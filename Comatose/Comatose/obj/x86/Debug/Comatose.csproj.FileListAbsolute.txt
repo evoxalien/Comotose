@@ -1,6 +1,0 @@
-C:\Users\nflynt\Documents\GitHub\Comotose\Comatose\Comatose\bin\x86\Debug\Comatose.exe
-C:\Users\nflynt\Documents\GitHub\Comotose\Comatose\Comatose\bin\x86\Debug\Comatose.pdb
-C:\Users\nflynt\Documents\GitHub\Comotose\Comatose\Comatose\obj\x86\Debug\Comatose.csprojResolveAssemblyReference.cache
-C:\Users\nflynt\Documents\GitHub\Comotose\Comatose\Comatose\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
-C:\Users\nflynt\Documents\GitHub\Comotose\Comatose\Comatose\obj\x86\Debug\Comatose.exe
-C:\Users\nflynt\Documents\GitHub\Comotose\Comatose\Comatose\obj\x86\Debug\Comatose.pdb
