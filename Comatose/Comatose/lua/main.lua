@@ -157,14 +157,14 @@ function TileMap.create(original)
 end
 
 --table for GameEngine stuff
-GameEngine = {}
+--GameEngine = {}
 
 --global collection of all game objects
 --TODO: Do we really need tilemaps and objects to be separated?
 objects = {}
 tilemaps = {}
 
-GameEngine.processEvent = function(event)
+processEvent = function(event)
 	for k, v in pairs(objects) do
 		if objects[k][event] then
 			objects[k][event](v)
@@ -271,9 +271,9 @@ debugprint = function(...)
 	for k,v in pairs(arg) do
 		output = output .. tostring(v)
 	end
-	GameEngine.consolePrint(output)
+	GameEngine:consoleWriteLn(output)
 end
 
---print = debugprint
+print = debugprint
 
 print("main.lua ran successfully")

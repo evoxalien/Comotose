@@ -64,14 +64,26 @@ namespace Comatose {
             Content.RootDirectory = "Content";
         }
 
-        protected override void Initialize() 
+        protected void InitLua()
         {
             vm = new Lua();
 
+            //bind in the game object; this means that any public functions
+            //or variables will  be accessible by lua, assuming lua understands how
+            //to call / manipulate them
+            vm["GameEngine"] = this;
             vm.DoFile("lua/main.lua");
-            
+        }
+
+        protected override void Initialize() 
+        {
 
             base.Initialize();
+        }
+
+        public void consoleWriteLn(string message)
+        {
+            console.WriteLine(message);
         }
 
         protected override void LoadContent() 
@@ -82,6 +94,10 @@ namespace Comatose {
             // TODO: use this.Content to load your game content here
             console = new GameConsole(this, spriteBatch);
             console.AddCommand(new LuaCommand(this));
+            console.Options.OpenOnWrite = false;
+
+            //Initialize lua here, as it relies on the console
+            InitLua();
         }
 
         protected override void UnloadContent() 
