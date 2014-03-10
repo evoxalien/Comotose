@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using NLua;
+using XNAGameConsole;
 
 namespace Comatose {
     public class ComatoseGame : Microsoft.Xna.Framework.Game 
@@ -17,6 +18,45 @@ namespace Comatose {
         SpriteBatch spriteBatch;
 
         Lua vm;
+        GameConsole console;
+
+        private class LuaCommand : IConsoleCommand
+        {
+            public string Name
+            {
+                get { return "lua"; }
+            }
+
+            public string Description
+            {
+                get { return "lua <command>: runs the command in the lua VM"; }
+            }
+
+            private ComatoseGame game;
+            public LuaCommand(ComatoseGame gm)
+            {
+                this.game = gm;
+            }
+
+            public string Execute(string[] arguments)
+            {
+                string commandString = arguments[0];
+                for (int i = 1; i < arguments.Length; i++)
+                {
+                    commandString += " " + arguments[i];
+                }
+
+                try
+                {
+                    game.vm.DoString(commandString);
+                    return "";
+                }
+                catch (NLua.Exceptions.LuaException e)
+                {
+                    return "ERROR: " + e.Message;
+                }
+            }
+        }
 
         public ComatoseGame() 
         {
@@ -29,6 +69,7 @@ namespace Comatose {
             vm = new Lua();
 
             vm.DoFile("lua/main.lua");
+            
 
             base.Initialize();
         }
@@ -39,6 +80,8 @@ namespace Comatose {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            console = new GameConsole(this, spriteBatch);
+            console.AddCommand(new LuaCommand(this));
         }
 
         protected override void UnloadContent() 
