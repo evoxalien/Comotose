@@ -54,7 +54,7 @@ namespace Comatose
             sprite_scale = new Vector2(sx, sy);
         }
 
-        public void rotate(float angle)
+        public virtual void rotate(float angle)
         {
             rotation = angle;
         }

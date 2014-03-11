@@ -8,6 +8,7 @@ function Hero:init()
 	self.framesAlive = 0
 	self.speed = 15
 	self:shape("circle")
+	--self.fixedRotation = true;
 end
 
 function Hero:everyFrame()
@@ -19,9 +20,13 @@ function Hero:everyFrame()
 		direction = Input:GetMovementDirection()
 		self.vx = direction.X * self.speed
 		self.vy = direction.Y * self.speed
+
+		--rotationey things
+		self:rotateTo(math.atan2(direction.X, -direction.Y))
 	else
 		self.vx = 0
 		self.vy = 0
+		self.vr = 0
 	end
 end
 

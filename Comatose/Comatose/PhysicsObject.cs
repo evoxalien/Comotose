@@ -129,6 +129,17 @@ namespace Comatose
             }
         }
 
+        public void rotateTo(float angle)
+        {
+            float nextAngle = body.GetAngle() + body.GetAngularVelocity() / 20f;
+            float totalRotation = angle - nextAngle;
+            while (totalRotation < -Math.PI) totalRotation += (float)Math.PI * 2;
+            while (totalRotation > Math.PI) totalRotation -= (float)Math.PI * 2;
+            float desiredAngleVelocity = totalRotation * 60f;
+            float torque = body.GetInertia() * desiredAngleVelocity * 2f;
+            body.ApplyTorque(torque);
+        }
+
         public void setDensity(float density)
         {
             body.GetFixtureList().SetDensity(density);
