@@ -1,6 +1,4 @@
 ﻿
-print("notfail1")
-
 Hero = inherits(GameObject)
 
 function Hero:init()
@@ -8,24 +6,24 @@ function Hero:init()
 	self.y = 50
 	self:sprite("Hero")
 	self.framesAlive = 0
+	self:origin(64,64)
+	self.speed = 5
 end
-
-print("notfail2")
 
 function Hero:everyFrame()
-	self.framesAlive = self.framesAlive + 1
+	if Input:WasKeyPressed("Space") then
+		self:color(255, 0, 0, 128)
+	end
 
-	self.vx = math.cos(self.framesAlive / 60) * 2
-	self.vy = math.sin(self.framesAlive / 60) * 2
-
-	self.x = self.x + self.vx
-	self.y = self.y + self.vy
+	direction = Input:GetMovementDirection()
+	self.x = self.x + direction.X * self.speed
+	self.y = self.y + direction.Y * self.speed
 
 	self:position(self.x, self.y)
+
+	if Input:LeftStickDead() then
+		self:rotate(math.atan2(-1 * direction.Y, -1 * direction.X) - (math.pi / 2))
+	end
 end
 
-print("notfail3")
-
 hero = Hero.create()
-
-print("notfail4")

@@ -17,6 +17,7 @@ namespace Comatose {
         GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
         Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
+        Input input = new Input();
 
         public Lua vm;
         GameConsole console;
@@ -73,6 +74,7 @@ namespace Comatose {
             //or variables will  be accessible by lua, assuming lua understands how
             //to call / manipulate them
             vm["GameEngine"] = this;
+            vm["Input"] = input;
             vm.DoFile("lua/main.lua");
         }
 
@@ -125,6 +127,7 @@ namespace Comatose {
             // TODO: Add your update logic here
             vm.DoString("processEvent(\"everyFrame\")");
 
+            input.Update();
             base.Update(gameTime);
         }
 

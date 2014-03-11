@@ -58,6 +58,11 @@ namespace Comatose
         {
             rotation = angle;
         }
+
+        public void origin(float x, float y)
+        {
+            rotation_origin = new Vector2(x, y);
+        }
         
         public GameObject(ComatoseGame gm) : base(gm)
         {
