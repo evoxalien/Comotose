@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using NLua;
 using XNAGameConsole;
+using Box2D.XNA;
 
 namespace Comatose {
     public class ComatoseGame : Microsoft.Xna.Framework.Game 
@@ -19,9 +20,14 @@ namespace Comatose {
         Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
         Input input = new Input();
 
+        public float physics_scale = 10f;
+        public float gravity = 0f;
+
         public Lua vm;
         GameConsole console;
+        public World world;
 
+        #region Lua
         private class LuaCommand : IConsoleCommand
         {
             public string Name
@@ -60,15 +66,11 @@ namespace Comatose {
             }
         }
 
-        public ComatoseGame() 
-        {
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-        }
-
         protected void InitLua()
         {
+            //clear out the current gamestate
             vm = new Lua();
+            world = new World(new Vector2(0f, gravity), true);
 
             //bind in the game object; this means that any public functions
             //or variables will  be accessible by lua, assuming lua understands how
@@ -78,14 +80,58 @@ namespace Comatose {
             vm.DoFile("lua/main.lua");
         }
 
-        protected override void Initialize() 
+        public void loadStage(string filename)
         {
-            base.Initialize();
+            //Initialize lua
+            InitLua();
+
+            vm.DoFile("lua/stages/" + filename + ".lua");
+        }
+
+        public int spawn(string classname)
+        {
+            GameObject new_object;
+
+            switch (classname)
+            {
+                case "GameObject":
+                    new_object = new GameObject(this);
+                    break;
+                case "PhysicsObject":
+                    new_object = (GameObject)new PhysicsObject(this);
+                    break;
+                default:
+                    throw (new NotImplementedException("Spawn Class Not Found! -_-"));
+            }
+
+            game_objects[new_object.ID()] = new_object;
+            Components.Add(new_object);
+
+            return new_object.ID();
         }
 
         public void consoleWriteLn(string message)
         {
             console.WriteLine(message);
+        }
+        #endregion
+
+        public ComatoseGame() 
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+        }
+
+        #region Initialization
+
+        protected override void Initialize() 
+        {
+            base.Initialize();
+        }
+
+        protected override void UnloadContent()
+        {
+            // TODO: Unload any non ContentManager content here
         }
 
         protected override void LoadContent() 
@@ -104,30 +150,23 @@ namespace Comatose {
             loadStage("test");
 
         }
+        #endregion
 
-        public void loadStage(string filename) 
-        {
-            //Initialize lua
-            InitLua();
-
-            vm.DoFile("lua/stages/" + filename + ".lua");
-        }
-
-        protected override void UnloadContent() 
-        {
-            // TODO: Unload any non ContentManager content here
-        }
-
+        #region Game Loop
         protected override void Update(GameTime gameTime) 
         {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
-            vm.DoString("processEvent(\"everyFrame\")");
-
             input.Update();
+
+            //process world stuffs
+            world.Step(1.0f / 60.0f, 6, 2);
+            //listener.HandleEvents(); //process collisions engineside as needed
+            vm.DoString("destroyObjects()"); //cleanup any objects that need to die
+            vm.DoString("processEvent(\"everyFrame\")");
+            
             base.Update(gameTime);
         }
 
@@ -138,14 +177,8 @@ namespace Comatose {
             // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
+        #endregion
 
-        public int spawn()
-        {
-            GameObject new_object = new GameObject(this);
-            game_objects[new_object.ID()] = new_object;
-            Components.Add(new_object);
 
-            return new_object.ID();
-        }
     }
 }

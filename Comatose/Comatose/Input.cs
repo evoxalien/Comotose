@@ -72,9 +72,9 @@ namespace Comatose
         }
         #endregion
 
-        public bool LeftStickDead()
+        public bool MovementDeadzone()
         {
-            return gamepadState.ThumbSticks.Left.Length() > 0.1;
+            return !(gamepadState.ThumbSticks.Left.Length() > 0.1) && keyboardState.IsKeyUp(Keys.W) && keyboardState.IsKeyUp(Keys.A) && keyboardState.IsKeyUp(Keys.S) && keyboardState.IsKeyUp(Keys.D);
         }
 
         #region Aiming

@@ -16,7 +16,7 @@ namespace Comatose
 {
     class GameObject : DrawableGameComponent
     {
-        ComatoseGame game;
+        protected ComatoseGame game;
         private static int next_id = 0;
         private int id;
 
@@ -34,7 +34,7 @@ namespace Comatose
             return id;
         }
 
-        public void sprite(string filename)
+        public virtual void sprite(string filename)
         {
             texture = game.Content.Load<Texture2D>("art/sprites/" + filename);
         }

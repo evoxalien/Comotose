@@ -1,13 +1,13 @@
 ﻿
-Hero = inherits(GameObject)
+Hero = inherits(PhysicsObject)
 
 function Hero:init()
-	self.x = 50
-	self.y = 50
+	self.x = 5
+	self.y = 5
 	self:sprite("Hero")
 	self.framesAlive = 0
 	self:origin(64,64)
-	self.speed = 5
+	self.speed = 15
 end
 
 function Hero:everyFrame()
@@ -15,15 +15,25 @@ function Hero:everyFrame()
 		self:color(255, 0, 0, 128)
 	end
 
-	direction = Input:GetMovementDirection()
-	self.x = self.x + direction.X * self.speed
-	self.y = self.y + direction.Y * self.speed
-
-	self:position(self.x, self.y)
-
-	if Input:LeftStickDead() then
-		self:rotate(math.atan2(-1 * direction.Y, -1 * direction.X) - (math.pi / 2))
+	if not Input:MovementDeadzone() then
+		direction = Input:GetMovementDirection()
+		self.vx = direction.X * self.speed
+		self.vy = direction.Y * self.speed
+	else
+		self.vx = 0
+		self.vy = 0
 	end
 end
 
 hero = Hero.create()
+
+Chair = inherits(PhysicsObject)
+
+function Chair:init()
+	self:body_type("static")
+	self:sprite("Chair1")
+	self.x = 20
+	self.y = 20
+end
+
+chair = Chair.create()

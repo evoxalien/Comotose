@@ -91,10 +91,11 @@ function process_metatables(o)
 	setmetatable(o,mt)
 end
 
-function GameObject.create(original)
+function GameObject.create(original, classname)
+	classname = classname or "GameObject"
 	print("Spawning an object with parent: ", getmetatable(original).__index)
 
-	local spawn_id = GameEngine:spawn() --returns the assigned object ID, which we need to keep track of
+	local spawn_id = GameEngine:spawn(classname) --returns the assigned object ID, which we need to keep track of
 
 	local o = original or {}
 	print("Spawned object ID:" .. spawn_id)
@@ -119,10 +120,7 @@ function GameObject.create(original)
 	return o
 end
 
-function GameObject:destroy()
-	--mark the object for deletion
-	self.dead = true
-end
+PhysicsObject = {create=function(original) return GameObject.create(original, "PhysicsObject") end}
 
 function destroyObjects()
 	for k,v in pairs(objects) do
