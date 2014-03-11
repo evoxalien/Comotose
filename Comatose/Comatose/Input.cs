@@ -18,6 +18,7 @@ namespace Comatose
         private MouseState mouseState, lastMouseState;
         private GamePadState gamepadState, lastGamepadState;
         public bool GamePause = false;
+        public bool DevMode = false;
 
         private bool isAimingWithMouse = false;
 
@@ -126,6 +127,12 @@ namespace Comatose
         }
         #endregion
 
+        public void DevModeButtonPressed()
+        {
+            if (WasButtonPressed("LeftShoulder") || WasKeyPressed("F3"))
+                DevMode = !DevMode;
+        }
+
         #region Update
         public void Update()
         {
@@ -146,6 +153,7 @@ namespace Comatose
                 isAimingWithMouse = true;
 
             GamePausePressed();
+            DevModeButtonPressed();
         }
         #endregion
     }

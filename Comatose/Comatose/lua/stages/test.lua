@@ -6,8 +6,8 @@ function Hero:init()
 	self.y = 5
 	self:sprite("Hero")
 	self.framesAlive = 0
-	self:origin(64,64)
 	self.speed = 15
+	self:shape("circle")
 end
 
 function Hero:everyFrame()

@@ -160,7 +160,7 @@ namespace Comatose
 
             FixtureDef fdef = new FixtureDef();
             fdef.density = 1.0f;
-            fdef.friction = 0.3f;
+            fdef.friction = 0.0f;
 
             switch (type)
             {

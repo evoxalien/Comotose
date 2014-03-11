@@ -17,6 +17,7 @@ namespace Comatose {
     {
         GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
+        public SpriteBatch debugBatch;
         Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
         Input input = new Input();
 
@@ -26,6 +27,13 @@ namespace Comatose {
         public Lua vm;
         GameConsole console;
         public World world;
+
+        Vector2 camera = new Vector2(0);
+
+        public Vector2 screenCoordinates(Vector2 physics_coordinates)
+        {
+            return new Vector2((physics_coordinates.X * physics_scale) - camera.X, (physics_coordinates.Y * physics_scale) - camera.Y);
+        }
 
         #region Lua
         private class LuaCommand : IConsoleCommand
@@ -71,6 +79,8 @@ namespace Comatose {
             //clear out the current gamestate
             vm = new Lua();
             world = new World(new Vector2(0f, gravity), true);
+            world.DebugDraw = new cDebugDraw(this);
+            world.DebugDraw.Flags = DebugDrawFlags.Shape;
 
             //bind in the game object; this means that any public functions
             //or variables will  be accessible by lua, assuming lua understands how
@@ -138,7 +148,7 @@ namespace Comatose {
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            debugBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
             console = new GameConsole(this, spriteBatch);
@@ -176,6 +186,15 @@ namespace Comatose {
 
             // TODO: Add your drawing code here
             base.Draw(gameTime);
+
+            //now draw the debug stuff, if needed
+            if (input.DevMode)
+            {
+                debugBatch.Begin();
+                ((cDebugDraw)world.DebugDraw).DrawBackground();
+                world.DrawDebugData();
+                debugBatch.End();
+            }
         }
         #endregion
 
