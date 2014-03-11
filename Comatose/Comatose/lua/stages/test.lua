@@ -8,6 +8,7 @@ function Hero:init()
 	self.framesAlive = 0
 	self.speed = 15
 	self:shape("circle")
+	self.z_index = 0
 	--self.fixedRotation = true;
 end
 
@@ -32,13 +33,21 @@ end
 
 hero = Hero.create()
 
-Chair = inherits(PhysicsObject)
+Static = inherits(PhysicsObject)
 
-function Chair:init()
+function Static:init()
 	self:body_type("static")
-	self:sprite("Chair1")
-	self.x = 20
-	self.y = 20
 end
 
-chair = Chair.create()
+chair = Static.create({x=15,y=5})
+chair:sprite("Chair1")
+
+sofa = Static.create({x=30,y=5})
+sofa:sprite("Sofa")
+
+table = Static.create({x=20,y=30})
+table:sprite("Table_Round1")
+table:shape("circle")
+
+recliner = Static.create({x=45,y=5})
+recliner:sprite("Chair_Recliner1")

@@ -54,7 +54,7 @@ namespace Comatose
         public override void DrawCircle(Vector2 center, float radius, Color color)
         {
             //throw new NotImplementedException();
-            int steps = 32;
+            int steps = 16;
 
             for (int i = 0; i < steps; i += 1)
             {
