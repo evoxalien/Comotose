@@ -13,6 +13,7 @@ function Hero:init()
 end
 
 function Hero:everyFrame()
+	Input:setAimCenter(self.x, self.y)
 	if Input:WasKeyPressed("Space") then
 		self:color(255, 0, 0, 128)
 	end
@@ -23,11 +24,18 @@ function Hero:everyFrame()
 		self.vy = direction.Y * self.speed
 
 		--rotationey things
-		self:rotateTo(math.atan2(direction.X, -direction.Y))
+		if Input:AimingDeadzone() then
+			self:rotateTo(math.atan2(direction.X, -direction.Y))
+		end
 	else
 		self.vx = 0
 		self.vy = 0
 		self.vr = 0
+	end
+
+	if not Input:AimingDeadzone() then
+		aim_direction = Input:GetAimDirection()
+		self:rotateTo(math.atan2(aim_direction.X, -aim_direction.Y))
 	end
 end
 

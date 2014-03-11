@@ -14,11 +14,17 @@ namespace Comatose
 {
     public class Input
     {
+        private ComatoseGame game;
         private KeyboardState keyboardState, lastKeyboardState;
         private MouseState mouseState, lastMouseState;
         private GamePadState gamepadState, lastGamepadState;
         public bool GamePause = false;
         public bool DevMode = false;
+
+        public Input(ComatoseGame game)
+        {
+            this.game = game;
+        }
 
         private bool isAimingWithMouse = false;
 
@@ -71,20 +77,26 @@ namespace Comatose
 
             return direction;
         }
-        #endregion
 
         public bool MovementDeadzone()
         {
             return !(gamepadState.ThumbSticks.Left.Length() > 0.1) && keyboardState.IsKeyUp(Keys.W) && keyboardState.IsKeyUp(Keys.A) && keyboardState.IsKeyUp(Keys.S) && keyboardState.IsKeyUp(Keys.D);
         }
+        #endregion
+
+        private Vector2 aim_center = new Vector2(0);
+        public void setAimCenter(float x, float y)
+        {
+            aim_center = new Vector2(x * game.physics_scale, y * game.physics_scale);
+        }
 
         #region Aiming
-        public Vector2 GetAimDirection(Vector2 origin)
+        public Vector2 GetAimDirection()
         {
 
-            if (isAimingWithMouse)
-                if (mouseState.LeftButton == ButtonState.Pressed)
-                    return GetMouseAimDirection(origin);
+            //if (isAimingWithMouse)
+                //if (mouseState.LeftButton == ButtonState.Pressed)
+                    //return GetMouseAimDirection();
 
             Vector2 direction = gamepadState.ThumbSticks.Right;
             direction.Y *= -1;
@@ -106,14 +118,19 @@ namespace Comatose
                 return Vector2.Normalize(direction);
         }
 
-        public Vector2 GetMouseAimDirection(Vector2 origin)
+        public Vector2 GetMouseAimDirection()
         {
-            Vector2 direction = MousePosition - origin;
+            Vector2 direction = MousePosition - aim_center;
 
             if (direction == Vector2.Zero)
                 return Vector2.Zero;
             else
                 return Vector2.Normalize(direction);
+        }
+
+        public bool AimingDeadzone()
+        {
+            return /*!isAimingWithMouse &&*/ !(gamepadState.ThumbSticks.Right.Length() > 0.1) && keyboardState.IsKeyUp(Keys.Up) && keyboardState.IsKeyUp(Keys.Down) && keyboardState.IsKeyUp(Keys.Left) && keyboardState.IsKeyUp(Keys.Right);
         }
         #endregion
 

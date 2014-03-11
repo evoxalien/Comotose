@@ -19,7 +19,7 @@ namespace Comatose {
         public SpriteBatch spriteBatch;
         public SpriteBatch debugBatch;
         Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
-        Input input = new Input();
+        Input input;
 
         public float physics_scale = 10f;
         public float gravity = 0f;
@@ -130,6 +130,7 @@ namespace Comatose {
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            input = new Input(this);
         }
 
         #region Initialization
