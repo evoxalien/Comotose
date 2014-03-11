@@ -26,7 +26,7 @@ function inherits(parent_class)
 	return new_class
 end
 
-Object = {}
+GameObject = {}
 
 function process_defaults(o, keep)
 	if not type(o) == "table" then
@@ -40,7 +40,10 @@ function process_defaults(o, keep)
 	
 	for k, v in pairs(o) do
 		if object_to_bind[k] and type(object_to_bind[k]) ~= "string" then
-			--print("setting default: ", k)
+			
+			print("setting default: ", k)
+			print(type(object_to_bind[k]))
+			print(type(object_to_bind))
 			object_to_bind[k] = v
 			if not keep then
 				o[k] = nil
@@ -88,17 +91,19 @@ function process_metatables(o)
 	setmetatable(o,mt)
 end
 
-function Object.create(original)
-	--print("Spawning an object with parent: ", getmetatable(original).__index)
+function GameObject.create(original)
+	print("Spawning an object with parent: ", getmetatable(original).__index)
 
-	local spawn_id = GameEngine.spawn() --returns the assigned object ID, which we need to keep track of
+	local spawn_id = GameEngine:spawn() --returns the assigned object ID, which we need to keep track of
 
 	local o = original or {}
-	--print("Spawned object ID:" .. spawn_id)
+	print("Spawned object ID:" .. spawn_id)
 
 	--set defaults; any keys that exist in the C# class will be set from their values in the original
 	--object
 	process_defaults(o)
+
+	print("Successfully processed defaults")
 
 	o.object = object_to_bind
 	o.body = body_to_bind
@@ -114,7 +119,7 @@ function Object.create(original)
 	return o
 end
 
-function Object:destroy()
+function GameObject:destroy()
 	--mark the object for deletion
 	self.dead = true
 end
@@ -128,52 +133,17 @@ function destroyObjects()
 	end
 end
 
---same as objects, now for TileMaps
-
-TileMap = {}
-
-function TileMap.create(original)
-	local spawn_id = GameEngine.tilemap()
-
-	local o = setmetatable({}, {})
-	if original then
-		o = original
-	end
-	--print(type(o))
-
-	process_defaults(o)
-
-	o.object = object_to_bind
-	--tilemaps[spawn_id] = o
-	objects[spawn_id] = o
-	
-	process_metatables(o)
-
-	if o.init then
-		o:init()
-	end
-
-	return o
-end
-
 --table for GameEngine stuff
 --GameEngine = {}
 
 --global collection of all game objects
 --TODO: Do we really need tilemaps and objects to be separated?
 objects = {}
-tilemaps = {}
 
 processEvent = function(event)
 	for k, v in pairs(objects) do
 		if objects[k][event] then
 			objects[k][event](v)
-		end
-	end
-
-	for k, v in pairs(tilemaps) do
-		if tilemaps[k][event] then
-			tilemaps[k][event](v)
 		end
 	end
 
@@ -274,6 +244,4 @@ debugprint = function(...)
 	GameEngine:consoleWriteLn(output)
 end
 
-print = debugprint
-
-print("main.lua ran successfully")
+--print = debugprint

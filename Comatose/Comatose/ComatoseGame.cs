@@ -15,9 +15,10 @@ namespace Comatose {
     public class ComatoseGame : Microsoft.Xna.Framework.Game 
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public SpriteBatch spriteBatch;
+        Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
 
-        Lua vm;
+        public Lua vm;
         GameConsole console;
 
         private class LuaCommand : IConsoleCommand
@@ -77,7 +78,6 @@ namespace Comatose {
 
         protected override void Initialize() 
         {
-
             base.Initialize();
         }
 
@@ -91,13 +91,24 @@ namespace Comatose {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+
             // TODO: use this.Content to load your game content here
             console = new GameConsole(this, spriteBatch);
             console.AddCommand(new LuaCommand(this));
             console.Options.OpenOnWrite = false;
 
-            //Initialize lua here, as it relies on the console
+            
+            //load the test level
+            loadStage("test");
+
+        }
+
+        public void loadStage(string filename) 
+        {
+            //Initialize lua
             InitLua();
+
+            vm.DoFile("lua/stages/" + filename + ".lua");
         }
 
         protected override void UnloadContent() 
@@ -112,6 +123,7 @@ namespace Comatose {
                 this.Exit();
 
             // TODO: Add your update logic here
+            vm.DoString("processEvent(\"everyFrame\")");
 
             base.Update(gameTime);
         }
@@ -121,8 +133,16 @@ namespace Comatose {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
             base.Draw(gameTime);
+        }
+
+        public int spawn()
+        {
+            GameObject new_object = new GameObject(this);
+            game_objects[new_object.ID()] = new_object;
+            Components.Add(new_object);
+
+            return new_object.ID();
         }
     }
 }
