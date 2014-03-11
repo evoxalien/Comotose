@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -18,7 +19,7 @@ namespace Comatose {
         GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
         public SpriteBatch debugBatch;
-        Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
+        public Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
         Input input;
 
         public float physics_scale = 10f;
@@ -88,14 +89,44 @@ namespace Comatose {
             vm["GameEngine"] = this;
             vm["Input"] = input;
             vm.DoFile("lua/main.lua");
+
+            loadAllObjects();
+        }
+
+        public void loadAllObjects()
+        {
+            List<string> files = new List<string>(Directory.EnumerateFiles("lua/objects"));
+            foreach (var file in files)
+            {
+                vm.DoFile(file);
+            }
         }
 
         public void loadStage(string filename)
         {
+            //delete all existing objects
+            foreach (var thing in game_objects)
+            {
+                Components.Remove(thing.Value);
+            }
+            game_objects.Clear();
+
             //Initialize lua
             InitLua();
 
             vm.DoFile("lua/stages/" + filename + ".lua");
+        }
+
+        string levelToLoad = "";
+        public void loadLevel(string filename)
+        {
+            levelToLoad = filename;
+        }
+
+        protected void realLoadLevel() {
+            loadStage("levelloader");
+            vm.DoString("load(\"" + levelToLoad + "\")");
+            levelToLoad = "";
         }
 
         public int spawn(string classname)
@@ -151,13 +182,12 @@ namespace Comatose {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             debugBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
             console = new GameConsole(this, spriteBatch);
             console.AddCommand(new LuaCommand(this));
             console.Options.OpenOnWrite = false;
-            
+
             //load the test level
-            loadStage("test");
+            loadStage("leveleditor");
 
         }
         #endregion
@@ -165,6 +195,11 @@ namespace Comatose {
         #region Game Loop
         protected override void Update(GameTime gameTime) 
         {
+            if (levelToLoad != "")
+            {
+                realLoadLevel();
+            }
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();

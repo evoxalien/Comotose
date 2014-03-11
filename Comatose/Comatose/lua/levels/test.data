@@ -1,0 +1,37 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	["objects"] = {
+		[1] = {
+			["defaults"] = {
+				["x"] = 5;
+				["y"] = 5;
+			};
+			["class"] = "Hero";
+		};
+		[2] = {
+			["defaults"] = {
+				["x"] = 17;
+				["y"] = 16;
+			};
+			["class"] = "Recliner";
+		};
+		[3] = {
+			["defaults"] = {
+				["x"] = 39;
+				["y"] = 5;
+			};
+			["class"] = "Table";
+		};
+		[4] = {
+			["defaults"] = {
+				["x"] = 32;
+				["y"] = 35;
+			};
+			["class"] = "Chair";
+		};
+	};
+}
+return obj1

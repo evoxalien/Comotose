@@ -14,7 +14,7 @@ using Box2D.XNA;
 
 namespace Comatose
 {
-    class GameObject : DrawableGameComponent
+    public class GameObject : DrawableGameComponent
     {
         protected ComatoseGame game;
         private static int next_id = 0;

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Box2D.XNA;
 
 namespace Comatose
 {
@@ -132,6 +133,11 @@ namespace Comatose
         {
             return /*!isAimingWithMouse &&*/ !(gamepadState.ThumbSticks.Right.Length() > 0.1) && keyboardState.IsKeyUp(Keys.Up) && keyboardState.IsKeyUp(Keys.Down) && keyboardState.IsKeyUp(Keys.Left) && keyboardState.IsKeyUp(Keys.Right);
         }
+
+        public Vector2 GetMousePosition()
+        {
+            return new Vector2((float)mouseState.X, (float)mouseState.Y);
+        }
         #endregion
 
         #region GamePause
@@ -148,6 +154,65 @@ namespace Comatose
         {
             if (WasButtonPressed("LeftShoulder") || WasKeyPressed("F3"))
                 DevMode = !DevMode;
+        }
+
+        private void handleMouseClicks()
+        {
+            Vector2 transformed_mouse = new Vector2(((float)Math.Floor((float)mouseState.X / game.physics_scale)), ((float)Math.Floor((float)mouseState.Y / game.physics_scale)));
+            game.vm.DoString("mouse.x = " + transformed_mouse.X);
+            game.vm.DoString("mouse.y = " + transformed_mouse.Y);
+
+
+            if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
+            {
+                foreach (var o in game.game_objects)
+                {
+                    if (o.Value is PhysicsObject) {
+                        PhysicsObject physics_object = (PhysicsObject)o.Value;
+                        Fixture thing = physics_object.body.GetFixtureList();
+                        while (thing != null)
+                        {
+                            if (thing.TestPoint(transformed_mouse))
+                                game.vm.DoString("if objects[" + physics_object.ID() + "].click then objects[" + physics_object.ID() + "]:click(mouse.x - " + physics_object.x + ", mouse.y - " + physics_object.y + ") end");
+                            
+                            thing = thing.GetNext();
+                        }
+                    }
+                }
+                game.vm.DoString("if stage.on_click then stage.on_click(mouse.x, mouse.y) end");
+            }
+
+            if (mouseState.RightButton == ButtonState.Pressed && lastMouseState.RightButton == ButtonState.Released)
+            {
+                foreach (var o in game.game_objects)
+                {
+                    if (o.Value is PhysicsObject) {
+                        PhysicsObject physics_object = (PhysicsObject)o.Value;
+                        Fixture thing = physics_object.body.GetFixtureList();
+                        while (thing != null)
+                        {
+                            if (thing.TestPoint(transformed_mouse))
+                                game.vm.DoString("if objects[" + physics_object.ID() + "].right_click then objects[" + physics_object.ID() + "]:right_click(mouse.x - " + physics_object.x + ", mouse.y - " + physics_object.y + ") end");
+                            
+                            thing = thing.GetNext();
+                        }
+                    }
+                }
+                game.vm.DoString("if stage.on_click then stage.on_click(mouse.x, mouse.y) end");
+            }
+
+            if (mouseState.ScrollWheelValue < lastMouseState.ScrollWheelValue) {
+                game.vm.DoString("processEvent('scroll_down')");
+            }
+
+            if (mouseState.ScrollWheelValue > lastMouseState.ScrollWheelValue) {
+                game.vm.DoString("processEvent('scroll_up')");
+            }
+
+            //scroll click
+            if (mouseState.MiddleButton == ButtonState.Pressed && lastMouseState.MiddleButton == ButtonState.Released) {
+                game.vm.DoString("processEvent('scroll_click')");
+            }
         }
 
         #region Update
@@ -171,6 +236,7 @@ namespace Comatose
 
             GamePausePressed();
             DevModeButtonPressed();
+            handleMouseClicks();
         }
         #endregion
     }

@@ -16,7 +16,7 @@ namespace Comatose
 {
     class PhysicsObject : GameObject
     {
-        protected Body body;
+        public Body body;
         protected Fixture fixture;
 
         #region Getters / Setters for body properties
