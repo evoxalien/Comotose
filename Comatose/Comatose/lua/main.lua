@@ -40,10 +40,6 @@ function process_defaults(o, keep)
 	
 	for k, v in pairs(o) do
 		if object_to_bind[k] and type(object_to_bind[k]) ~= "string" then
-			
-			print("setting default: ", k)
-			print(type(object_to_bind[k]))
-			print(type(object_to_bind))
 			object_to_bind[k] = v
 			if not keep then
 				o[k] = nil
@@ -93,18 +89,18 @@ end
 
 function GameObject.create(original, classname)
 	classname = classname or "GameObject"
-	print("Spawning an object with parent: ", getmetatable(original).__index)
+	--print("Spawning an object with parent: ", getmetatable(original).__index)
 
 	local spawn_id = GameEngine:spawn(classname) --returns the assigned object ID, which we need to keep track of
 
 	local o = original or {}
-	print("Spawned object ID:" .. spawn_id)
+	--print("Spawned object ID:" .. spawn_id)
 
 	--set defaults; any keys that exist in the C# class will be set from their values in the original
 	--object
 	process_defaults(o)
 
-	print("Successfully processed defaults")
+	--print("Successfully processed defaults")
 
 	o.object = object_to_bind
 	o.body = body_to_bind

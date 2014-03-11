@@ -154,7 +154,6 @@ namespace Comatose {
             console = new GameConsole(this, spriteBatch);
             console.AddCommand(new LuaCommand(this));
             console.Options.OpenOnWrite = false;
-
             
             //load the test level
             loadStage("test");
@@ -182,7 +181,7 @@ namespace Comatose {
 
         protected override void Draw(GameTime gameTime) 
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             base.Draw(gameTime);

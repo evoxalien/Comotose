@@ -69,7 +69,6 @@ namespace Comatose
             game = gm;
             id = next_id++;
             game.vm["object_to_bind"] = this;
-            Console.WriteLine("Bound object from C#");
         }
 
         public override void Draw(GameTime gameTime)
@@ -82,7 +81,6 @@ namespace Comatose
             }
 
             base.Draw(gameTime);
-            Console.WriteLine("Drew?");
         }
 
 

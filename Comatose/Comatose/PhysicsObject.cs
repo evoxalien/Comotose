@@ -219,7 +219,6 @@ namespace Comatose
 
         public override void Draw(GameTime gameTime)
         {
-            Console.WriteLine("Physics Drew? " + body.GetPosition().X + ", " + body.GetPosition().Y);
             position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
             rotate(body.GetAngle());
 

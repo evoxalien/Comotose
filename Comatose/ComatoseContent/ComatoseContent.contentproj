@@ -52,11 +52,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="art\sprites\Hero.png">
-      <Name>Hero</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="art\sprites\Sofa.png">
       <Name>Sofa</Name>
       <Importer>TextureImporter</Importer>
@@ -71,6 +66,13 @@
   <ItemGroup>
     <Compile Include="art\pixel.png">
       <Name>pixel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="art\sprites\Hero.png">
+      <Name>Hero</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
