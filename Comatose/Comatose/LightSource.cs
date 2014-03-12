@@ -18,7 +18,7 @@ namespace Comatose
     {
         public LightSource(ComatoseGame gm) : base(gm)
         {
-
+            
         }
 
         public override void Draw(GameTime gameTime)

@@ -215,4 +215,4 @@ pip-log.txt
 .mr.developer.cfg
 Comatose/Comatose/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 Comatose/ComatoseContent/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-*.suo
+Comatose.v11.suo

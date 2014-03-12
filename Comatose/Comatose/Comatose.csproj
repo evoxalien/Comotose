@@ -185,6 +185,9 @@
     <None Include="lua\savetable.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\stages\test2.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\stages\leveleditor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
