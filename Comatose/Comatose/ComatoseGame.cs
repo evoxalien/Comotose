@@ -32,7 +32,7 @@ namespace Comatose {
         GameConsole console;
         public World world;
 
-        Vector2 camera = new Vector2(0);
+        public Vector2 camera = new Vector2(0);
 
         public Vector2 screenCoordinates(Vector2 physics_coordinates)
         {
@@ -113,6 +113,7 @@ namespace Comatose {
                 Components.Remove(thing.Value);
             }
             game_objects.Clear();
+            camera = new Vector2(0);
 
             //Initialize lua
             InitLua();
@@ -162,6 +163,11 @@ namespace Comatose {
         {
             console.WriteLine(message);
         }
+
+        public void setCamera(int x, int y)
+        {
+            camera = new Vector2(x, y);
+        }
         #endregion
 
         public ComatoseGame() 
@@ -195,6 +201,8 @@ namespace Comatose {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             debugBatch = new SpriteBatch(GraphicsDevice);
             pixel = Content.Load<Texture2D>("art/pixel");
+
+            gameObjectBatch = new SpriteBatch(GraphicsDevice);
 
             console = new GameConsole(this, spriteBatch);
             console.AddCommand(new LuaCommand(this));
@@ -247,13 +255,17 @@ namespace Comatose {
                 .5f);
         }
 
+        public SpriteBatch gameObjectBatch;
+
         protected override void Draw(GameTime gameTime) 
         {
             debugBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
             GraphicsDevice.Clear(Color.White);
 
             // TODO: Add your drawing code here
+            gameObjectBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
             base.Draw(gameTime);
+            gameObjectBatch.End();
 
             //now draw the debug stuff, if needed
             if (input.DevMode)

@@ -134,6 +134,9 @@
     <Content Include="lua52.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="lua\maps\empty">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\levels\empty">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -182,6 +185,9 @@
     <None Include="lua\objects\statics.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\objects\WASDcamera.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\savetable.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -192,6 +198,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="lua\stages\levelloader.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="lua\stages\mapeditor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="lua\stages\test.lua">

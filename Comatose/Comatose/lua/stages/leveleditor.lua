@@ -67,7 +67,7 @@ end
 
 mode = "object"
 
-function stage.on_click(mx, my)
+function stage.click(mx, my)
 	if mode == "object" then
 		current_level.objects[insert_index] = {
 			class=gameObjects[selector.current_index].class,
@@ -128,7 +128,7 @@ function color(red, green, blue, alpha)
 end
 
 --WASD camera, for moving around the level and stuff
---camera = WASDcamera.create()
+camera = WASDcamera.create()
 
 --save/load functions for the level
 current_filename = ""

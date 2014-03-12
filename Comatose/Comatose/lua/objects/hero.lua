@@ -1,8 +1,6 @@
 ﻿Hero = inherits(PhysicsObject)
 
 function Hero:init()
-	self.x = 5
-	self.y = 5
 	self:sprite("Hero")
 	self.framesAlive = 0
 	self.speed = 15

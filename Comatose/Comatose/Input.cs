@@ -136,7 +136,7 @@ namespace Comatose
 
         public Vector2 GetMousePosition()
         {
-            return new Vector2((float)mouseState.X, (float)mouseState.Y);
+            return new Vector2((float)mouseState.X + game.camera.X, (float)mouseState.Y + game.camera.Y);
         }
         #endregion
 
@@ -158,7 +158,8 @@ namespace Comatose
 
         private void handleMouseClicks()
         {
-            Vector2 transformed_mouse = new Vector2(((float)Math.Floor((float)mouseState.X / game.physics_scale)), ((float)Math.Floor((float)mouseState.Y / game.physics_scale)));
+            Vector2 mouse_position = GetMousePosition();
+            Vector2 transformed_mouse = new Vector2(((float)Math.Floor(mouse_position.X / game.physics_scale)), ((float)Math.Floor(mouse_position.Y / game.physics_scale)));
             game.vm.DoString("mouse.x = " + transformed_mouse.X);
             game.vm.DoString("mouse.y = " + transformed_mouse.Y);
 
@@ -179,7 +180,7 @@ namespace Comatose
                         }
                     }
                 }
-                game.vm.DoString("if stage.on_click then stage.on_click(mouse.x, mouse.y) end");
+                game.vm.DoString("if stage.click then stage.click(mouse.x, mouse.y) end");
             }
 
             if (mouseState.RightButton == ButtonState.Pressed && lastMouseState.RightButton == ButtonState.Released)
@@ -198,7 +199,7 @@ namespace Comatose
                         }
                     }
                 }
-                game.vm.DoString("if stage.on_click then stage.on_click(mouse.x, mouse.y) end");
+                game.vm.DoString("if stage.right_click then stage.right_click(mouse.x, mouse.y) end");
             }
 
             if (mouseState.ScrollWheelValue < lastMouseState.ScrollWheelValue) {
