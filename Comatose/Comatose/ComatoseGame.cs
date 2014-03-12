@@ -31,7 +31,7 @@ namespace Comatose {
 
         Vector2 camera = new Vector2(0);
 
-        public Vector2 screenCoordinates(Vector2 physics_coordinates)
+        public static Vector2 screenCoordinates(Vector2 physics_coordinates)
         {
             return new Vector2((physics_coordinates.X * physics_scale) - camera.X, (physics_coordinates.Y * physics_scale) - camera.Y);
         }
