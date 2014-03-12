@@ -141,6 +141,11 @@ namespace Comatose {
                 case "PhysicsObject":
                     new_object = (GameObject)new PhysicsObject(this);
                     break;
+                /*
+                case "LightSource":
+                    new_object = (GameObject)new LightSource(this);
+                    break;
+                 */
                 default:
                     throw (new NotImplementedException("Spawn Class Not Found! -_-"));
             }

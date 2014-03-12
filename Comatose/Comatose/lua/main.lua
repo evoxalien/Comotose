@@ -117,6 +117,7 @@ function GameObject.create(original, classname)
 end
 
 PhysicsObject = {create=function(original) return GameObject.create(original, "PhysicsObject") end}
+LightSource = {create=function(original) return GameObject.create(original, "LightSource") end}
 
 function destroyObjects()
 	for k,v in pairs(objects) do
