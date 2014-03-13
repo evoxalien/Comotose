@@ -16,11 +16,14 @@ using Box2D.XNA;
 namespace Comatose {
     public class ComatoseGame : Microsoft.Xna.Framework.Game 
     {
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics;
+        public GraphicsDevice gDevice;
         public SpriteBatch spriteBatch;
         public SpriteBatch debugBatch;
         public Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
-        Input input;
+        public Input input;
+
+        public Texture2D pixel;
 
         public float physics_scale = 10f;
         public float gravity = 0f;
@@ -31,7 +34,7 @@ namespace Comatose {
 
         Vector2 camera = new Vector2(0);
 
-        public static Vector2 screenCoordinates(Vector2 physics_coordinates)
+        public Vector2 screenCoordinates(Vector2 physics_coordinates)
         {
             return new Vector2((physics_coordinates.X * physics_scale) - camera.X, (physics_coordinates.Y * physics_scale) - camera.Y);
         }
@@ -141,11 +144,10 @@ namespace Comatose {
                 case "PhysicsObject":
                     new_object = (GameObject)new PhysicsObject(this);
                     break;
-                /*
                 case "LightSource":
                     new_object = (GameObject)new LightSource(this);
                     break;
-                 */
+                 
                 default:
                     throw (new NotImplementedException("Spawn Class Not Found! -_-"));
             }
@@ -173,6 +175,12 @@ namespace Comatose {
 
         protected override void Initialize() 
         {
+            
+
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.ApplyChanges();
+
             base.Initialize();
         }
 
@@ -186,13 +194,15 @@ namespace Comatose {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             debugBatch = new SpriteBatch(GraphicsDevice);
+            pixel = Content.Load<Texture2D>("art/pixel");
 
             console = new GameConsole(this, spriteBatch);
             console.AddCommand(new LuaCommand(this));
             console.Options.OpenOnWrite = false;
 
             //load the test level
-            loadStage("leveleditor");
+            //loadStage("leveleditor");
+            loadStage("test2");
 
         }
         #endregion
@@ -220,9 +230,27 @@ namespace Comatose {
             base.Update(gameTime);
         }
 
+        public void drawLine(Vector2 start, Vector2 end, Color color)
+        {
+            start = screenCoordinates(start);
+            end = screenCoordinates(end);
+            Vector2 edge = end - start;
+            float angle = (float)Math.Atan2(edge.Y, edge.X);
+
+            debugBatch.Draw(pixel,
+                new Rectangle((int)(start.X), (int)(start.Y), (int)(edge.Length()), 2),
+                null,
+                color,
+                angle,
+                new Vector2(0),
+                SpriteEffects.None,
+                .5f);
+        }
+
         protected override void Draw(GameTime gameTime) 
         {
-            GraphicsDevice.Clear(Color.Black);
+            debugBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
+            GraphicsDevice.Clear(Color.White);
 
             // TODO: Add your drawing code here
             base.Draw(gameTime);
@@ -230,11 +258,16 @@ namespace Comatose {
             //now draw the debug stuff, if needed
             if (input.DevMode)
             {
-                debugBatch.Begin();
+
                 ((cDebugDraw)world.DebugDraw).DrawBackground();
                 world.DrawDebugData();
-                debugBatch.End();
+
             }
+            else
+            {
+
+            }
+            debugBatch.End();
         }
         #endregion
 

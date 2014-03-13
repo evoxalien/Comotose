@@ -21,7 +21,7 @@ namespace Comatose
         private int id;
 
         protected Texture2D texture;
-        protected float rotation = 0f;
+        public float rotation = 0f;
         protected Vector2 rotation_origin = new Vector2(0f);
         public float z_index = 0.5f;
         protected Vector2 sprite_scale = new Vector2(1f);
