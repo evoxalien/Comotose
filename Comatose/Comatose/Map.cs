@@ -21,9 +21,27 @@ namespace Comatose
             body.SetType(BodyType.Static);
         }
 
+        public bool debugdraw = false;
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+
+            if (debugdraw)
+            {
+                Fixture fixture = body.GetFixtureList();
+                while (fixture != null)
+                {
+                    EdgeShape shape = (EdgeShape) fixture.GetShape();
+                    game.drawLine(shape._vertex1, shape._vertex2, Color.Green, Color.White);
+                    fixture = fixture.GetNext();
+                }
+            }
+        }
+
         public override void sprite(string path)
         {
-            base.sprite(path);
+            base.sprite("../maps/"+path);
             shape("none");
         }
 

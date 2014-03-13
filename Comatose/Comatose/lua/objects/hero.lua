@@ -6,6 +6,7 @@ function Hero:init()
 	self.speed = 15
 	self:shape("circle")
 	self.z_index = 0
+	self.centered = true
 	--self.fixedRotation = true;
 
 	

@@ -108,10 +108,6 @@ namespace Comatose {
         public void loadStage(string filename)
         {
             //delete all existing objects
-            foreach (var thing in game_objects)
-            {
-                Components.Remove(thing.Value);
-            }
             game_objects.Clear();
             camera = new Vector2(0);
 
@@ -156,8 +152,6 @@ namespace Comatose {
             }
 
             game_objects[new_object.ID()] = new_object;
-            Components.Add(new_object);
-
             return new_object.ID();
         }
 
@@ -212,10 +206,50 @@ namespace Comatose {
 
             //load the test level
             //loadStage("leveleditor");
-            loadStage("test");
+            loadStage("mapeditor");
 
         }
         #endregion
+
+        public void drawLine(Vector2 start, Vector2 end, Color startColor, Color endColor)
+        {
+            //divide this line into segments and fake a gradient. Because lazy, and debugging.
+            int segments = 32;
+            for (int i = 0; i < segments - 1; i++)
+            {
+                float a = (float)(segments - i) / (float)segments;
+                float b = (float)i / (float)segments;
+                
+                float a1 = (float)(segments - (i + 1)) / (float)segments;
+                float b1 = (float)(i + 1) / (float)segments;
+
+                //blend the colors
+                Color finalColor = new Color();
+                finalColor.R = (byte)(startColor.R * a + endColor.R * b);
+                finalColor.G = (byte)(startColor.G * a + endColor.G * b);
+                finalColor.B = (byte)(startColor.B * a + endColor.B * b);
+                finalColor.A = (byte)(startColor.A * a + endColor.A * b);
+
+                drawLine(start * a + end * b, start * a1 + end * b1, finalColor);
+            }
+        }
+
+        public void drawLine(Vector2 start, Vector2 end, Color color)
+        {
+            start = screenCoordinates(start);
+            end = screenCoordinates(end);
+            Vector2 edge = end - start;
+            float angle = (float)Math.Atan2(edge.Y, edge.X);
+
+            debugBatch.Draw(pixel,
+                new Rectangle((int)(start.X), (int)(start.Y), (int)(edge.Length()), 2),
+                null,
+                color,
+                angle,
+                new Vector2(0),
+                SpriteEffects.None,
+                .5f);
+        }
 
         #region Game Loop
         protected override void Update(GameTime gameTime) 
@@ -240,23 +274,6 @@ namespace Comatose {
             base.Update(gameTime);
         }
 
-        public void drawLine(Vector2 start, Vector2 end, Color color)
-        {
-            start = screenCoordinates(start);
-            end = screenCoordinates(end);
-            Vector2 edge = end - start;
-            float angle = (float)Math.Atan2(edge.Y, edge.X);
-
-            debugBatch.Draw(pixel,
-                new Rectangle((int)(start.X), (int)(start.Y), (int)(edge.Length()), 2),
-                null,
-                color,
-                angle,
-                new Vector2(0),
-                SpriteEffects.None,
-                .5f);
-        }
-
         public SpriteBatch gameObjectBatch;
 
         protected override void Draw(GameTime gameTime) 
@@ -265,8 +282,10 @@ namespace Comatose {
             GraphicsDevice.Clear(Color.White);
 
             // TODO: Add your drawing code here
-            gameObjectBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
-            base.Draw(gameTime);
+            gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
+            foreach (var o in game_objects) {
+                o.Value.Draw(gameTime);
+            }
             gameObjectBatch.End();
 
             //now draw the debug stuff, if needed
@@ -277,11 +296,9 @@ namespace Comatose {
                 world.DrawDebugData();
 
             }
-            else
-            {
-
-            }
             debugBatch.End();
+
+            base.Draw(gameTime);
         }
         #endregion
 

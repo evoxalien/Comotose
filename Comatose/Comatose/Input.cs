@@ -159,7 +159,7 @@ namespace Comatose
         private void handleMouseClicks()
         {
             Vector2 mouse_position = GetMousePosition();
-            Vector2 transformed_mouse = new Vector2(((float)Math.Floor(mouse_position.X / game.physics_scale)), ((float)Math.Floor(mouse_position.Y / game.physics_scale)));
+            Vector2 transformed_mouse = new Vector2(((float)(mouse_position.X / game.physics_scale)), ((float)(mouse_position.Y / game.physics_scale)));
             game.vm.DoString("mouse.x = " + transformed_mouse.X);
             game.vm.DoString("mouse.y = " + transformed_mouse.Y);
 

@@ -19,6 +19,7 @@ namespace Comatose
         public Body body;
         protected Fixture fixture;
         public bool cast_shadow = true;
+        private bool _centered = false;
 
         #region Getters / Setters for body properties
         public float x
@@ -47,6 +48,12 @@ namespace Comatose
         {
             get { return body.GetAngularVelocity(); }
             set { body.SetAngularVelocity(value); body.SetAwake(true); }
+        }
+
+        public bool centered
+        {
+            get { return _centered; }
+            set { _centered = value; shape(current_shape); }
         }
 
         public bool active
@@ -132,12 +139,12 @@ namespace Comatose
 
         public void rotateTo(float angle)
         {
-            float nextAngle = body.GetAngle() + body.GetAngularVelocity() / 20f;
+            float nextAngle = body.GetAngle() + body.GetAngularVelocity() / 10f;
             float totalRotation = angle - nextAngle;
             while (totalRotation < -Math.PI) totalRotation += (float)Math.PI * 2;
             while (totalRotation > Math.PI) totalRotation -= (float)Math.PI * 2;
             float desiredAngleVelocity = totalRotation * 60f;
-            float torque = body.GetInertia() * desiredAngleVelocity * 2f;
+            float torque = body.GetInertia() * desiredAngleVelocity * 4f;
             body.ApplyTorque(torque);
         }
 
@@ -180,7 +187,14 @@ namespace Comatose
                     break; //do nothing, leave the body with no fixture
                 case "circle":
                     CircleShape circle = new CircleShape();
-                    circle._p = new Vector2((float)texture.Width / 20.0f, (float)texture.Height / 20.0f);
+                    if (_centered)
+                    {
+                        circle._p = new Vector2(0);
+                    }
+                    else
+                    {
+                        circle._p = new Vector2((float)texture.Width / 20.0f, (float)texture.Height / 20.0f);
+                    }
                     circle._radius = (float)texture.Width / 20.0f;
 
                     fdef.shape = circle;
@@ -197,12 +211,22 @@ namespace Comatose
                     PolygonShape box = new PolygonShape();
                     float phys_width = (float)texture.Width / 10.0f;
                     float phys_height = (float)texture.Height / 10.0f;
-                    box.SetAsBox(
-                        phys_width / 2.0f,
-                        phys_height / 2.0f,
-                        new Vector2(phys_width / 2.0f, phys_height / 2.0f),
-                        0.0f);
-
+                    if (_centered)
+                    {
+                        box.SetAsBox(
+                            0,
+                            0,
+                            new Vector2(phys_width / 2.0f, phys_height / 2.0f),
+                            0.0f);
+                    }
+                    else
+                    {
+                        box.SetAsBox(
+                            phys_width / 2.0f,
+                            phys_height / 2.0f,
+                            new Vector2(phys_width / 2.0f, phys_height / 2.0f),
+                            0.0f);
+                    }
                     fdef.shape = box;
 
                     fixture = body.CreateFixture(fdef);
@@ -220,8 +244,17 @@ namespace Comatose
 
         public override void Draw(GameTime gameTime)
         {
-            position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
             rotate(body.GetAngle());
+            if (_centered)
+            {
+                position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
+                rotation_origin = new Vector2(texture.Width / 2, texture.Height / 2);
+            }
+            else
+            {
+                position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
+                rotation_origin = new Vector2(0);
+            }
 
             base.Draw(gameTime);
         }

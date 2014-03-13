@@ -14,7 +14,7 @@ using Box2D.XNA;
 
 namespace Comatose
 {
-    public class GameObject : DrawableGameComponent
+    public class GameObject
     {
         protected ComatoseGame game;
         private static int next_id = 0;
@@ -23,7 +23,7 @@ namespace Comatose
         protected Texture2D texture;
         public float rotation = 0f;
         protected Vector2 rotation_origin = new Vector2(0f);
-        public float z_index = 0.5f;
+        public float z_index = 0.0f;
         protected Vector2 sprite_scale = new Vector2(1f);
         protected Color sprite_color = Color.White;
 
@@ -64,21 +64,19 @@ namespace Comatose
             rotation_origin = new Vector2(x, y);
         }
         
-        public GameObject(ComatoseGame gm) : base(gm)
+        public GameObject(ComatoseGame gm)
         {
             game = gm;
             id = next_id++;
             game.vm["object_to_bind"] = this;
         }
 
-        public override void Draw(GameTime gameTime)
+        public virtual void Draw(GameTime gameTime)
         {
             if (texture != null)
             {
                 game.gameObjectBatch.Draw(texture, screen_position - game.camera, null, sprite_color, rotation, rotation_origin, sprite_scale, SpriteEffects.None, z_index);
             }
-
-            base.Draw(gameTime);
         }
 
 

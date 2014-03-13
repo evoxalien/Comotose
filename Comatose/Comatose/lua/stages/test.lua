@@ -1,5 +1,5 @@
 ﻿
-hero = Hero.create()
+hero = Hero.create({x=20,y=20})
 
 map = Map.create()
 map:sprite("../maps/awfulmap")
