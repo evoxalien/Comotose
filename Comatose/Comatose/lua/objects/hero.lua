@@ -7,6 +7,13 @@ function Hero:init()
 	self:shape("circle")
 	self.z_index = 0
 	--self.fixedRotation = true;
+
+	
+	self.light = LightSource.create({
+		ray_length=20,
+		rays_to_cast=100,
+		light_spread_angle=(math.pi / 2)})
+
 end
 
 function Hero:everyFrame()
@@ -34,6 +41,10 @@ function Hero:everyFrame()
 		aim_direction = Input:GetAimDirection()
 		self:rotateTo(math.atan2(aim_direction.X, -aim_direction.Y))
 	end
+
+	self.light.rotation = self.rotation
+	self.light.x = self.x
+	self.light.y = self.y
 end
 
 registered_objects["Hero"] = "Hero"

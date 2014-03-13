@@ -148,7 +148,9 @@ namespace Comatose {
                 case "LightSource":
                     new_object = (GameObject)new LightSource(this);
                     break;
-                 
+                case "Map":
+                    new_object = (GameObject)new Map(this);
+                    break; 
                 default:
                     throw (new NotImplementedException("Spawn Class Not Found! -_-"));
             }
@@ -210,7 +212,7 @@ namespace Comatose {
 
             //load the test level
             //loadStage("leveleditor");
-            loadStage("test2");
+            loadStage("test");
 
         }
         #endregion
