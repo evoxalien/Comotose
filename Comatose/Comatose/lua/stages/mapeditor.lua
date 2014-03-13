@@ -70,6 +70,13 @@ end
 --Handle what happens when any vertex is clicked, including all the weird cases
 --where something else was already clicked before this one.
 function VertexHandle:click()
+	--bail on double click
+	if selected_vertex == self then
+		clear_selection()
+		handled_by_vertex = true
+		return
+	end
+
 	if selected_vertex == nil then
 		select_vertex(self)
 	else
@@ -172,8 +179,10 @@ end
 
 function recolor(vertex)
 	alpha = 96
+	vertex:sprite("vertex_handle")
 	if selected_vertex == vertex then
 		alpha = 255
+		vertex:sprite("vertex_handle_selected")
 	end
 	-- default grey for orphans
 	red = 128
