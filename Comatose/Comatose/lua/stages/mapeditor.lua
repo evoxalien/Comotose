@@ -92,6 +92,7 @@ function VertexHandle:click()
 			mapdata.edges[clicked_edge].looped = true
 			find_chain_end(self).looped = true
 			clear_selection()
+			recolor(self)
 		else
 			--complex case: we're connecting to the start (or end!) of another chain
 			if self.previous == nil and selected_vertex.next == nil then
@@ -101,6 +102,7 @@ function VertexHandle:click()
 				mapdata.edges[self.edge] = nil
 				self.edge = nil
 				clear_selection()
+				recolor(self)
 			end
 			if self.next == nil and selected_vertex.previous == nil then
 				--my tail to your head
@@ -109,6 +111,7 @@ function VertexHandle:click()
 				mapdata.edges[selected_vertex.edge] = nil
 				selected_vertex.edge = nil
 				clear_selection()
+				recolor(self)
 			end
 
 			if self.previous == nil and selected_vertex.previous == nil then
@@ -130,6 +133,7 @@ function VertexHandle:click()
 				mapdata.edges[next_edge_id] = new_head
 				new_head.edge = next_edge_id
 				next_edge_id = next_edge_id + 1
+				recolor(self)
 			end
 
 			if self.next == nil and selected_vertex.next == nil then
@@ -141,7 +145,8 @@ function VertexHandle:click()
 				selected_head = find_chain_begin(selected_tail)
 				self.next = selected_head
 				selected_head.previous = self
-
+				clear_selection()
+				recolor(self)
 			end
 
 
@@ -154,14 +159,54 @@ selected_vertex = nil
 function select_vertex(vertex)
 	clear_selection()
 	selected_vertex = vertex
-	vertex:color(128,255,255,255) --cyan ish
+	recolor(vertex)
 end
 
 function clear_selection()
 	if selected_vertex then
-		selected_vertex:color(128,128,128,255)
+		vertex = selected_vertex
 		selected_vertex = nil
+		recolor(vertex)
 	end
+end
+
+function recolor(vertex)
+	alpha = 96
+	if selected_vertex == vertex then
+		alpha = 255
+	end
+	-- default grey for orphans
+	red = 128
+	green = 128
+	blue = 128
+	if vertex.previous and not vertex.next then
+		--tail (darker)
+		blue = 0
+		if vertex.looped then
+			red = 64
+			green = 128
+		else
+			red = 128
+			green = 64
+		end
+	end
+	if not vertex.previous and vertex.next then
+		--head (darker)
+		blue = 0
+		if vertex.looped then
+			red = 0
+			green = 255
+		else
+			red = 255
+			green = 0
+		end
+	end
+	if vertex.next and vertex.previous then
+		red = 0
+		green = 255
+		blue = 255
+	end
+	vertex:color(red,green,blue,alpha)
 end
 
 next_edge_id = 1
@@ -252,6 +297,7 @@ function delete_vertex(vertex)
 		if vertex.looped then
 			head = find_chain_begin(vertex)
 			head.looped = false
+			recolor(head)
 		end
 		vertex.previous.next = nil
 		vertex:destroy()
@@ -263,12 +309,41 @@ function delete_vertex(vertex)
 		if vertex.looped then
 			tail = find_chain_end(vertex)
 			tail.looped = false
+			recolor(tail)
 		end
 		mapdata.edges[vertex.edge] = nil
 		vertex.next.previous = nil
 		mapdata.edges[next_edge_id] = vertex.next
 		vertex.next.edge = next_edge_id
 		next_edge_id = next_edge_id + 1
+		vertex:destroy()
+		selected_vertex = nil
+	end
+
+	--mid-chain deletion (looped?) (complex...)
+	if vertex.previous and vertex.next then
+		--figure out if we're looped
+		head = find_chain_begin(vertex)
+		if head.looped then
+			head.looped = false
+			tail = find_chain_end(vertex)
+			tail.looped = false
+			recolor(head)
+			recolor(tail)
+		end
+
+		--remove ourselves from the previous chain *and* the next chain
+		vertex.previous.next = nil
+
+		--create a new chain starting with the node following this one
+		mapdata.edges[next_edge_id] = vertex.next
+		vertex.next.edge = next_edge_id
+		next_edge_id = next_edge_id + 1
+
+		--remove ourselves from the next chain
+		vertex.next.previous = nil
+
+		--finally, destroy this node
 		vertex:destroy()
 		selected_vertex = nil
 	end

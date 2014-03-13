@@ -287,7 +287,7 @@ namespace Comatose {
         protected override void Draw(GameTime gameTime) 
         {
             debugBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
