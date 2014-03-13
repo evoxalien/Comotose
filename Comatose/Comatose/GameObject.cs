@@ -75,9 +75,7 @@ namespace Comatose
         {
             if (texture != null)
             {
-                //game.spriteBatch.Begin();
                 game.gameObjectBatch.Draw(texture, screen_position - game.camera, null, sprite_color, rotation, rotation_origin, sprite_scale, SpriteEffects.None, z_index);
-                //game.spriteBatch.End();
             }
 
             base.Draw(gameTime);
