@@ -79,9 +79,23 @@ namespace Comatose
                 }
 
                 p2 = p1 + closestFraction * (p2 - p1);
+                /*
+                Vector3[] Triangle = new Vector3[3];
 
-                //game.gDevice.DrawPrimitives( PrimitiveType Triangle
+                Triangle[0] = new Vector3 (p1.X, p1.Y, 0);
+                Triangle[1] = new Vector3 (p2.X, p2.Y, 0);
+                Triangle[2] = new Vector3 (screen_position.X, screen_position.Y, 0);
 
+                VertexBuffer vertexBuffer;
+
+                vertexBuffer = new VertexBuffer(game.gDevice,
+                    Triangle.VertexDeclaration,
+
+                    );
+
+                game.gDevice.SetVertexBuffer(vertexBuffer);
+                game.gDevice.DrawPrimitives( PrimitiveType.TriangleStrip, 0, 1);
+                */
                 if (game.input.DevMode)
                     game.drawLine(p1, p2, (Color.White));
 
