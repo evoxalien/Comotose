@@ -20,19 +20,16 @@ namespace Comatose
         public float light_spread_angle = (float)Math.PI * 2;
         public int rays_to_cast = 640;
         public float max_fraction = 1;
-        ComatoseGame game;
 
         public LightSource(ComatoseGame gm) : base(gm)
         {
             body.SetActive(false);
-            game = gm;
         }
 
 
         public override void Draw(GameTime gameTime)
         {
             position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
-            //rotate(body.GetAngle());
 
             float currentRayAngle = 0;
             float drawRayAngle = 0;
