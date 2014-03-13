@@ -155,6 +155,14 @@ namespace Comatose {
             return new_object.ID();
         }
 
+        public void destroy(int objectID) {
+            //simply pull it from game_objects, and the GC will delete it
+            if (game_objects[objectID] is PhysicsObject) {
+                world.DestroyBody(((PhysicsObject)game_objects[objectID]).body);
+            }
+            game_objects.Remove(objectID);
+        }
+
         public void consoleWriteLn(string message)
         {
             console.WriteLine(message);

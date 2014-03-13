@@ -33,7 +33,7 @@ namespace Comatose
                 while (fixture != null)
                 {
                     EdgeShape shape = (EdgeShape) fixture.GetShape();
-                    game.drawLine(shape._vertex1, shape._vertex2, Color.Blue, Color.LightBlue);
+                    game.drawLine(shape._vertex1, shape._vertex2, Color.Blue, Color.Cyan);
                     fixture = fixture.GetNext();
                 }
             }
@@ -100,12 +100,12 @@ namespace Comatose
             if (looped)
             {
                 EdgeShape shape = new EdgeShape();
-                shape.Set(vertexChain[0], vertexChain[vertexChain.Count - 1]);
+                shape.Set(vertexChain[vertexChain.Count - 1], vertexChain[0]);
                 shape._hasVertex0 = true;
-                shape._vertex0 = vertexChain[1];
+                shape._vertex0 = vertexChain[vertexChain.Count - 2];
                 shape._hasVertex3 = true;
-                shape._vertex3 = vertexChain[vertexChain.Count - 2];
-
+                shape._vertex3 = vertexChain[1];
+                
                 FixtureDef def = new FixtureDef();
                 def.shape = shape;
                 def.friction = 0.0f;

@@ -116,15 +116,20 @@ function GameObject.create(original, classname)
 	return o
 end
 
-PhysicsObject = {create=function(original) return GameObject.create(original, "PhysicsObject") end}
-LightSource = {create=function(original) return GameObject.create(original, "LightSource") end}
-Map = {create=function(original) return GameObject.create(original, "Map") end}
+function GameObject:destroy()
+	self.dead = true
+end
+
+PhysicsObject = {destroy=GameObject.destroy,create=function(original) return GameObject.create(original, "PhysicsObject") end}
+LightSource = {destroy=GameObject.destroy,create=function(original) return GameObject.create(original, "LightSource") end}
+Map = {destroy=GameObject.destroy,create=function(original) return GameObject.create(original, "Map") end}
 
 function destroyObjects()
 	for k,v in pairs(objects) do
 		if v.dead then
 			objects[v.ID()] = nil --remove this object from the update table
-			v:destroyObject() --gameengine call
+			--v:destroyObject() --gameengine call
+			GameEngine:destroy(v.ID())
 		end
 	end
 end

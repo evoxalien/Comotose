@@ -67,6 +67,8 @@ function reverse_list(head)
 	return head
 end
 
+--Handle what happens when any vertex is clicked, including all the weird cases
+--where something else was already clicked before this one.
 function VertexHandle:click()
 	if selected_vertex == nil then
 		select_vertex(self)
@@ -206,6 +208,13 @@ function stage.everyFrame()
 	if Input:WasKeyPressed("Escape") then
 		clear_selection()
 	end
+
+	if Input:WasKeyPressed("X") then
+		if selected_vertex then
+			delete_vertex(selected_vertex)
+			process_collision()
+		end
+	end
 end
 
 function process_collision()
@@ -225,5 +234,42 @@ function process_collision()
 			print("made a chain of " .. i .. " elements")
 			map:endChain(chainstart.looped == true) --todo: handle loops?
 		end
+	end
+end
+
+function delete_vertex(vertex)
+	--several cases here
+
+	--easy case: orphans
+	if vertex.previous == nil and vertex.next == nil then
+		mapdata.edges[vertex.edge] = nil
+		vertex:destroy()
+		selected_vertex = nil
+	end
+
+	--tail deletion (looped?)
+	if vertex.previous and not vertex.next then
+		if vertex.looped then
+			head = find_chain_begin(vertex)
+			head.looped = false
+		end
+		vertex.previous.next = nil
+		vertex:destroy()
+		selected_vertex = nil
+	end
+
+	--head deletion (looped?)
+	if not vertex.previous and vertex.next then
+		if vertex.looped then
+			tail = find_chain_end(vertex)
+			tail.looped = false
+		end
+		mapdata.edges[vertex.edge] = nil
+		vertex.next.previous = nil
+		mapdata.edges[next_edge_id] = vertex.next
+		vertex.next.edge = next_edge_id
+		next_edge_id = next_edge_id + 1
+		vertex:destroy()
+		selected_vertex = nil
 	end
 end
