@@ -33,7 +33,7 @@ namespace Comatose
                 while (fixture != null)
                 {
                     EdgeShape shape = (EdgeShape) fixture.GetShape();
-                    game.drawLine(shape._vertex1, shape._vertex2, Color.Green, Color.White);
+                    game.drawLine(shape._vertex1, shape._vertex2, Color.Blue, Color.LightBlue);
                     fixture = fixture.GetNext();
                 }
             }

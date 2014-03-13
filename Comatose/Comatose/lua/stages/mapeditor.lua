@@ -46,10 +46,42 @@ function find_chain_end(vertex)
 	return vertex
 end
 
+function find_chain_begin(vertex)
+	while vertex.previous do
+		vertex = vertex.previous
+	end
+	return vertex
+end
+
+function reverse_list(head)
+	--reverses a linked list in place, then returns the new *tail*
+	node = head
+	while node do
+		--swap next and previous
+		temp = node.next
+		node.next = node.previous
+		node.previous = temp
+
+		node = node.previous
+	end
+	return head
+end
+
 function VertexHandle:click()
 	if selected_vertex == nil then
 		select_vertex(self)
 	else
+		--test for looped points; if either point is looped, bail
+		if self.looped or selected_vertex.looped then
+			handled_by_vertex = true
+			return
+		end
+		--if either vertex is invalid (no free edges) bail
+		if (self.previous and self.next) or (selected_vertex.previous and selected_vertex.next) then
+			handled_by_vertex = true
+			return
+		end
+
 		--TODO: Handle "edge" cases
 		clicked_edge = find_edge_id(self)
 		selected_edge = find_edge_id(selected_vertex)
@@ -60,6 +92,56 @@ function VertexHandle:click()
 			clear_selection()
 		else
 			--complex case: we're connecting to the start (or end!) of another chain
+			if self.previous == nil and selected_vertex.next == nil then
+				--my head to your tail
+				selected_vertex.next = self
+				self.previous = selected_vertex
+				mapdata.edges[self.edge] = nil
+				self.edge = nil
+				clear_selection()
+			end
+			if self.next == nil and selected_vertex.previous == nil then
+				--my tail to your head
+				self.next = selected_vertex
+				selected_vertex.previous = self
+				mapdata.edges[selected_vertex.edge] = nil
+				selected_vertex.edge = nil
+				clear_selection()
+			end
+
+			if self.previous == nil and selected_vertex.previous == nil then
+				--my head to your head; this one's complicated
+				
+				--kill the edge pointers; we need to establish a *new* head
+				mapdata.edges[self.edge] = nil
+				mapdata.edges[selected_vertex.edge] = nil
+				self.edge = nil
+				selected_vertex.edge = nil
+
+				--reverse the "selected" linked list, and attach its tail to our head
+				new_tail = reverse_list(selected_vertex)
+				new_tail.next = self
+				self.previous = new_tail
+				
+				--finally, add the new chain beginning to the edge list
+				new_head = find_chain_begin(new_tail)
+				mapdata.edges[next_edge_id] = new_head
+				new_head.edge = next_edge_id
+				next_edge_id = next_edge_id + 1
+			end
+
+			if self.next == nil and selected_vertex.next == nil then
+				--my tail to your tail; equally complicated
+				selected_head = find_chain_begin(selected_vertex)
+				mapdata.edges[selected_head.edge] = nil
+
+				selected_tail = reverse_list(find_chain_begin(selected_vertex))
+				selected_head = find_chain_begin(selected_tail)
+				self.next = selected_head
+				selected_head.previous = self
+
+			end
+
 
 		end
 	end
@@ -128,6 +210,7 @@ end
 
 function process_collision()
 	map:resetCollision()
+	print("recalculating collision...")
 	for k,chainstart in pairs(mapdata.edges) do
 		if chainstart.next then
 			--this chain is longer than one element, draw it
@@ -139,7 +222,7 @@ function process_collision()
 				vertex = vertex.next
 				i = i + 1
 			end
-			print("made a chain of " .. i .. "elements")
+			print("made a chain of " .. i .. " elements")
 			map:endChain(chainstart.looped == true) --todo: handle loops?
 		end
 	end
