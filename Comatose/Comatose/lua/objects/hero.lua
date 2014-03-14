@@ -15,6 +15,7 @@ function Hero:init()
 		rays_to_cast=100,
 		light_spread_angle=(math.pi / 2)})
 
+	stage.hero = self
 end
 
 function Hero:everyFrame()

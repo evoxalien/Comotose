@@ -227,9 +227,9 @@ namespace Comatose
                     if (_centered)
                     {
                         box.SetAsBox(
-                            0,
-                            0,
-                            new Vector2(phys_width / 2.0f, phys_height / 2.0f),
+                            phys_width / 2.0f,
+                            phys_height / 2.0f,
+                            new Vector2(0f, 0f),
                             0.0f);
                     }
                     else

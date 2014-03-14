@@ -3,45 +3,46 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
+	["objects"] = {
+		[6] = {
+			["class"] = "Hero";
+			["defaults"] = {
+				["x"] = 31.3;
+				["y"] = 21.1;
+			};
+		};
+		[10] = {
+			["class"] = "Chair";
+			["defaults"] = {
+				["x"] = 90.5;
+				["y"] = 62.8;
+			};
+		};
+		[8] = {
+			["class"] = "Chair";
+			["defaults"] = {
+				["x"] = 100.1;
+				["y"] = 62.6;
+			};
+		};
+		[7] = {
+			["class"] = "Recliner";
+			["defaults"] = {
+				["x"] = 90.9;
+				["y"] = 19.4;
+				["cast_shadow"] = false;
+			};
+		};
+		[9] = {
+			["class"] = "Chair";
+			["defaults"] = {
+				["x"] = 109.5;
+				["y"] = 62.6;
+			};
+		};
+	};
 	["joints"] = {
 	};
 	["map"] = "test";
-	["objects"] = {
-		[10] = {
-			["defaults"] = {
-				["y"] = 62.8;
-				["x"] = 90.5;
-			};
-			["class"] = "Chair";
-		};
-		[6] = {
-			["defaults"] = {
-				["y"] = 21.1;
-				["x"] = 31.3;
-			};
-			["class"] = "Hero";
-		};
-		[9] = {
-			["defaults"] = {
-				["y"] = 62.6;
-				["x"] = 109.5;
-			};
-			["class"] = "Chair";
-		};
-		[8] = {
-			["defaults"] = {
-				["y"] = 62.6;
-				["x"] = 100.1;
-			};
-			["class"] = "Chair";
-		};
-		[7] = {
-			["defaults"] = {
-				["y"] = 19.4;
-				["x"] = 90.9;
-			};
-			["class"] = "Recliner";
-		};
-	};
 }
 return obj1

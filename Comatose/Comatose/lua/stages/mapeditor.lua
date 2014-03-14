@@ -110,8 +110,7 @@ function VertexHandle:click()
 				self.edge = nil
 				clear_selection()
 				recolor(self)
-			end
-			if self.next == nil and selected_vertex.previous == nil then
+			elseif self.next == nil and selected_vertex.previous == nil then
 				--my tail to your head
 				self.next = selected_vertex
 				selected_vertex.previous = self
@@ -119,9 +118,7 @@ function VertexHandle:click()
 				selected_vertex.edge = nil
 				clear_selection()
 				recolor(self)
-			end
-
-			if self.previous == nil and selected_vertex.previous == nil then
+			elseif self.previous == nil and selected_vertex.previous == nil then
 				--my head to your head; this one's complicated
 				
 				--kill the edge pointers; we need to establish a *new* head
@@ -141,9 +138,7 @@ function VertexHandle:click()
 				new_head.edge = next_edge_id
 				next_edge_id = next_edge_id + 1
 				recolor(self)
-			end
-
-			if self.next == nil and selected_vertex.next == nil then
+			elseif self.next == nil and selected_vertex.next == nil then
 				--my tail to your tail; equally complicated
 				selected_head = find_chain_begin(selected_vertex)
 				mapdata.edges[selected_head.edge] = nil
@@ -155,8 +150,6 @@ function VertexHandle:click()
 				clear_selection()
 				recolor(self)
 			end
-
-
 		end
 	end
 	handled_by_vertex = true

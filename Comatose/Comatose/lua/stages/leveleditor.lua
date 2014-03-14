@@ -174,6 +174,11 @@ function load(filename)
 			insert_index = k + 1
 		end
 	end
+
+	--load in the map, if there is one
+	if current_level.map then
+		map(current_level.map)
+	end
 end
 
 levelmap = Map.create()
