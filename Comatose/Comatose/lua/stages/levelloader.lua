@@ -5,7 +5,27 @@ stage.triggered = {}
 
 current_filename = ""
 
-current_map = {}
+current_map = Map.create()
+current_map.z_index = 0
+
+function load_map(filename)
+	--load the file
+	savedata = persistence.load("lua/maps/"..filename..".data")
+	current_map:sprite(savedata.image)
+
+	--load in the collision data
+	for k,edge in pairs(savedata.edges) do
+		if edge.length > 1 then
+			current_map:beginChain()
+			for i = 1, edge.length do
+				current_map:addVertex(edge.verticies[i].x, edge.verticies[i].y)
+			end
+			current_map:endChain(edge.looped == true)
+		end
+	end
+
+	current_level.map = filename
+end
 
 function load(name)
 	print("Called load level")
@@ -14,6 +34,11 @@ function load(name)
 
 	loaded_objects = {}
 
+	if current_level.map then
+		print("attempting map load...")
+		load_map(current_level.map)
+	end
+
 	print("starting an object load...")
 	--load up all the objects
 	for k,v in pairs(current_level.objects) do
@@ -21,6 +46,7 @@ function load(name)
 		if _G[v.class] then
 			print("Attempting to instanciate a " .. v.class)
 			loaded_objects[k] = _G[v.class].create(v.defaults)
+			loaded_objects[k].z_index = 0.5
 			if v.color then
 				loaded_objects[k]:color(v.color.r, v.color.g, v.color.b, v.color.a)
 			end

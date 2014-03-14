@@ -246,3 +246,11 @@ debugprint = function(...)
 end
 
 --print = debugprint
+
+function loadstage(filename)
+	GameEngine:loadStage(filename)
+end
+
+function loadlevel(filename)
+	GameEngine:loadLevel(filename)
+end

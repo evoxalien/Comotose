@@ -18,6 +18,7 @@ current_level = {
 selector = Cursor.create()
 selector.current_index = 1
 selector:sprite(gameObjects[selector.current_index].art)
+selector.z_index = 1
 
 function selector:scroll_up()
 	if self.current_index > 1 then
@@ -82,6 +83,7 @@ function stage.click(mx, my)
 		placeholders[insert_index].x = mx
 		placeholders[insert_index].y = my
 		placeholders[insert_index]:color(255,255,255,128)
+		placeholders[insert_index].z_index = 0.5
 
 		insert_index = insert_index + 1
 	end
@@ -94,21 +96,12 @@ function stage.everyFrame()
 		selector:sprite(gameObjects[selector.current_index].art)
 		selector:color(255,255,255,255)
 	end
-	if keys_up.X then
-		--attempt to delete the selected object, and any attached joints
+	if Input:WasKeyPressed("X") then
+		--attempt to delete the selected object
 		if selected_object then
 			current_level.objects[selected_object] = nil
 			placeholders[selected_object]:destroy()
-			--destroy any joints that reference this object
-			for k,v in pairs(current_level.joints) do
-				for i = 1, #v do
-					if v[i] == selected_object then
-						--destroy this joint
-						--TODO: make this work
-						current_level.joints[k] = nil
-					end
-				end
-			end
+			
 			selected_object = nil
 		end
 	end
@@ -173,6 +166,7 @@ function load(filename)
 		placeholders[k].x = v.defaults.x
 		placeholders[k].y = v.defaults.y
 		placeholders[k]:color(255,255,255,128)
+		placeholders[k].z_index = 0.5
 		if v.color then
 			placeholders[k]:color(v.color.r,v.color.g,v.color.b,128)
 		end
@@ -182,3 +176,26 @@ function load(filename)
 	end
 end
 
+levelmap = Map.create()
+levelmap.z_index = 0
+
+function map(filename)
+	--load the file
+	savedata = persistence.load("lua/maps/"..filename..".data")
+
+	levelmap:sprite(savedata.image)
+	levelmap:resetCollision()
+
+	--load in the collision data
+	for k,edge in pairs(savedata.edges) do
+		if edge.length > 1 then
+			levelmap:beginChain()
+			for i = 1, edge.length do
+				levelmap:addVertex(edge.verticies[i].x, edge.verticies[i].y)
+			end
+			levelmap:endChain(edge.looped == true)
+		end
+	end
+
+	current_level.map = filename
+end
