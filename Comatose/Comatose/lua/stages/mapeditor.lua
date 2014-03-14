@@ -357,3 +357,112 @@ function delete_vertex(vertex)
 		selected_vertex = nil
 	end
 end
+
+current_filename = ""
+function save(filename)
+	--construct the thing with the stuff for saving
+	savedata = {}
+	savedata.image = mapdata.image
+	savedata.edges = {}
+
+	for k,v in pairs(mapdata.edges) do
+		savedata.edges[k] = {}
+		savedata.edges[k].looped = v.looped
+		savedata.edges[k].verticies = {}
+		i = 1
+		current_vertex = v
+		while current_vertex do
+			savedata.edges[k].verticies[i]= {
+				x=current_vertex.x,
+				y=current_vertex.y
+			}
+			current_vertex = current_vertex.next
+			i = i + 1
+		end
+		savedata.edges[k].length = i - 1
+	end
+
+	filename = filename or current_filename
+	persistence.store("lua/maps/"..filename..".data", savedata)
+	if debug then
+		persistence.store(debugpath.."lua/maps/"..filename..".data", savedata)
+	end
+	current_filename = filename
+end
+
+function clear()
+	if map then
+		
+		--map:destroy()
+		map.dead = true
+		map = Map.create()
+		map.debugdraw = true
+	end
+
+	--destroy all vertex handles
+	for k,edge in pairs(mapdata.edges) do
+		for i, vertex in pairs(edge) do
+			vertex:destroy()
+		end
+	end
+	--delete!
+	mapdata.edges = {}
+	mapdata.image = nil
+	selected_vertex = nil
+end
+
+function load(filename)
+	filename = filename or current_filename
+	savedata = persistence.load("lua/maps/"..filename..".data")
+	current_filename = filename
+
+	--now, do some fun things
+	clear()
+
+	if savedata.image then
+		map:sprite(savedata.image)
+		mapdata.image = savedata.image
+	end
+
+	--load in all the verticies and re-create the joints and stuff
+	next_edge_id = 1
+	for k,edge in pairs(savedata.edges) do
+		local previous_vertex = nil
+		for i = 1, edge.length do
+			vertex = VertexHandle.create({x=edge.verticies[i].x,y=edge.verticies[i].y})
+			if i == 1 then
+				--first vertex in this chain
+				mapdata.edges[next_edge_id] = vertex
+				vertex.edge = next_edge_id
+				next_edge_id = next_edge_id + 1
+
+				if edge.looped then
+					vertex.looped = true
+				end
+				print("head: " .. i)
+			else
+				previous_vertex.next = vertex
+				vertex.previous = previous_vertex
+
+				print("vertex: " .. i)
+
+				if i == edge.length and edge.looped then
+					vertex.looped = true
+				end
+			end
+			previous_vertex = vertex
+		end
+	end
+
+	recolorAll()
+	process_collision()
+end
+
+function recolorAll()
+	for k,vertex in pairs(mapdata.edges) do
+		while vertex do
+			recolor(vertex)
+			vertex = vertex.next
+		end
+	end
+end
