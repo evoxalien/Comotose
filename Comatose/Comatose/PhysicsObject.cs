@@ -89,6 +89,7 @@ namespace Comatose
 
         #region Collision Groups
         protected string collision_group;
+
         public void set_group(string gp)
         {
             collision_group = gp;
@@ -111,9 +112,15 @@ namespace Comatose
             }
         }
 
+
         public void remove_target(string target)
         {
             collision_targets.Remove(target);
+        }
+
+        public void remove_all_targets()
+        {
+            collision_targets.Clear();
         }
         #endregion
 
@@ -148,6 +155,8 @@ namespace Comatose
             body.ApplyTorque(torque);
         }
 
+
+
         public void setDensity(float density)
         {
             body.GetFixtureList().SetDensity(density);
@@ -168,6 +177,10 @@ namespace Comatose
 
         #region Shape Definitions
         private string current_shape = "box";
+        public string GetShape()
+        {
+            return current_shape;
+        }
         public void shape(string type)
         {
             current_shape = type;

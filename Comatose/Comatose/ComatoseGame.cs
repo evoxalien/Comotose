@@ -215,6 +215,8 @@ namespace Comatose {
             //load the test level
             //loadStage("leveleditor");
             loadStage("mapeditor");
+            //loadStage("test2");
+            //loadStage("uitest");
 
         }
         #endregion

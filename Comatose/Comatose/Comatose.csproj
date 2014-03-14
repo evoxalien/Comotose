@@ -177,6 +177,9 @@
     <None Include="lua\main.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\objects\ui.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\objects\cursor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -190,6 +193,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="lua\savetable.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="lua\stages\uitest.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="lua\stages\test2.lua">
