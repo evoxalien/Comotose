@@ -11,9 +11,9 @@ function Hero:init()
 
 	
 	self.light = LightSource.create({
-		ray_length=20,
-		rays_to_cast=100,
-		light_spread_angle=(math.pi / 2)})
+		ray_length=80,
+		rays_to_cast=1000,
+		light_spread_angle=(math.pi / 3)})
 
 	stage.hero = self
 end
