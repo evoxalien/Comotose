@@ -78,6 +78,11 @@ namespace Comatose
                 game.gameObjectBatch.Draw(texture, screen_position - game.camera, null, sprite_color, rotation, rotation_origin, sprite_scale, SpriteEffects.None, z_index);
             }
         }
+        //center an object on the screen, used for bars
+        public void Center()
+        {
+            screen_position=new Vector2((game.graphics.PreferredBackBufferWidth / 2)-(sprite_scale.X/2), screen_position.Y);
+        }
 
 
     }

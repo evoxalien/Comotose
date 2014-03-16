@@ -177,6 +177,9 @@
     <None Include="lua\main.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\objects\Bar.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\objects\ui.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

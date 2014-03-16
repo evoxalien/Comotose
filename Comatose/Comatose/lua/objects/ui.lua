@@ -1,42 +1,35 @@
 ﻿UI= inherits(GameObject)
 
-
-
 function UI:init()
 	self.table={}
 	self.items=0
 	self.open=false
 end
-
 function UI:AddObject(o)
 
 	o.oldshape=o:GetShape()
-	o:shape("none")
+	o:shape("none")		   --make sure the object doesnt collide with anything
 	o.z_index=-1		   --remove  from screen by setting behind the map
 
-	o.vx=0
-	o.vy=0
-	o.vr=0
-	--o:rotateTo(math.atan(0)) --this isnt resting the rotation
+	--stop the object from moving and straighten it
+	o.resetPosition()
 
 	self.table[self.items]=o --insert into the table
 
 	self.items=self.items+1  
 
 end
-
 function UI:Display()
 	self.open=true	
 
 	local x = 10
 	local y = 10
 
+	--create a nice menu
 	for key,value in pairs(self.table) do
 		self.table[key].x=x
 		self.table[key].y=y
-		--self.table[key]:rotateTo(math.atan(0)) --this isnt resting the rotation
-
-		x=x+10
+	 	x=x+10	
 	end
 
 	
@@ -54,10 +47,12 @@ function UI:UnDisplay()
 	end
 
 end
-
 function UI:DropItem(x,y)
 	if self.items > 0 then
+
 		self.items=self.items-1
+
+		--place the item back into the world infront of the player 
 		self.table[self.items]:shape( self.table[self.items].oldshape )
 		self.table[self.items].z_index=1
 		self.table[self.items].x=x

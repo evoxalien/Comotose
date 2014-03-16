@@ -155,7 +155,13 @@ namespace Comatose
             body.ApplyTorque(torque);
         }
 
-
+        public void resetPosition()
+        {
+            body.SetTransform(new Vector2(0, 0), 0);
+            vx = 0f;
+            vy = 0f;
+            vr = 0f;
+        }
 
         public void setDensity(float density)
         {

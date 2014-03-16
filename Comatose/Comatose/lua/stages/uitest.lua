@@ -1,8 +1,21 @@
-﻿
-hero = Hero.create()
+﻿hero = Hero.create()
 --hero.cast_shadow = false
 ui=	UI.create()
 cursor=Cursor.create()
+
+
+lightbar= Bar.create()
+lightbar:set(100,100,10,680,300,5) 
+lightbar:setColor(254,254,0,254)
+lightbar:Center()
+lightbar:setCurrent(50)
+
+sanitybar= Bar.create()
+sanitybar:set(100,100,10,700,300,5) 
+sanitybar:setColor(128,128,128,254)
+sanitybar:Center()
+
+
 
 light = LightSource.create()
 light.x = 25
@@ -48,9 +61,8 @@ function ui.everyFrame()
 
 	if Input:WasKeyPressed("tab")  and not ui.open then
 		ui:Display()
-	end
 
-	if Input:WasKeyPressed("escape") and ui.open then
+	elseif Input:WasKeyPressed("tab") and ui.open then
 		ui:UnDisplay()
 	end
 
