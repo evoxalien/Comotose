@@ -146,6 +146,9 @@ namespace Comatose {
                     break;
                 case "Map":
                     new_object = (GameObject)new Map(this);
+                    break;
+                case "TextBox":
+                    new_object = (GameObject)new TextBox(this);
                     break; 
                 default:
                     throw (new NotImplementedException("Spawn Class Not Found! -_-"));

@@ -123,6 +123,7 @@ end
 PhysicsObject = {destroy=GameObject.destroy,create=function(original) return GameObject.create(original, "PhysicsObject") end}
 LightSource = {destroy=GameObject.destroy,create=function(original) return GameObject.create(original, "LightSource") end}
 Map = {destroy=GameObject.destroy,create=function(original) return GameObject.create(original, "Map") end}
+TextBox = {destroy=GameObject.destroy,create=function(original) return GameObject.create(original, "TextBox") end}
 
 function destroyObjects()
 	for k,v in pairs(objects) do

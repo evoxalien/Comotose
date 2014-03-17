@@ -85,3 +85,13 @@ function light2:everyFrame()
 	--print(hero.rotation)
 	--print(self.rotation)
 end
+
+--test out some textbox stuff
+
+textbox = TextBox.create()
+--textbox.character_delay = 0
+textbox:position(50,50)
+textbox.z_index = 500
+textbox:attach(hero.ID())
+textbox:text("Hello World! Hello World! Hello World! Hello World! Hello World!")
+

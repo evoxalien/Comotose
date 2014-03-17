@@ -27,13 +27,25 @@ namespace Comatose
         protected Vector2 sprite_scale = new Vector2(1f);
         protected Color sprite_color = Color.White;
 
-        protected Vector2 screen_position = new Vector2(0);
+        public Vector2 screen_position = new Vector2(0);
 
+        protected GameObject parent_object = null;
+
+        #region Initialization
         public int ID()
         {
             return id;
         }
 
+        public GameObject(ComatoseGame gm)
+        {
+            game = gm;
+            id = next_id++;
+            game.vm["object_to_bind"] = this;
+        }
+        #endregion
+
+        #region Properties
         public virtual void sprite(string filename)
         {
             texture = game.Content.Load<Texture2D>("art/sprites/" + filename);
@@ -63,21 +75,32 @@ namespace Comatose
         {
             rotation_origin = new Vector2(x, y);
         }
-        
-        public GameObject(ComatoseGame gm)
+        #endregion
+
+        public void attach(int objectID) 
         {
-            game = gm;
-            id = next_id++;
-            game.vm["object_to_bind"] = this;
+            if (game.game_objects.ContainsKey(objectID)) 
+                parent_object = game.game_objects[objectID];
         }
 
         public virtual void Draw(GameTime gameTime)
         {
             if (texture != null)
             {
-                game.gameObjectBatch.Draw(texture, screen_position - game.camera, null, sprite_color, rotation, rotation_origin, sprite_scale, SpriteEffects.None, z_index);
+                Vector2 draw_position = screen_position - game.camera;
+                if (parent_object != null)
+                    draw_position += parent_object.screen_position;
+                
+                game.gameObjectBatch.Draw(
+                    texture, 
+                    draw_position, 
+                    null, //source rectangle (spritesheets maybe?)
+                    sprite_color, 
+                    rotation, 
+                    rotation_origin, sprite_scale, SpriteEffects.None, z_index / 1000f);
             }
         }
+
         //center an object on the screen, used for bars
         public void Center()
         {
