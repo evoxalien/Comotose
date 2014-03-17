@@ -22,10 +22,13 @@ namespace Comatose
 
         public SpriteFont sprite_font;
 
+        private SoundEffect chatter;
+
         public TextBox(ComatoseGame gm)
             : base(gm)
         {
             sprite_font = game.Content.Load<SpriteFont>("art/fonts/segoeprint");
+            chatter = game.Content.Load<SoundEffect>("sounds/chatter");
         }
 
         public void text(string message)
@@ -62,6 +65,11 @@ namespace Comatose
                 {
                     current_character++;
                     current_frame = character_delay;
+
+                    int tline = currentLine();
+                    int tcharacter = currentCharacter();
+                    if (tcharacter < displayMessage[tline].Length && displayMessage[tline][tcharacter] != ' ')
+                        chatter.Play(1.0f, (float)game.rand.NextDouble() * 0.1f - 0.05f, 0.0f);
                 }
             }
 
@@ -87,6 +95,9 @@ namespace Comatose
             }
 
             game.gameObjectBatch.DrawString(sprite_font, displayMessage[line].Substring(0, Math.Min(character, displayMessage[line].Length)), draw_position, sprite_color, rotation, rotation_origin, sprite_scale, SpriteEffects.None, z_index / 1000f);
+
+            game.gameObjectBatch.DrawString(sprite_font, "Line: " + line, draw_position + new Vector2(0f, 30f), Color.White);
+            game.gameObjectBatch.DrawString(sprite_font, "Character: " + character, draw_position + new Vector2(0f, 40f), Color.White);
         }
 
         private int currentLine()
@@ -127,6 +138,7 @@ namespace Comatose
             displayMessage.Clear();
 
             string[] lines = displayText.Split('\n');
+            displayText.Replace("\n", ""); //remove newlines from the original string
             int lineNum = 0;
             foreach (var line in lines)
             {

@@ -89,7 +89,7 @@ end
 --test out some textbox stuff
 
 textbox = TextBox.create()
-textbox.character_delay = 2
+textbox.character_delay = 4
 textbox:position(50,50)
 textbox.width = 300
 textbox.height = 50

@@ -23,6 +23,8 @@ namespace Comatose {
         public Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
         public Input input;
 
+        public Random rand = new Random();
+
         public Texture2D pixel;
 
         public float physics_scale = 10f;
