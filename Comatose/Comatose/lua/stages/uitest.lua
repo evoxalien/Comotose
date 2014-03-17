@@ -89,9 +89,13 @@ end
 --test out some textbox stuff
 
 textbox = TextBox.create()
---textbox.character_delay = 0
+textbox.character_delay = 2
 textbox:position(50,50)
+textbox.width = 300
+textbox.height = 50
+textbox.maxLinex = 3
 textbox.z_index = 500
+textbox:color(128,0,192,255)
 textbox:attach(hero.ID())
-textbox:text("Hello World! Hello World! Hello World! Hello World! Hello World!")
-
+textbox:font("buxton")
+textbox:text("First Line\nThis line is really long and should be clipped by the engine if it is sane.\nThird Line\nFourth Line")

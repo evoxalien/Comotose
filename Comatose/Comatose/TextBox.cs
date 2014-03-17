@@ -20,12 +20,12 @@ namespace Comatose
 
         public int character_delay = -1; //in frames
 
-        public SpriteFont font;
+        public SpriteFont sprite_font;
 
         public TextBox(ComatoseGame gm)
             : base(gm)
         {
-            font = game.Content.Load<SpriteFont>("art/fonts/segoeprint");
+            sprite_font = game.Content.Load<SpriteFont>("art/fonts/segoeprint");
         }
 
         public void text(string message)
@@ -39,6 +39,14 @@ namespace Comatose
             } else {
                 current_frame = character_delay;
             }
+
+            //process line endings
+            textWrap();
+        }
+
+        public void font(string name)
+        {
+            sprite_font = game.Content.Load<SpriteFont>("art/fonts/" + name);
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
@@ -58,14 +66,94 @@ namespace Comatose
             }
 
             //figure out screen position (same logic as GameObject base, but we aren't a
-            //sprite, so we repeat here
+            //sprite, so we repeat here)
             Vector2 draw_position = screen_position - game.camera;
             if (parent_object != null)
                 draw_position += parent_object.screen_position;
 
-            game.gameObjectBatch.DrawString(font, displayText.Substring(0, current_character), draw_position, sprite_color, rotation, rotation_origin, sprite_scale, SpriteEffects.None, z_index / 1000f);
+            //figure out our current line and draw just that line (for now)
+            int line = currentLine();
+            int character = currentCharacter();
+
+            int startingLine = line - (maxLines - 1);
+            while (startingLine < line)
+            {
+                if (startingLine >= 0)
+                {
+                    game.gameObjectBatch.DrawString(sprite_font, displayMessage[startingLine], draw_position, sprite_color, rotation, rotation_origin, sprite_scale, SpriteEffects.None, z_index / 1000f);
+                    draw_position.Y += 25.0f; //TODO: not a constant
+                }
+                startingLine++;
+            }
+
+            game.gameObjectBatch.DrawString(sprite_font, displayMessage[line].Substring(0, Math.Min(character, displayMessage[line].Length)), draw_position, sprite_color, rotation, rotation_origin, sprite_scale, SpriteEffects.None, z_index / 1000f);
         }
 
+        private int currentLine()
+        {
+            int characters = 0;
+            int lineNum = 0;
+            while (lineNum < displayMessage.Count() && characters + displayMessage[lineNum].Length < current_character)
+            {
+                characters += displayMessage[lineNum].Length;
+                lineNum++;
+            }
 
+            //sanity, because newlines I think?
+            if (lineNum >= displayMessage.Count())
+                lineNum = displayMessage.Count() - 1;
+
+            return lineNum;
+        }
+
+        private int currentCharacter()
+        {
+            int line = currentLine();
+            int character = current_character;
+            for (int i = 0; i < displayMessage.Count() && i < line; i++) {
+                character -= displayMessage[i].Length;
+            }
+            return character;
+        }
+
+        public int width;
+        public int height;
+        public int maxLines = 3;
+        private SortedList<int, string> displayMessage = new SortedList<int, string>();
+
+        private void textWrap()
+        {
+            //given an input displayMessage, this modifies it to correct for word wrap
+            displayMessage.Clear();
+
+            string[] lines = displayText.Split('\n');
+            int lineNum = 0;
+            foreach (var line in lines)
+            {
+                string[] words = line.Split(' ');
+
+                string currentLine = "";
+                foreach (var word in words)
+                {
+                    if (currentLine.Length > 0)
+                    {
+                        if (sprite_font.MeasureString(currentLine + " " + word).X > width)
+                        {
+                            displayMessage.Add(lineNum++, currentLine);
+                            currentLine = "";
+                        }
+                        else
+                        {
+                            currentLine += " ";
+                        }
+                    }
+                    currentLine += word;
+                }
+                if (currentLine.Length > 0)
+                {
+                    displayMessage.Add(lineNum++, currentLine);
+                }
+            }
+        }
     }
 }
