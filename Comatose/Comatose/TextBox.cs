@@ -16,7 +16,6 @@ namespace Comatose
     {
         protected string displayText = "";
         protected int current_character = 0;
-        protected int current_frame = 0; //used for timing delays
 
         public int character_delay = -1; //in frames
 
@@ -127,8 +126,9 @@ namespace Comatose
             return character;
         }
 
-        public int width;
-        public int height;
+        int height;
+        int width;
+
         public int maxLines = 3;
         private SortedList<int, string> displayMessage = new SortedList<int, string>();
 

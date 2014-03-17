@@ -27,6 +27,14 @@ namespace Comatose
         protected Vector2 sprite_scale = new Vector2(1f);
         protected Color sprite_color = Color.White;
 
+        public int sprite_width = 0;
+        public int sprite_height = 0;
+
+        public int animation = 0;
+        public int current_frame = 0;
+        public int frame_delay = 0; //one cell per frame
+        protected int delay_timer = 0;
+
         public Vector2 screen_position = new Vector2(0);
 
         protected GameObject parent_object = null;
@@ -49,6 +57,8 @@ namespace Comatose
         public virtual void sprite(string filename)
         {
             texture = game.Content.Load<Texture2D>("art/sprites/" + filename);
+            sprite_width = texture.Width;
+            sprite_height = texture.Height;
         }
 
         public void position(float x, float y)
@@ -90,14 +100,24 @@ namespace Comatose
                 Vector2 draw_position = screen_position - game.camera;
                 if (parent_object != null)
                     draw_position += parent_object.screen_position;
+
+                Rectangle source_rectangle = new Rectangle(current_frame * sprite_width, animation * sprite_height, sprite_width, sprite_height);
                 
                 game.gameObjectBatch.Draw(
                     texture, 
                     draw_position, 
-                    null, //source rectangle (spritesheets maybe?)
+                    source_rectangle, //source rectangle (spritesheets maybe?)
                     sprite_color, 
                     rotation, 
                     rotation_origin, sprite_scale, SpriteEffects.None, z_index / 1000f);
+
+                delay_timer++;
+                if (delay_timer >= frame_delay) {
+                    current_frame++;
+                    if (current_frame * sprite_width >= texture.Width)
+                        current_frame = 0;
+                    delay_timer = 0;
+                }
             }
         }
 

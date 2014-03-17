@@ -3,6 +3,8 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
+	["joints"] = {
+	};
 	["objects"] = {
 		[6] = {
 			["class"] = "Hero";
@@ -25,12 +27,11 @@ local obj1 = {
 				["y"] = 62.6;
 			};
 		};
-		[7] = {
-			["class"] = "Recliner";
+		[11] = {
+			["class"] = "Monster";
 			["defaults"] = {
-				["x"] = 90.9;
-				["y"] = 19.4;
-				["cast_shadow"] = false;
+				["x"] = 55.7;
+				["y"] = 26.9;
 			};
 		};
 		[9] = {
@@ -40,8 +41,14 @@ local obj1 = {
 				["y"] = 62.6;
 			};
 		};
-	};
-	["joints"] = {
+		[7] = {
+			["class"] = "Recliner";
+			["defaults"] = {
+				["cast_shadow"] = false;
+				["y"] = 19.4;
+				["x"] = 90.9;
+			};
+		};
 	};
 	["map"] = "test";
 }

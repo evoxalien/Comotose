@@ -73,6 +73,16 @@ namespace Comatose
             get { return body.GetFixtureList().IsSensor(); }
             set { body.GetFixtureList().SetSensor(value); }
         }
+
+        public int width {
+            get { return sprite_width; }
+            set { sprite_width = value; shape(current_shape); }
+        }
+
+        public int height {
+            get { return sprite_height; }
+            set { sprite_height = value; shape(current_shape); }
+        }
         #endregion
 
         public PhysicsObject(ComatoseGame gm)
@@ -212,9 +222,9 @@ namespace Comatose
                     }
                     else
                     {
-                        circle._p = new Vector2((float)texture.Width / 20.0f, (float)texture.Height / 20.0f);
+                        circle._p = new Vector2((float)sprite_width / 20.0f, (float)sprite_height / 20.0f);
                     }
-                    circle._radius = (float)texture.Width / 20.0f;
+                    circle._radius = (float)sprite_width / 20.0f;
 
                     fdef.shape = circle;
 
@@ -228,8 +238,8 @@ namespace Comatose
                 case "box":
                 default:
                     PolygonShape box = new PolygonShape();
-                    float phys_width = (float)texture.Width / 10.0f;
-                    float phys_height = (float)texture.Height / 10.0f;
+                    float phys_width = (float)sprite_width / 10.0f;
+                    float phys_height = (float)sprite_height / 10.0f;
                     if (_centered)
                     {
                         box.SetAsBox(
