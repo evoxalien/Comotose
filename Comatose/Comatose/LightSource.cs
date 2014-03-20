@@ -40,12 +40,13 @@ namespace Comatose
 
                 Vector2 p1 = new Vector2(x,y);
                 Vector2 p2 = p1 + ray_length * new Vector2((float)Math.Sin((double)drawRayAngle), (float)Math.Cos((double)drawRayAngle));
+                Vector2 p3 = new Vector2(0f);
 
                 Vector2 intersectionNormal = new Vector2( 0 , 0 );
 
                 RayCastInput input;
                 input.p1 = p1;
-                input.p2 = p2;
+                //input.p2 = p2;
                 input.maxFraction = max_fraction;
 
                 float closestFraction = 1;
@@ -58,20 +59,47 @@ namespace Comatose
                             Fixture f = b.GetFixtureList();
                             while (f != null)
                             {
-                                RayCastOutput output;
-                                //bool RayCast = f.RayCast(output, input);
-                                if (!f.RayCast(out output, ref input, 0))
-                                {
-                                    f = f.GetNext();
-                                    continue;
-                                }
-                                if (output.fraction < closestFraction)
-                                {
-                                    closestFraction = output.fraction;
-                                    intersectionNormal = output.normal;
-                                }
-                                // do something
+                                
 
+                                Type shapeType = f.GetType();
+
+                                if (f.GetShape() is PolygonShape)
+                                {
+                                    PolygonShape polygon = (PolygonShape)f.GetShape();
+
+                                    for (int curVert = 0; curVert < polygon.GetVertexCount(); curVert++)
+                                    {
+                                        p3 = polygon.GetVertex(curVert);
+                                        input.p2 = p3;
+
+                                        RayCastOutput output;
+                                        //bool RayCast = f.RayCast(out output,ref input, 0);
+
+
+                                        if (!f.RayCast(out output, ref input, 0))
+                                        {
+                                            f = f.GetNext();
+                                            continue;
+                                        }
+                                        if (output.fraction < closestFraction)
+                                        {
+                                            closestFraction = output.fraction;
+                                            intersectionNormal = output.normal;
+                                        }
+                                        // do something
+                                    }
+
+                                }
+                                else if (f.GetShape() is EdgeShape)
+                                {
+                                    //EdgeShape* edge = (EdgeShape)f.GetShape();
+                                }
+
+
+
+
+
+                                
                                 f = f.GetNext();
                             }
                         }
