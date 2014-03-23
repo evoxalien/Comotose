@@ -95,8 +95,9 @@ namespace Comatose
 
             game.gameObjectBatch.DrawString(sprite_font, displayMessage[line].Substring(0, Math.Min(character, displayMessage[line].Length)), draw_position, sprite_color, rotation, rotation_origin, sprite_scale, SpriteEffects.None, z_index / 1000f);
 
-            game.gameObjectBatch.DrawString(sprite_font, "Line: " + line, draw_position + new Vector2(0f, 30f), Color.White);
-            game.gameObjectBatch.DrawString(sprite_font, "Character: " + character, draw_position + new Vector2(0f, 40f), Color.White);
+            //debug
+            //game.gameObjectBatch.DrawString(sprite_font, "Line: " + line, draw_position + new Vector2(0f, 30f), Color.White);
+            //game.gameObjectBatch.DrawString(sprite_font, "Character: " + character, draw_position + new Vector2(0f, 40f), Color.White);
         }
 
         private int currentLine()

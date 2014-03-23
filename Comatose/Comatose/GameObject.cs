@@ -89,6 +89,9 @@ namespace Comatose
 
         public void attach(int objectID) 
         {
+            if (objectID == -1)
+                parent_object = null;
+
             if (game.game_objects.ContainsKey(objectID)) 
                 parent_object = game.game_objects[objectID];
         }

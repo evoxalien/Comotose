@@ -2,6 +2,7 @@
 --hero.cast_shadow = false
 ui=	UI.create()
 cursor=Cursor.create()
+monster=Monster.create()
 
 
 lightbar= Bar.create()
@@ -46,48 +47,86 @@ chair3.x = 50
 chair3.y = 15
 chair3:sprite("Chair1")
 
+chair4 = PhysicsObject.create()
+chair4.x = 50
+chair4.y = 15
+chair4:sprite("Chair1")
+
 
 
 
 function chair.click(mx,my)
-	ui:AddObject(chair)
-	--chair.z_index=-1
+	--if chair.in_inv== false or chair.in_inv ==nil then
+	if chair.in_inv==nil or chair.in_inv==false then --has not been added yet
+		ui:AddObject(chair,"chair 1")
+
+	else
+		print(chair.in_inv)
+		ui:SelectID(chair.ID())
+	end
+
+
 end
 
 
 function chair2.click(mx,my)
-	ui:AddObject(chair2)
-	--chair.z_index=-1
+	if chair2.in_inv== false or chair2.in_inv==nil then
+		ui:AddObject(chair2,"chair 2")
+	else
+		ui:SelectID(chair2.ID())
+	end
 end
+
+
 function chair3.click(mx,my)
-	ui:AddObject(chair3)
-	--chair.z_index=-1
+	if chair3.in_inv== false or chair3.in_inv==nil then
+		ui:AddObject(chair3,"chair 3")
+	else
+		ui:SelectID(chair3.ID())
+	end
 end
 
-
-
-
+function chair4.click(mx,my)
+	if chair4.in_inv== false or chair4.in_inv==nil then
+		ui:AddObject(chair4,"chair 4")
+	else
+		ui:SelectID(chair4.ID())
+	end
+end
 function ui.everyFrame()
 
+	--open and close ui
 	if Input:WasKeyPressed("tab")  and not ui.open then
+		ui:Display()
+
+	elseif Input:WasButtonReleased("Y") and not ui.open then
 		ui:Display()
 
 	elseif Input:WasKeyPressed("tab") and ui.open then
 		ui:UnDisplay()
-	end
 
-	if Input:WasKeyPressed("e") then
+	elseif Input:WasButtonReleased("Y") and ui.open then
 		ui:UnDisplay()
-		ui:DropItem(hero.x,hero.y)
 	end
 
 	if ui.open then
-		if Input:WasButtonReleased("DPadLeft") then
-			print("selecting to left")
-			ui:SelectLeft()
+		--we can drop stuff
+		if Input:WasKeyPressed("e") then
+			ui:Display()
+			ui:DropItem(hero.x,hero.y)
+		elseif Input:WasButtonReleased("A") then
+			ui:Display()
+			ui:DropItem(hero.x,hero.y)
+		end
 
+		--we can select what we want
+		if Input:WasButtonReleased("DPadLeft") then
+			ui:SelectLeft()
 		elseif Input:WasButtonReleased("DPadRight") then
-			print("selecting to right")
+			ui:SelectRight()
+		elseif Input:WasKeyPressed("left") then
+			ui:SelectLeft()
+		elseif Input:WasKeyPressed("right") then
 			ui:SelectRight()
 		end
 	end
@@ -117,7 +156,7 @@ textbox = TextBox.create()
 textbox:position(50,50)
 textbox.width = 300
 textbox.height = 50
-textbox.maxLinex = 3
+textbox.maxLine = 3
 textbox.z_index = 500
 textbox:color(128,0,192,255)
 textbox:attach(hero.ID())
