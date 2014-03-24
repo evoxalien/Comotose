@@ -20,6 +20,8 @@ namespace Comatose
         public float light_spread_angle = (float)Math.PI * 2;
         public int rays_to_cast = 640;
         public float max_fraction = 1;
+        
+        private Vector2 intersectionNormal = new Vector2(0, 0);
 
         public LightSource(ComatoseGame gm) : base(gm)
         {
@@ -31,18 +33,19 @@ namespace Comatose
         {
             position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
 
-            float currentRayAngle = 0;
-            float drawRayAngle = 0;
+            //float currentRayAngle = 0;
+            //float drawRayAngle = 0;
+            /*
             for (int i = 1; i <= rays_to_cast && currentRayAngle <= light_spread_angle; i++)
-            {
-                currentRayAngle += (float)Math.PI * 2 / rays_to_cast;
-                drawRayAngle = currentRayAngle - rotation - light_spread_angle / 2 + (float)Math.PI;
+            {*/
+                //currentRayAngle += (float)Math.PI * 2 / rays_to_cast;
+                //drawRayAngle = currentRayAngle - rotation - light_spread_angle / 2 + (float)Math.PI;
 
                 Vector2 p1 = new Vector2(x,y);
-                Vector2 p2 = p1 + ray_length * new Vector2((float)Math.Sin((double)drawRayAngle), (float)Math.Cos((double)drawRayAngle));
-                Vector2 p3 = new Vector2(0f);
+                //Vector2 p2 = p1 + ray_length * new Vector2((float)Math.Sin((double)drawRayAngle), (float)Math.Cos((double)drawRayAngle));
+                Vector2 p2 = new Vector2(0f);
 
-                Vector2 intersectionNormal = new Vector2( 0 , 0 );
+                
 
                 RayCastInput input;
                 input.p1 = p1;
@@ -69,12 +72,32 @@ namespace Comatose
 
                                     for (int curVert = 0; curVert < polygon.GetVertexCount(); curVert++)
                                     {
-                                        p3 = polygon.GetVertex(curVert);
-                                        input.p2 = p3;
+                                        //p3 = polygon.GetVertex(curVert);
+                                        p2 = polygon.GetVertex(curVert);
+                                        //Vector2 p3edge = p2 - p1;
+                                        //float p3angle = currentRayAngle - rotation - light_spread_angle / 2 + (float)Math.PI;
+                                        //p2 = p1 + ray_length * new Vector2((float)Math.Sin((double)p3angle), (float)Math.Cos((double)p3angle));
+                                        input.p2 = p2;
+                                        //p2 = p3;
 
-                                        RayCastOutput output;
+                                        //RayCastOutput output;
+
+                                        //closestFraction = rayCast(input);
+
+                                        RayCastResult RayCastReport;
+
+                                        
+                                        //game.world.RayCast(RayCastReport, p1, p2);
+                                        
+
+                                        Vector2 intersectPoint = p1 + closestFraction * (p2 - p1);
+
+                                        if (game.input.DevMode)
+                                            game.drawLine(p1, intersectPoint, (Color.White));
+
+
                                         //bool RayCast = f.RayCast(out output,ref input, 0);
-
+                                        /*
 
                                         if (!f.RayCast(out output, ref input, 0))
                                         {
@@ -86,6 +109,7 @@ namespace Comatose
                                             closestFraction = output.fraction;
                                             intersectionNormal = output.normal;
                                         }
+                                         */
                                         // do something
                                     }
 
@@ -104,9 +128,9 @@ namespace Comatose
                             }
                         }
                     b = b.GetNext();
-                }
+                //}
 
-                p2 = p1 + closestFraction * (p2 - p1);
+                
                 /*
                 Vector3[] Triangle = new Vector3[3];
 
@@ -124,14 +148,62 @@ namespace Comatose
                 game.gDevice.SetVertexBuffer(vertexBuffer);
                 game.gDevice.DrawPrimitives( PrimitiveType.TriangleStrip, 0, 1);
                 */
-                if (game.input.DevMode)
-                    game.drawLine(p1, p2, (Color.White));
+                
 
             }
 
             
 
             //base.Draw(gameTime);
+        }
+
+        float rayCast(RayCastInput input)
+        {
+            float closestFraction = 1;
+            Body b = game.world.GetBodyList();
+            while (b != null)
+            {
+                if (b.GetUserData() is PhysicsObject)
+                {
+                    PhysicsObject testObject = (PhysicsObject)b.GetUserData();
+
+                    if (testObject.cast_shadow)
+                    {
+                        Fixture f = b.GetFixtureList();
+                        while (f != null)
+                        {
+                            //p3 = polygon.GetVertex(curVert);
+                            //p3 = polygon.GetVertex(curVert);
+                            //input.p2 = p3;
+
+                            RayCastOutput output;
+                            //bool RayCast = f.RayCast(out output,ref input, 0);
+
+                            //adjust our positions based on the fixture's position
+                            RayCastInput adjustedInput = input;
+                            adjustedInput.p1 -= b.GetPosition();
+                            adjustedInput.p2 -= b.GetPosition();
+
+                            
+
+                            if (!f.RayCast(out output, ref adjustedInput, 0))
+                            {
+                                f = f.GetNext();
+                                continue;
+                            }
+                            if (output.fraction < closestFraction)
+                            {
+                                closestFraction = output.fraction;
+                                intersectionNormal = output.normal;
+                            }
+                            // do something
+                            f = f.GetNext();
+                        }
+                    }
+                }
+                b = b.GetNext();
+            }
+            return closestFraction;
         }
 
     }
