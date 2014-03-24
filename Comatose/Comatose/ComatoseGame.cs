@@ -34,12 +34,7 @@ namespace Comatose {
         GameConsole console;
         public World world;
 
-        public Vector2 camera = new Vector2(0);
-
-        public Vector2 screenCoordinates(Vector2 physics_coordinates)
-        {
-            return new Vector2((physics_coordinates.X * physics_scale) - camera.X, (physics_coordinates.Y * physics_scale) - camera.Y);
-        }
+        public Vector2 camera = new Vector2(0);        
 
         #region Lua
         private class LuaCommand : IConsoleCommand
@@ -179,14 +174,13 @@ namespace Comatose {
         }
         #endregion
 
-        public ComatoseGame() 
+        #region Initialization
+        public ComatoseGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             input = new Input(this);
         }
-
-        #region Initialization
 
         protected override void Initialize() 
         {
@@ -226,6 +220,12 @@ namespace Comatose {
         }
         #endregion
 
+        #region Drawing Utilities
+        public Vector2 screenCoordinates(Vector2 physics_coordinates)
+        {
+            return new Vector2((physics_coordinates.X * physics_scale) - camera.X, (physics_coordinates.Y * physics_scale) - camera.Y);
+        }
+        
         public void drawLine(Vector2 start, Vector2 end, Color startColor, Color endColor)
         {
             //divide this line into segments and fake a gradient. Because lazy, and debugging.
@@ -265,6 +265,7 @@ namespace Comatose {
                 SpriteEffects.None,
                 .5f);
         }
+        #endregion
 
         #region Game Loop
         protected override void Update(GameTime gameTime) 
