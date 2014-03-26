@@ -31,26 +31,10 @@ namespace Comatose
 
         public override void Draw(GameTime gameTime)
         {
-            position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
-
-            //float currentRayAngle = 0;
-            //float drawRayAngle = 0;
-            /*
-            for (int i = 1; i <= rays_to_cast && currentRayAngle <= light_spread_angle; i++)
-            {*/
-                //currentRayAngle += (float)Math.PI * 2 / rays_to_cast;
-                //drawRayAngle = currentRayAngle - rotation - light_spread_angle / 2 + (float)Math.PI;
+                //position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
 
                 Vector2 p1 = new Vector2(x,y);
-                //Vector2 p2 = p1 + ray_length * new Vector2((float)Math.Sin((double)drawRayAngle), (float)Math.Cos((double)drawRayAngle));
-                Vector2 p2 = new Vector2(0f);
-
-                
-
-                RayCastInput input;
-                input.p1 = p1;
-                //input.p2 = p2;
-                input.maxFraction = max_fraction;
+                Vector2 p2;
 
                 float closestFraction = 1;
                 Body b = game.world.GetBodyList();
@@ -62,8 +46,6 @@ namespace Comatose
                             Fixture f = b.GetFixtureList();
                             while (f != null)
                             {
-                                
-
                                 Type shapeType = f.GetType();
 
                                 if (f.GetShape() is PolygonShape)
@@ -72,138 +54,59 @@ namespace Comatose
 
                                     for (int curVert = 0; curVert < polygon.GetVertexCount(); curVert++)
                                     {
-                                        //p3 = polygon.GetVertex(curVert);
                                         p2 = polygon.GetVertex(curVert);
-                                        //Vector2 p3edge = p2 - p1;
-                                        //float p3angle = currentRayAngle - rotation - light_spread_angle / 2 + (float)Math.PI;
-                                        //p2 = p1 + ray_length * new Vector2((float)Math.Sin((double)p3angle), (float)Math.Cos((double)p3angle));
-                                        input.p2 = p2;
-                                        //p2 = p3;
-
-                                        //RayCastOutput output;
-
-                                        //closestFraction = rayCast(input);
-
-                                        RayCastResult RayCastReport;
-
                                         
-                                        //game.world.RayCast(RayCastReport, p1, p2);
+                                        //transform this point based on the body transforms
+                                        p2 = Vector2.Transform(p2, Matrix.CreateRotationZ(b.GetAngle()));
+                                        p2 += b.GetPosition();
+
+                                        //perform the ray cast, and figure out what to do about the result
+                                        closestFraction = rayCast(p1, p2);
                                         
+                                        if (closestFraction > 1f) {
+                                            closestFraction = 1f;
+                                        }
 
                                         Vector2 intersectPoint = p1 + closestFraction * (p2 - p1);
+
 
                                         if (game.input.DevMode)
                                             game.drawLine(p1, intersectPoint, (Color.White));
 
-
-                                        //bool RayCast = f.RayCast(out output,ref input, 0);
-                                        /*
-
-                                        if (!f.RayCast(out output, ref input, 0))
-                                        {
-                                            f = f.GetNext();
-                                            continue;
-                                        }
-                                        if (output.fraction < closestFraction)
-                                        {
-                                            closestFraction = output.fraction;
-                                            intersectionNormal = output.normal;
-                                        }
-                                         */
-                                        // do something
                                     }
 
                                 }
                                 else if (f.GetShape() is EdgeShape)
                                 {
-                                    //EdgeShape* edge = (EdgeShape)f.GetShape();
+                                    //Do the same thing, except for edge shapes
                                 }
-
-
-
-
-
                                 
                                 f = f.GetNext();
                             }
                         }
                     b = b.GetNext();
-                //}
-
-                
-                /*
-                Vector3[] Triangle = new Vector3[3];
-
-                Triangle[0] = new Vector3 (p1.X, p1.Y, 0);
-                Triangle[1] = new Vector3 (p2.X, p2.Y, 0);
-                Triangle[2] = new Vector3 (screen_position.X, screen_position.Y, 0);
-
-                VertexBuffer vertexBuffer;
-
-                vertexBuffer = new VertexBuffer(game.gDevice,
-                    Triangle.VertexDeclaration,
-
-                    );
-
-                game.gDevice.SetVertexBuffer(vertexBuffer);
-                game.gDevice.DrawPrimitives( PrimitiveType.TriangleStrip, 0, 1);
-                */
-                
-
             }
 
             
-
-            //base.Draw(gameTime);
         }
 
-        float rayCast(RayCastInput input)
+        float min_distance;
+
+        float ReportFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction)
         {
-            float closestFraction = 1;
-            Body b = game.world.GetBodyList();
-            while (b != null)
+            if (fraction < min_distance)
             {
-                if (b.GetUserData() is PhysicsObject)
-                {
-                    PhysicsObject testObject = (PhysicsObject)b.GetUserData();
-
-                    if (testObject.cast_shadow)
-                    {
-                        Fixture f = b.GetFixtureList();
-                        while (f != null)
-                        {
-                            //p3 = polygon.GetVertex(curVert);
-                            //p3 = polygon.GetVertex(curVert);
-                            //input.p2 = p3;
-
-                            RayCastOutput output;
-                            //bool RayCast = f.RayCast(out output,ref input, 0);
-
-                            //adjust our positions based on the fixture's position
-                            RayCastInput adjustedInput = input;
-                            adjustedInput.p1 -= b.GetPosition();
-                            adjustedInput.p2 -= b.GetPosition();
-
-                            
-
-                            if (!f.RayCast(out output, ref adjustedInput, 0))
-                            {
-                                f = f.GetNext();
-                                continue;
-                            }
-                            if (output.fraction < closestFraction)
-                            {
-                                closestFraction = output.fraction;
-                                intersectionNormal = output.normal;
-                            }
-                            // do something
-                            f = f.GetNext();
-                        }
-                    }
-                }
-                b = b.GetNext();
+                min_distance = fraction;
             }
-            return closestFraction;
+
+            return 1;
+        }
+
+        float rayCast(Vector2 start, Vector2 end)
+        {
+            min_distance = (end - start).Length();
+            game.world.RayCast(ReportFixture, start, end);
+            return min_distance;
         }
 
     }
