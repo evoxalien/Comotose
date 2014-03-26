@@ -26,11 +26,11 @@ light1 = LightSource.create()
 light1.x = 65
 light1.y = 62
 
-light2 = LightSource.create()
-light2.x = 65
-light2.y = 31
-light2.light_spread_angle = math.pi / 4
-light2.rotation = hero.rotation
+--light2 = LightSource.create()
+--light2.x = 65
+--light2.y = 31
+--light2.light_spread_angle = math.pi / 4
+--light2.rotation = hero.rotation
 
 chair = PhysicsObject.create()
 chair.x = 50
@@ -140,14 +140,14 @@ end
 
 
 
-function light2:everyFrame()
-	self.x = hero.x
-	self.y = hero.y
-	self:rotate(hero.rotation)
+--function light2:everyFrame()
+	--self.x = hero.x
+	--self.y = hero.y
+	--self:rotate(hero.rotation)
 	
 	--print(hero.rotation)
 	--print(self.rotation)
-end
+--end
 
 --test out some textbox stuff
 

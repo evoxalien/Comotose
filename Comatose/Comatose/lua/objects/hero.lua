@@ -1,7 +1,7 @@
 ﻿Hero = inherits(PhysicsObject)
 
 function Hero:init()
-	self:sprite("Hero")
+	self:sprite("Herov2")
 	self.framesAlive = 0
 	self.speed = 15
 	self:shape("circle")
@@ -11,7 +11,7 @@ function Hero:init()
 
 	
 	self.light = LightSource.create({
-		ray_length=80,
+		ray_length=60,
 		rays_to_cast=1000,
 		light_spread_angle=(math.pi / 3)})
 
