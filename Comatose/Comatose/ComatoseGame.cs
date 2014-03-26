@@ -31,7 +31,7 @@ namespace Comatose {
         public float gravity = 0f;
 
         public Lua vm;
-        GameConsole console;
+        public GameConsole console;
         public World world;
 
         public Vector2 camera = new Vector2(0);        

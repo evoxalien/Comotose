@@ -97,7 +97,7 @@ namespace Comatose
                 game.gDevice.DrawPrimitives( PrimitiveType.TriangleStrip, 0, 1);
                 */
                 if (game.input.DevMode)
-                    game.drawLine(p1, p2, (Color.White));
+                    game.drawLine(p1, p2, Color.FromNonPremultiplied(255,255,255,32));
 
             }
 

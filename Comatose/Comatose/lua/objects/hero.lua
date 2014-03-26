@@ -3,7 +3,7 @@
 function Hero:init()
 	self:sprite("Herov2")
 	self.framesAlive = 0
-	self.speed = 15
+	self.speed = 20
 	self:shape("circle")
 	self.z_index = 0
 	self.centered = true
@@ -11,8 +11,8 @@ function Hero:init()
 
 	
 	self.light = LightSource.create({
-		ray_length=60,
-		rays_to_cast=1000,
+		ray_length=50,
+		rays_to_cast=4000,
 		light_spread_angle=(math.pi / 3)})
 
 	stage.hero = self
@@ -23,9 +23,6 @@ end
 
 function Hero:everyFrame()
 	Input:setAimCenter(self.x, self.y)
-	if Input:WasKeyPressed("Space") then
-		self:color(255, 0, 0, 128)
-	end
 
 	if not Input:MovementDeadzone() then
 		direction = Input:GetMovementDirection()
@@ -70,8 +67,8 @@ function HeroCamera:everyFrame()
 		local hero_y = self.target.y
 
 		--adjust the hero's coordinates for the flashlight
-		local flashlight_x = math.cos(self.target.rotation - math.pi / 2) * 20 + hero_x
-		local flashlight_y = math.sin(self.target.rotation - math.pi / 2) * 20 + hero_y
+		local flashlight_x = math.cos(self.target.rotation - math.pi / 2) * 25 + hero_x
+		local flashlight_y = math.sin(self.target.rotation - math.pi / 2) * 25 + hero_y
 
 		print("flashlight: " .. flashlight_x .. ", " .. flashlight_y)
 
@@ -108,4 +105,4 @@ function HeroCamera:everyFrame()
 	end
 end
 
-registered_objects["Hero"] = "Hero"
+registered_objects["Hero"] = "Herov2"

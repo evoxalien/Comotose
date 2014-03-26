@@ -34,24 +34,32 @@ namespace Comatose
         #region WasKeyOrButtonPressedOrReleased
         public bool WasKeyPressed(string key_string)
         {
+            if (game.console.Opened)
+                return false;
             Keys key = (Keys) Keys.Parse(typeof(Keys), key_string, true);
             return lastKeyboardState.IsKeyUp(key) && keyboardState.IsKeyDown(key);
         }
 
         public bool WasButtonPressed(string button_string)
         {
+            if (game.console.Opened)
+                return false;
             Buttons button = (Buttons)Buttons.Parse(typeof(Buttons), button_string, true);
             return lastGamepadState.IsButtonUp(button) && gamepadState.IsButtonDown(button);
         }
 
         public bool WasKeyReleased(string key_string)
         {
+            if (game.console.Opened)
+                return false;
             Keys key = (Keys)Keys.Parse(typeof(Keys), key_string, true);
             return lastKeyboardState.IsKeyDown(key) && keyboardState.IsKeyUp(key);
         }
 
         public bool WasButtonReleased(string button_string)
         {
+            if (game.console.Opened)
+                return false;
             Buttons button = (Buttons)Buttons.Parse(typeof(Buttons), button_string, true);
             return lastGamepadState.IsButtonDown(button) && gamepadState.IsButtonUp(button);
         }
@@ -60,6 +68,9 @@ namespace Comatose
         #region Movement
         public Vector2 GetMovementDirection()
         {
+            if (game.console.Opened)
+                return new Vector2(0);
+
             Vector2 direction = gamepadState.ThumbSticks.Left;
             direction.Y *= -1; //invert the y-axis
 
@@ -94,7 +105,8 @@ namespace Comatose
         #region Aiming
         public Vector2 GetAimDirection()
         {
-
+            if (game.console.Opened)
+                return new Vector2(0);
             //if (isAimingWithMouse)
                 //if (mouseState.LeftButton == ButtonState.Pressed)
                     //return GetMouseAimDirection();
