@@ -66,6 +66,11 @@ namespace Comatose
             screen_position = new Vector2(x, y);
         }
 
+        public Vector2 getPosition()
+        {
+            return screen_position;
+        }
+
         public void color(int r, int g, int b, int a)
         {
             sprite_color = Color.FromNonPremultiplied(r, g, b, a);
@@ -96,11 +101,13 @@ namespace Comatose
                 parent_object = game.game_objects[objectID];
         }
 
+        public float camera_weight = 1.0f;
+
         public virtual void Draw(GameTime gameTime)
         {
             if (texture != null)
             {
-                Vector2 draw_position = screen_position - game.camera;
+                Vector2 draw_position = screen_position - game.camera * camera_weight;
                 if (parent_object != null)
                     draw_position += parent_object.screen_position;
 

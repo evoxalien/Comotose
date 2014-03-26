@@ -12,13 +12,19 @@ function Hero:init()
 	
 	self.light = LightSource.create({
 		ray_length=50,
-		rays_to_cast=4000,
+		rays_to_cast=2500,
 		light_spread_angle=(math.pi / 3)})
 
 	stage.hero = self
 
 	self.camera = HeroCamera.create()
 	self.camera.target = self
+
+	stage.dialog = DialogBox.create()
+	stage.dialog:position(80, 720 - 100)
+	stage.dialog.width = 1280 - 80
+	stage.dialog.height = 100
+	stage.dialog.character_delay = 3
 end
 
 function Hero:everyFrame()

@@ -53,6 +53,10 @@ namespace Comatose
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            if (displayMessage.Count <= 0)
+            {
+                return;
+            }
             if (current_frame > 0)
             {
                 current_frame = current_frame - 1;
@@ -74,7 +78,7 @@ namespace Comatose
 
             //figure out screen position (same logic as GameObject base, but we aren't a
             //sprite, so we repeat here)
-            Vector2 draw_position = screen_position - game.camera;
+            Vector2 draw_position = screen_position - game.camera * camera_weight;
             if (parent_object != null)
                 draw_position += parent_object.screen_position;
 
@@ -127,8 +131,13 @@ namespace Comatose
             return character;
         }
 
-        int height;
-        int width;
+        public bool isFinished()
+        {
+            return current_character >= displayText.Length;
+        }
+
+        public int height;
+        public int width;
 
         public int maxLines = 3;
         private SortedList<int, string> displayMessage = new SortedList<int, string>();

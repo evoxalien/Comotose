@@ -215,7 +215,8 @@ namespace Comatose {
             //loadStage("leveleditor");
             //loadStage("mapeditor");
             //loadStage("test");
-            loadStage("uitest");
+            //loadStage("textboxtest");
+            loadLevel("demo");
 
         }
         #endregion
@@ -294,7 +295,7 @@ namespace Comatose {
 
         protected override void Draw(GameTime gameTime) 
         {
-            debugBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
+            debugBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Additive);
             GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here

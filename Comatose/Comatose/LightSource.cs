@@ -96,7 +96,8 @@ namespace Comatose
                 game.gDevice.SetVertexBuffer(vertexBuffer);
                 game.gDevice.DrawPrimitives( PrimitiveType.TriangleStrip, 0, 1);
                 */
-                if (game.input.DevMode)
+
+                //if (game.input.DevMode)
                     game.drawLine(p1, p2, Color.FromNonPremultiplied(255,255,255,32));
 
             }

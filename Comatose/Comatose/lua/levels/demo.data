@@ -6,12 +6,21 @@ local obj1 = {
 	["objects"] = {
 		[1] = {
 			["defaults"] = {
-				["y"] = 66.3;
 				["x"] = 82.6;
+				["y"] = 66.3;
 			};
 			["class"] = "Hero";
 		};
+		[2] = {
+			["defaults"] = {
+				["x"] = 49.9;
+				["y"] = 51.7;
+			};
+			["class"] = "Log";
+		};
 	};
 	["map"] = "demo";
+	["joints"] = {
+	};
 }
 return obj1

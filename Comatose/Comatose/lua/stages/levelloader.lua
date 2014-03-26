@@ -7,6 +7,11 @@ current_filename = ""
 
 current_map = Map.create()
 current_map.z_index = 0
+current_map:color(32,32,32,255)
+
+--cursor, for selecting stuff
+cursor = Cursor.create()
+cursor:color(0, 255, 255, 255)
 
 function load_map(filename)
 	--load the file
