@@ -23,6 +23,8 @@ namespace Comatose {
         public Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
         public Input input;
 
+        public static ParticleManager<ParticleState> ParticleManager { get; private set; }
+
         public Random rand = new Random();
 
         public Texture2D pixel;
@@ -190,6 +192,9 @@ namespace Comatose {
             graphics.PreferredBackBufferHeight = 720;
             graphics.ApplyChanges();
 
+            ParticleManager = new ParticleManager<ParticleState>(1024 * 20, ParticleState.UpdateParticle);
+
+
             base.Initialize();
         }
 
@@ -218,6 +223,7 @@ namespace Comatose {
             //loadStage("textboxtest");
             loadLevel("demo");
 
+           
         }
         #endregion
 
@@ -287,7 +293,10 @@ namespace Comatose {
             //listener.HandleEvents(); //process collisions engineside as needed
             vm.DoString("destroyObjects()"); //cleanup any objects that need to die
             vm.DoString("processEvent(\"everyFrame\")");
-            
+
+
+            ParticleManager.Update();
+
             base.Update(gameTime);
         }
 
@@ -297,6 +306,8 @@ namespace Comatose {
         {
             debugBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Additive);
             GraphicsDevice.Clear(Color.Black);
+
+            ParticleManager.Draw(spriteBatch);
 
             // TODO: Add your drawing code here
             gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
