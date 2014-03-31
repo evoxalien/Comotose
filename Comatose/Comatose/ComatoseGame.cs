@@ -299,9 +299,21 @@ namespace Comatose {
             // TODO: Add your drawing code here
             gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
             foreach (var o in game_objects) {
-                o.Value.Draw(gameTime);
+                if (!(o.Value is LightSource))
+                {
+                    o.Value.Draw(gameTime);
+                }
             }
             gameObjectBatch.End();
+
+            //draw lights after the game objects / map (but before debug lines)
+            foreach (var o in game_objects)
+            {
+                if (o.Value is LightSource)
+                {
+                    o.Value.Draw(gameTime);
+                }
+            }
 
             //now draw the debug stuff, if needed
             if (input.DevMode)
