@@ -58,7 +58,7 @@ namespace Comatose
             //and ensure that lack of collision targets doesn't lead to rendering holes
             for (int i = -4; i <= 4; i++)
             {
-                Vector2 target = Vector2.Transform(new Vector2(0,-ray_length), Matrix.CreateRotationZ((light_spread_angle / 9) * i + rotation)) + light_origin;
+                Vector2 target = Vector2.Transform(new Vector2(0,-ray_length), Matrix.CreateRotationZ((light_spread_angle / 8) * i + rotation)) + light_origin;
                 testPoints.Add(target);
             }
 
@@ -86,8 +86,14 @@ namespace Comatose
                                     if (Vector2.DistanceSquared(light_origin, target) <= ray_length * ray_length * 2)
                                     {
                                         float ray_angle = (float)Math.Atan2((target - light_origin).Y, (target - light_origin).X) + (float)Math.PI / 2;
-                                        if ((ray_angle > current_rotation - light_spread_angle / 2) && (ray_angle < current_rotation + light_spread_angle / 2))
-                                        {
+                                        float light_min = current_rotation - light_spread_angle / 2;
+                                        float light_max = current_rotation + light_spread_angle / 2;
+
+                                        while (ray_angle < light_min) {
+                                            ray_angle += (float)Math.PI * 2;
+                                        }
+
+                                        if (ray_angle < light_max) {
                                             //Add it to the list for processing
                                             testPoints.Add(target);
                                         }
@@ -104,13 +110,33 @@ namespace Comatose
                                 Vector2 target1 = Vector2.Transform(line._vertex1, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
                                 if (Vector2.DistanceSquared(light_origin, target1) <= ray_length * ray_length * 2)
                                 {
-                                    testPoints.Add(target1);
+                                    float ray_angle = (float)Math.Atan2((target1 - light_origin).Y, (target1 - light_origin).X) + (float)Math.PI / 2;
+                                    float light_min = current_rotation - light_spread_angle / 2;
+                                    float light_max = current_rotation + light_spread_angle / 2;
+
+                                    while (ray_angle < light_min) {
+                                        ray_angle += (float)Math.PI * 2;
+                                    }
+
+                                    if (ray_angle < light_max) {
+                                        testPoints.Add(target1);
+                                    }
                                 }
 
                                 Vector2 target2 = Vector2.Transform(line._vertex2, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
                                 if (Vector2.DistanceSquared(light_origin, target2) <= ray_length * ray_length * 2)
                                 {
-                                    testPoints.Add(target2);
+                                    float ray_angle = (float)Math.Atan2((target2 - light_origin).Y, (target2 - light_origin).X) + (float)Math.PI / 2;
+                                    float light_min = current_rotation - light_spread_angle / 2;
+                                    float light_max = current_rotation + light_spread_angle / 2;
+
+                                    while (ray_angle < light_min) {
+                                        ray_angle += (float)Math.PI * 2;
+                                    }
+
+                                    if (ray_angle < light_max) {
+                                        testPoints.Add(target2);
+                                    }
                                 }
                             }
                                 
@@ -202,7 +228,10 @@ namespace Comatose
         {
             if (fraction < min_distance)
             {
-                min_distance = fraction;
+                //check shadow logic
+                if (((PhysicsObject)fixture.GetBody().GetUserData()).cast_shadow) {
+                    min_distance = fraction;
+                }
             }
 
             return 1;

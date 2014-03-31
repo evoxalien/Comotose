@@ -24,15 +24,15 @@ chair.x = 40
 chair.y = 15
 chair:sprite("Chair1")
 
-chair2 = PhysicsObject.create()
-chair2.x = 50
-chair2.y = 15
-chair2:sprite("Chair1")
+--chair2 = PhysicsObject.create()
+--chair2.x = 50
+--chair2.y = 15
+--chair2:sprite("Chair1")
 
-chair3 = PhysicsObject.create()
-chair3.x = 60
-chair3.y = 15
-chair3:sprite("Chair1")
+--chair3 = PhysicsObject.create()
+--chair3.x = 60
+--chair3.y = 15
+--chair3:sprite("Chair1")
 
 
 
@@ -43,14 +43,14 @@ function chair.click(mx,my)
 end
 
 
-function chair2.click(mx,my)
-	ui:AddObject(chair2)
+--function chair2.click(mx,my)
+--	ui:AddObject(chair2)
 	--chair.z_index=-1
-end
-function chair3.click(mx,my)
-	ui:AddObject(chair3)
+--end
+--function chair3.click(mx,my)
+--	ui:AddObject(chair3)
 	--chair.z_index=-1
-end
+--end
 
 
 

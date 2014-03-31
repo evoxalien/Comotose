@@ -6,6 +6,20 @@ local obj1 = {
 	["joints"] = {
 	};
 	["objects"] = {
+		[14] = {
+			["class"] = "Chair";
+			["defaults"] = {
+				["x"] = 30.8;
+				["y"] = 62.2;
+			};
+		};
+		[13] = {
+			["class"] = "Chair";
+			["defaults"] = {
+				["x"] = 21.6;
+				["y"] = 62.8;
+			};
+		};
 		[6] = {
 			["class"] = "Hero";
 			["defaults"] = {
@@ -13,18 +27,19 @@ local obj1 = {
 				["y"] = 21.1;
 			};
 		};
-		[10] = {
+		[12] = {
 			["class"] = "Chair";
 			["defaults"] = {
-				["x"] = 90.5;
-				["y"] = 62.8;
+				["x"] = 12.2;
+				["y"] = 62.7;
 			};
 		};
-		[8] = {
-			["class"] = "Chair";
+		[7] = {
+			["class"] = "Recliner";
 			["defaults"] = {
-				["x"] = 100.1;
-				["y"] = 62.6;
+				["y"] = 19.4;
+				["x"] = 90.9;
+				["cast_shadow"] = false;
 			};
 		};
 		[11] = {
@@ -32,21 +47,6 @@ local obj1 = {
 			["defaults"] = {
 				["x"] = 55.7;
 				["y"] = 26.9;
-			};
-		};
-		[9] = {
-			["class"] = "Chair";
-			["defaults"] = {
-				["x"] = 109.5;
-				["y"] = 62.6;
-			};
-		};
-		[7] = {
-			["class"] = "Recliner";
-			["defaults"] = {
-				["cast_shadow"] = false;
-				["y"] = 19.4;
-				["x"] = 90.9;
 			};
 		};
 	};
