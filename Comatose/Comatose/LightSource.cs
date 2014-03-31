@@ -26,12 +26,27 @@ namespace Comatose
 
         public LightSource(ComatoseGame gm) : base(gm)
         {
-            body.SetActive(false);
+            //body.SetActive(false);
             buffer = new VertexBuffer(game.GraphicsDevice, typeof(VertexPositionColor), _max_rays * 3, BufferUsage.None);
 
             light_shader = new BasicEffect(game.GraphicsDevice);
             light_shader.Projection = Matrix.CreateOrthographicOffCenter(0, 128, 72, 0, 1, -1);
             light_shader.VertexColorEnabled = true;
+
+            //add a dummy physics object to the light, to allow it to do things
+            body.SetType(BodyType.Dynamic);
+
+            FixtureDef fdef = new FixtureDef();
+            fdef.density = 0.1f;
+            fdef.friction = 0.0f;
+
+            CircleShape circle = new CircleShape();
+            circle._p = new Vector2(0);
+            circle._radius = (float)0.1f;
+            fdef.shape = circle;
+
+            fixture = body.CreateFixture(fdef);
+            body.ResetMassData();
         }
 
         const int _max_rays = 1000;
@@ -44,7 +59,7 @@ namespace Comatose
             //position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
 
             Vector2 light_origin = new Vector2(x,y);
-            float current_rotation = rotation;
+            float current_rotation = body.GetAngle();
             while (current_rotation < 0)
             {
                 current_rotation += (float)Math.PI * 2;
@@ -58,7 +73,7 @@ namespace Comatose
             //and ensure that lack of collision targets doesn't lead to rendering holes
             for (int i = -4; i <= 4; i++)
             {
-                Vector2 target = Vector2.Transform(new Vector2(0,-ray_length), Matrix.CreateRotationZ((light_spread_angle / 8) * i + rotation)) + light_origin;
+                Vector2 target = Vector2.Transform(new Vector2(0, -ray_length), Matrix.CreateRotationZ((light_spread_angle / 8) * i + current_rotation)) + light_origin;
                 testPoints.Add(target);
             }
 

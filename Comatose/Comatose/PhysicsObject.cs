@@ -97,6 +97,29 @@ namespace Comatose
             collision_group = "gameobject";
         }
 
+        #region Joint Management
+
+        public void join(int targetID)
+        {
+            if (game.game_objects[targetID] is PhysicsObject)
+            {
+                PhysicsObject target = (PhysicsObject)game.game_objects[targetID];
+
+                WeldJointDef def = new WeldJointDef();
+                def.bodyA = body;
+                def.bodyB = target.body;
+
+                def.localAnchorA = body.GetPosition() - target.body.GetPosition();
+                def.localAnchorB = target.body.GetPosition() - body.GetPosition();
+
+                def.collideConnected = false;
+
+                game.world.CreateJoint(def);
+            }
+        }
+
+        #endregion
+
         #region Collision Groups
         protected string collision_group;
 

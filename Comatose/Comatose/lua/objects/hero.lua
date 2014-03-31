@@ -25,6 +25,12 @@ function Hero:init()
 	stage.dialog.width = 1280 - 80
 	stage.dialog.height = 100
 	stage.dialog.character_delay = 3
+
+	--do weird things with the light
+	self.light.x = self.x - 1.2
+	self.light.y = self.y + 1.5
+
+	self.light:join(self.ID())
 end
 
 function Hero:everyFrame()
@@ -50,10 +56,10 @@ function Hero:everyFrame()
 		self:rotateTo(math.atan2(aim_direction.X, -aim_direction.Y))
 	end
 
-	self.light.rotation = self.rotation
+	--self.light.rotation = self.rotation
 
-	self.light.x = self.x
-	self.light.y = self.y
+	--self.light.x = self.x
+	--self.light.y = self.y
 end
 
 HeroCamera = inherits(GameObject)
