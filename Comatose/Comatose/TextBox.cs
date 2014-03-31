@@ -126,8 +126,8 @@ namespace Comatose
             return character;
         }
 
-        int height;
-        int width;
+        int height = 0;
+        int width = 0;
 
         public int maxLines = 3;
         private SortedList<int, string> displayMessage = new SortedList<int, string>();

@@ -44,9 +44,23 @@ namespace Comatose
             //position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
 
             Vector2 light_origin = new Vector2(x,y);
+            float current_rotation = rotation;
+            while (current_rotation < 0)
+            {
+                current_rotation += (float)Math.PI * 2;
+            }
+            current_rotation = current_rotation % ((float)Math.PI * 2);
 
             List<Vector2> testPoints = new List<Vector2>();
             SortedList<float, Vector2> intersectionPoints = new SortedList<float, Vector2>();
+
+            //firstly, cast out 9 rays around the circle/cone; this will define the base shape of this light
+            //and ensure that lack of collision targets doesn't lead to rendering holes
+            for (int i = -4; i <= 4; i++)
+            {
+                Vector2 target = Vector2.Transform(new Vector2(0,-ray_length), Matrix.CreateRotationZ((light_spread_angle / 9) * i + rotation)) + light_origin;
+                testPoints.Add(target);
+            }
 
             //Gather a list of all test points in the scene
             Body b = game.world.GetBodyList();
@@ -69,8 +83,15 @@ namespace Comatose
                                     //transform this point based on the body transforms
                                     Vector2 target = Vector2.Transform(polygon.GetVertex(curVert), Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
 
-                                    //Add it to the list for processing
-                                    testPoints.Add(target);
+                                    if (Vector2.DistanceSquared(light_origin, target) <= ray_length * ray_length * 2)
+                                    {
+                                        float ray_angle = (float)Math.Atan2((target - light_origin).Y, (target - light_origin).X) + (float)Math.PI / 2;
+                                        if ((ray_angle > current_rotation - light_spread_angle / 2) && (ray_angle < current_rotation + light_spread_angle / 2))
+                                        {
+                                            //Add it to the list for processing
+                                            testPoints.Add(target);
+                                        }
+                                    }
                                 }
                             }
                             else if (f.GetShape() is EdgeShape)
@@ -80,8 +101,17 @@ namespace Comatose
                                 //only v1 and v2 will count here
                                 EdgeShape line = (EdgeShape)f.GetShape();
 
-                                testPoints.Add(Vector2.Transform(line._vertex1, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition());
-                                testPoints.Add(Vector2.Transform(line._vertex2, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition());
+                                Vector2 target1 = Vector2.Transform(line._vertex1, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
+                                if (Vector2.DistanceSquared(light_origin, target1) <= ray_length * ray_length * 2)
+                                {
+                                    testPoints.Add(target1);
+                                }
+
+                                Vector2 target2 = Vector2.Transform(line._vertex2, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
+                                if (Vector2.DistanceSquared(light_origin, target2) <= ray_length * ray_length * 2)
+                                {
+                                    testPoints.Add(target2);
+                                }
                             }
                                 
                             f = f.GetNext();
