@@ -45,8 +45,10 @@ namespace Comatose
 
             Vector2 light_origin = new Vector2(x,y);
 
+            List<Vector2> testPoints = new List<Vector2>();
             SortedList<float, Vector2> intersectionPoints = new SortedList<float, Vector2>();
 
+            //Gather a list of all test points in the scene
             Body b = game.world.GetBodyList();
             while (b != null)
             {
@@ -64,54 +66,65 @@ namespace Comatose
 
                                 for (int curVert = 0; curVert < polygon.GetVertexCount(); curVert++)
                                 {
-                                    Vector2 target = polygon.GetVertex(curVert);
-
                                     //transform this point based on the body transforms
-                                    target = Vector2.Transform(target, Matrix.CreateRotationZ(b.GetAngle()));
-                                    target += b.GetPosition();
+                                    Vector2 target = Vector2.Transform(polygon.GetVertex(curVert), Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
 
-                                    //normalize this point, then multiply it by the length; this will give us a
-                                    //line originating from the light source, and cast "toward" this corner point
-                                    //that is exactly the distance of the light's normal max range
-                                    target -= light_origin;
-                                    target.Normalize();
-                                    target = target * ray_length;
-
-                                    //cast two more rays at slight angle offsets, to deal with corner edge cases
-                                    //(only 2, so everything after this is doubled, because loops are silly for only 2 elements)
-                                    Vector2 target_neg = Vector2.Transform(target, Matrix.CreateRotationZ(-0.0001f));
-                                    Vector2 target_pos = Vector2.Transform(target, Matrix.CreateRotationZ(0.0001f));
-
-                                    target_neg += light_origin;
-                                    target_pos += light_origin;
-
-                                    //perform the ray cast, and figure out what to do about the result
-                                    float closestFractionNeg = Math.Min(rayCast(light_origin, target_neg), 1f);
-                                    float closestFractionPos = Math.Min(rayCast(light_origin, target_pos), 1f);
-
-                                    Vector2 intersectPointPos = light_origin + closestFractionPos * (target_pos - light_origin);
-                                    Vector2 intersectPointNeg = light_origin + closestFractionNeg * (target_neg - light_origin);
-
-                                    if (game.input.DevMode)
-                                    {
-                                        game.drawLine(light_origin, intersectPointNeg, (Color.White));
-                                        game.drawLine(light_origin, intersectPointPos, (Color.White));
-                                    }
-
-                                    intersectionPoints[(float)Math.Atan2((float)(intersectPointNeg - light_origin).Y, (float)(intersectPointNeg - light_origin).X)] = intersectPointNeg;
-                                    intersectionPoints[(float)Math.Atan2((float)(intersectPointPos - light_origin).Y, (float)(intersectPointPos - light_origin).X)] = intersectPointPos;
+                                    //Add it to the list for processing
+                                    testPoints.Add(target);
                                 }
                             }
                             else if (f.GetShape() is EdgeShape)
                             {
                                 //Do the same thing, except for edge shapes
-                                //TODO: Not fail at this
+
+                                //only v1 and v2 will count here
+                                EdgeShape line = (EdgeShape)f.GetShape();
+
+                                testPoints.Add(Vector2.Transform(line._vertex1, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition());
+                                testPoints.Add(Vector2.Transform(line._vertex2, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition());
                             }
                                 
                             f = f.GetNext();
                         }
                     }
                 b = b.GetNext();
+            }
+
+            //For every test point, calculate the closest intersection
+            foreach (Vector2 point in testPoints)
+            {
+                Vector2 target = point;
+
+                //normalize this point, then multiply it by the length; this will give us a
+                //line originating from the light source, and cast "toward" this corner point
+                //that is exactly the distance of the light's normal max range
+                target -= light_origin;
+                target.Normalize();
+                target = target * ray_length;
+
+                //cast two more rays at slight angle offsets, to deal with corner edge cases
+                //(only 2, so everything after this is doubled, because loops are silly for only 2 elements)
+                Vector2 target_neg = Vector2.Transform(target, Matrix.CreateRotationZ(-0.0001f));
+                Vector2 target_pos = Vector2.Transform(target, Matrix.CreateRotationZ(0.0001f));
+
+                target_neg += light_origin;
+                target_pos += light_origin;
+
+                //perform the ray cast, and figure out what to do about the result
+                float closestFractionNeg = Math.Min(rayCast(light_origin, target_neg), 1f);
+                float closestFractionPos = Math.Min(rayCast(light_origin, target_pos), 1f);
+
+                Vector2 intersectPointPos = light_origin + closestFractionPos * (target_pos - light_origin);
+                Vector2 intersectPointNeg = light_origin + closestFractionNeg * (target_neg - light_origin);
+
+                if (game.input.DevMode)
+                {
+                    game.drawLine(light_origin, intersectPointNeg, (Color.White));
+                    game.drawLine(light_origin, intersectPointPos, (Color.White));
+                }
+
+                intersectionPoints[(float)Math.Atan2((float)(intersectPointNeg - light_origin).Y, (float)(intersectPointNeg - light_origin).X)] = intersectPointNeg;
+                intersectionPoints[(float)Math.Atan2((float)(intersectPointPos - light_origin).Y, (float)(intersectPointPos - light_origin).X)] = intersectPointPos;
             }
 
             //now, attempt (poorly) to create a triangle mesh based on our hopefully sorted points
