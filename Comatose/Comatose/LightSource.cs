@@ -201,7 +201,7 @@ namespace Comatose
                     vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), vertexColor));
                 }
                 //start a new triangle leading with this edge
-                vertex_list.Add(new VertexPositionColor(new Vector3(light_origin.X, light_origin.Y, 0), vertexColor));
+                vertex_list.Add(new VertexPositionColor(new Vector3(light_origin.X, light_origin.Y, 0), Color.FromNonPremultiplied(255, 255, 255, 255)));
                 vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), vertexColor));
 
                 first = false;
@@ -214,6 +214,7 @@ namespace Comatose
             gd.SetVertexBuffer(buffer);
 
             //make sure the light shader is set up
+            light_shader.World = Matrix.CreateTranslation(new Vector3(-game.camera.X / 10, -game.camera.Y / 10, 0));
             light_shader.CurrentTechnique.Passes[0].Apply();
 
             //draw them primitives!

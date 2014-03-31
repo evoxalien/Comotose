@@ -51,6 +51,7 @@ function Hero:everyFrame()
 	end
 
 	self.light.rotation = self.rotation
+
 	self.light.x = self.x
 	self.light.y = self.y
 end
@@ -76,7 +77,7 @@ function HeroCamera:everyFrame()
 		local flashlight_x = math.cos(self.target.rotation - math.pi / 2) * 25 + hero_x
 		local flashlight_y = math.sin(self.target.rotation - math.pi / 2) * 25 + hero_y
 
-		print("flashlight: " .. flashlight_x .. ", " .. flashlight_y)
+		--print("flashlight: " .. flashlight_x .. ", " .. flashlight_y)
 
 		local min_x = math.min(hero_x, flashlight_x) - self.margin
 		local min_y = math.min(hero_y, flashlight_y) - self.margin

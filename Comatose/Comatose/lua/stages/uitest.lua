@@ -37,23 +37,20 @@ chair.x = 40
 chair.y = 15
 chair:sprite("Chair1")
 
---chair2 = PhysicsObject.create()
---chair2.x = 50
---chair2.y = 15
---chair2:sprite("Chair1")
+chair2 = PhysicsObject.create()
+chair2.x = 50
+chair2.y = 15
+chair2:sprite("Chair1")
 
---chair3 = PhysicsObject.create()
---chair3.x = 60
---chair3.y = 15
---chair3:sprite("Chair1")
+chair3 = PhysicsObject.create()
+chair3.x = 60
+chair3.y = 15
+chair3:sprite("Chair1")
 
 chair4 = PhysicsObject.create()
 chair4.x = 50
 chair4.y = 15
 chair4:sprite("Chair1")
-
-
-
 
 function chair.click(mx,my)
 	--if chair.in_inv== false or chair.in_inv ==nil then
