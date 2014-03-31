@@ -36,7 +36,6 @@ namespace Comatose
                 Vector2 p1 = new Vector2(x,y);
                 Vector2 p2;
 
-                float closestFraction = 1;
                 Body b = game.world.GetBodyList();
                 while (b != null)
                 {
@@ -60,18 +59,33 @@ namespace Comatose
                                         p2 = Vector2.Transform(p2, Matrix.CreateRotationZ(b.GetAngle()));
                                         p2 += b.GetPosition();
 
-                                        //perform the ray cast, and figure out what to do about the result
-                                        closestFraction = rayCast(p1, p2);
+                                        //normalize this point, then multiply it by the length; this will give us a
+                                        //line originating from the light source, and cast "toward" this corner point
+                                        //that is exactly the distance of the light's normal max range
+                                        p2 -= p1;
+                                        p2.Normalize();
+                                        p2 = p2 * ray_length;
+
+                                        //cast two more rays at slight angle offsets, to deal with corner edge cases
+                                        Vector2 p2neg = Vector2.Transform(p2, Matrix.CreateRotationZ(-0.0001f));
+                                        Vector2 p2pos = Vector2.Transform(p2, Matrix.CreateRotationZ(0.0001f));
                                         
-                                        if (closestFraction > 1f) {
-                                            closestFraction = 1f;
-                                        }
+                                        p2 += p1;
+                                        p2neg += p1;
+                                        p2pos += p1;
 
-                                        Vector2 intersectPoint = p1 + closestFraction * (p2 - p1);
+                                        //perform the ray cast, and figure out what to do about the result
+                                        float closestFractionNeg = Math.Min(rayCast(p1, p2neg), 1f);
+                                        float closestFractionPos = Math.Min(rayCast(p1, p2pos), 1f);
 
+                                        Vector2 intersectPointPos = p1 + closestFractionPos * (p2 - p1);
+                                        Vector2 intersectPointNeg = p1 + closestFractionNeg * (p2 - p1);
 
                                         if (game.input.DevMode)
-                                            game.drawLine(p1, intersectPoint, (Color.White));
+                                        {
+                                            game.drawLine(p1, intersectPointNeg, (Color.White));
+                                            game.drawLine(p1, intersectPointPos, (Color.White));
+                                        }
 
                                     }
 
