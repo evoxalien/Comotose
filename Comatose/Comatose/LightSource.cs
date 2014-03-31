@@ -71,9 +71,9 @@ namespace Comatose
 
             //firstly, cast out 9 rays around the circle/cone; this will define the base shape of this light
             //and ensure that lack of collision targets doesn't lead to rendering holes
-            for (int i = -4; i <= 4; i++)
+            for (int i = -16; i <= 16; i++)
             {
-                Vector2 target = Vector2.Transform(new Vector2(0, -ray_length), Matrix.CreateRotationZ((light_spread_angle / 8) * i + current_rotation)) + light_origin;
+                Vector2 target = Vector2.Transform(new Vector2(0, -ray_length), Matrix.CreateRotationZ((light_spread_angle / 32) * i + current_rotation)) + light_origin;
                 testPoints.Add(target);
             }
 
@@ -205,7 +205,7 @@ namespace Comatose
 
             ArrayList vertex_list = new ArrayList();
 
-            Color vertexColor = Color.FromNonPremultiplied(255, 255, 255, 92);
+            Color vertexColor = Color.FromNonPremultiplied(255, 255, 255, 0);
 
             bool first = true;
             foreach (var intersection in intersectionPoints)
