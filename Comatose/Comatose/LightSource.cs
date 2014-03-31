@@ -78,6 +78,7 @@ namespace Comatose
                                     target = target * ray_length;
 
                                     //cast two more rays at slight angle offsets, to deal with corner edge cases
+                                    //(only 2, so everything after this is doubled, because loops are silly for only 2 elements)
                                     Vector2 target_neg = Vector2.Transform(target, Matrix.CreateRotationZ(-0.0001f));
                                     Vector2 target_pos = Vector2.Transform(target, Matrix.CreateRotationZ(0.0001f));
 
