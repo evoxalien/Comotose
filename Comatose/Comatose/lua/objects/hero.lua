@@ -1,7 +1,7 @@
 ﻿Hero = inherits(PhysicsObject)
 
 function Hero:init()
-	self:sprite("Herov2")
+	self:sprite("Herov3")
 	self.framesAlive = 0
 	self.speed = 20
 	self:shape("circle")
@@ -118,4 +118,4 @@ function HeroCamera:everyFrame()
 	end
 end
 
-registered_objects["Hero"] = "Herov2"
+registered_objects["Hero"] = "Herov3"
