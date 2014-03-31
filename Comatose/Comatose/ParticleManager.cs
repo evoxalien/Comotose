@@ -15,11 +15,13 @@ using Box2D.XNA;
 
 namespace Comatose
 {
-    public class ParticleManager<T>
+    public class ParticleManager
     {
         private Action<Particle> updateParticle;
         private CircularParticleArray particleList;
         public int ParticleCount;
+        ComatoseGame game;
+        Random rand = new Random();
 
         public class Particle
         {
@@ -32,14 +34,15 @@ namespace Comatose
             public Color Tint;
             public float Duration;
             public float PercentLife = 1f;
-            public T State;
+            public ParticleState State;
         }
 
-        public ParticleManager(int capacity, Action<Particle> updateParticle)
+        public ParticleManager(int capacity, Action<Particle> updateParticle, ComatoseGame root)
         {
             this.updateParticle = updateParticle;
             particleList = new CircularParticleArray(capacity);
 
+            game = root;
             // Populate the list with empty particle objects, for reuse
             for (int i = 0; i < capacity; i++)
                 particleList[i] = new Particle();
@@ -55,7 +58,7 @@ namespace Comatose
         #endregion
 
         #region CreateParticle
-        public void CreateParticle(Texture2D texture, Vector2 position, Color tint, float duration, Vector2 scale, T state, float theta = 0)
+        public void CreateParticle(Texture2D texture, Vector2 position, Color tint, float duration, Vector2 scale, ParticleState state, float theta = 0)
         {
             Particle particle;
             if (particleList.Count == particleList.Capacity)
@@ -137,11 +140,51 @@ namespace Comatose
                 var particle = particleList[i];
 
                 Vector2 origin = new Vector2(particle.Texture.Width / 2, particle.Texture.Height / 2);
-                spriteBatch.Draw(particle.Texture, particle.Position, null, particle.Tint, particle.Orientation, origin, particle.Scale, 0, 0);
+                spriteBatch.Draw(particle.Texture, particle.Position - game.camera, null, particle.Tint, particle.Orientation, origin, particle.Scale, 0, 0);
 
             }
         }
         #endregion
 
+        #region AdditionalFunctions
+        #region NextFloat
+        float NextFloat(Random rand, float minValue, float maxValue)
+        {
+            return (float)rand.NextDouble() * (maxValue - minValue) + minValue;
+        }
+        #endregion
+
+        #region NextVector2
+        Vector2 NextVector2(Random rand, float minLength, float maxLength)
+        {
+            double theta = rand.NextDouble() * 2 * Math.PI;
+            float length = NextFloat(rand, minLength, maxLength);
+            return new Vector2(length * (float)Math.Cos(theta), length * (float)Math.Sin(theta));
+        }
+        #endregion
+        #endregion
+
+
+        #region CreateCalls
+        public void CreateExplosion(int x, int y, int count, int r, int b, int g)
+        {
+            
+            Vector2 Position = new Vector2(x, y) * game.physics_scale;
+            //Texture2D particleTexture = game.Content.Load<Texture2D>("art/particle");
+
+            Texture2D particleTexture = game.Content.Load<Texture2D>("art/FlappyBird");
+            for (int i = 0; i < count; i++)
+            {
+                float speed = 6f * (1f - 1 / NextFloat(rand, 1f, 10f));
+                var state = new ParticleState()
+                {
+                    Velocity = NextVector2(rand, speed, speed),
+                    Type = ParticleType.Enemy,
+                    LengthMultiplier = 1f
+                };
+                CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 190f, new Vector2(1.0f), state);
+            }
+        }
+        #endregion
     }
 }

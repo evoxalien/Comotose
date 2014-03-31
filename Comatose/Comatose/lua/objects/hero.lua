@@ -36,6 +36,7 @@ end
 function Hero:everyFrame()
 	Input:setAimCenter(self.x, self.y)
 
+	Particle:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
 	if not Input:MovementDeadzone() then
 		direction = Input:GetMovementDirection()
 		self.vx = direction.X * self.speed

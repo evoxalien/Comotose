@@ -44,7 +44,7 @@ namespace Comatose
         }
 
         #region UpdateParticle
-        public static void UpdateParticle(ParticleManager<ParticleState>.Particle particle)
+        public static void UpdateParticle(ParticleManager.Particle particle)
         {
             var vel = particle.State.Velocity;
             float speed = vel.Length();

@@ -23,7 +23,7 @@ namespace Comatose {
         public Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
         public Input input;
 
-        public static ParticleManager<ParticleState> ParticleManager { get; private set; }
+        public static ParticleManager ParticleManager { get; private set; }
 
         public Random rand = new Random();
 
@@ -90,6 +90,7 @@ namespace Comatose {
             //to call / manipulate them
             vm["GameEngine"] = this;
             vm["Input"] = input;
+            vm["Particle"] = ParticleManager;
             vm.DoFile("lua/main.lua");
 
             loadAllObjects();
@@ -192,8 +193,8 @@ namespace Comatose {
             graphics.PreferredBackBufferHeight = 720;
             graphics.ApplyChanges();
 
-            ParticleManager = new ParticleManager<ParticleState>(1024 * 20, ParticleState.UpdateParticle);
-
+            //MODIFYING THE FIRST VALUE WILL LIMIT PARTICLE COUNT
+            ParticleManager = new ParticleManager(1024, ParticleState.UpdateParticle, this);
 
             base.Initialize();
         }
@@ -307,10 +308,9 @@ namespace Comatose {
             debugBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Additive);
             GraphicsDevice.Clear(Color.Black);
 
-            ParticleManager.Draw(spriteBatch);
-
             // TODO: Add your drawing code here
             gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
+            ParticleManager.Draw(gameObjectBatch);
             foreach (var o in game_objects) {
                 if (!(o.Value is LightSource))
                 {
