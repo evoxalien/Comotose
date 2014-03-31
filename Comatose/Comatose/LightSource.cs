@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using NLua;
 using Box2D.XNA;
+using System.Collections;
 
 namespace Comatose
 {
@@ -18,93 +19,229 @@ namespace Comatose
     {
         public int ray_length = 50;
         public float light_spread_angle = (float)Math.PI * 2;
-        public int rays_to_cast = 640;
+        //public int rays_to_cast = 640;
         public float max_fraction = 1;
+        
+        private Vector2 intersectionNormal = new Vector2(0, 0);
 
         public LightSource(ComatoseGame gm) : base(gm)
         {
             body.SetActive(false);
+            buffer = new VertexBuffer(game.GraphicsDevice, typeof(VertexPositionColor), _max_rays * 3, BufferUsage.None);
+
+            light_shader = new BasicEffect(game.GraphicsDevice);
+            light_shader.Projection = Matrix.CreateOrthographicOffCenter(0, 128, 72, 0, 1, -1);
+            light_shader.VertexColorEnabled = true;
         }
 
+        const int _max_rays = 1000;
+
+        VertexBuffer buffer;
+        BasicEffect light_shader;
 
         public override void Draw(GameTime gameTime)
         {
-            position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
+            //position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
 
-            float currentRayAngle = 0;
-            float drawRayAngle = 0;
-            for (int i = 1; i <= rays_to_cast && currentRayAngle <= light_spread_angle; i++)
+            Vector2 light_origin = new Vector2(x,y);
+            float current_rotation = rotation;
+            while (current_rotation < 0)
             {
-                currentRayAngle += (float)Math.PI * 2 / rays_to_cast;
-                drawRayAngle = currentRayAngle - rotation - light_spread_angle / 2 + (float)Math.PI;
+                current_rotation += (float)Math.PI * 2;
+            }
+            current_rotation = current_rotation % ((float)Math.PI * 2);
 
-                Vector2 p1 = new Vector2(x,y);
-                Vector2 p2 = p1 + ray_length * new Vector2((float)Math.Sin((double)drawRayAngle), (float)Math.Cos((double)drawRayAngle));
+            List<Vector2> testPoints = new List<Vector2>();
+            SortedList<float, Vector2> intersectionPoints = new SortedList<float, Vector2>();
 
-                Vector2 intersectionNormal = new Vector2( 0 , 0 );
-
-                RayCastInput input;
-                input.p1 = p1;
-                input.p2 = p2;
-                input.maxFraction = max_fraction;
-
-                float closestFraction = 1;
-                Body b = game.world.GetBodyList();
-                while (b != null)
-                {
-                    if (b.GetUserData() is PhysicsObject)
-                        if (((PhysicsObject)b.GetUserData()).cast_shadow)
-                        {
-                            Fixture f = b.GetFixtureList();
-                            while (f != null)
-                            {
-                                RayCastOutput output;
-                                //bool RayCast = f.RayCast(output, input);
-                                if (!f.RayCast(out output, ref input, 0))
-                                {
-                                    f = f.GetNext();
-                                    continue;
-                                }
-                                if (output.fraction < closestFraction)
-                                {
-                                    closestFraction = output.fraction;
-                                    intersectionNormal = output.normal;
-                                }
-                                // do something
-
-                                f = f.GetNext();
-                            }
-                        }
-                    b = b.GetNext();
-                }
-
-                p2 = p1 + closestFraction * (p2 - p1);
-                /*
-                Vector3[] Triangle = new Vector3[3];
-
-                Triangle[0] = new Vector3 (p1.X, p1.Y, 0);
-                Triangle[1] = new Vector3 (p2.X, p2.Y, 0);
-                Triangle[2] = new Vector3 (screen_position.X, screen_position.Y, 0);
-
-                VertexBuffer vertexBuffer;
-
-                vertexBuffer = new VertexBuffer(game.gDevice,
-                    Triangle.VertexDeclaration,
-
-                    );
-
-                game.gDevice.SetVertexBuffer(vertexBuffer);
-                game.gDevice.DrawPrimitives( PrimitiveType.TriangleStrip, 0, 1);
-                */
-
-                //if (game.input.DevMode)
-                    game.drawLine(p1, p2, Color.FromNonPremultiplied(255,255,255,32));
-
+            //firstly, cast out 9 rays around the circle/cone; this will define the base shape of this light
+            //and ensure that lack of collision targets doesn't lead to rendering holes
+            for (int i = -4; i <= 4; i++)
+            {
+                Vector2 target = Vector2.Transform(new Vector2(0,-ray_length), Matrix.CreateRotationZ((light_spread_angle / 8) * i + rotation)) + light_origin;
+                testPoints.Add(target);
             }
 
-            
+            //Gather a list of all test points in the scene
+            Body b = game.world.GetBodyList();
+            while (b != null)
+            {
+                if (b.GetUserData() is PhysicsObject)
+                    if (((PhysicsObject)b.GetUserData()).cast_shadow)
+                    {
+                        Fixture f = b.GetFixtureList();
+                        while (f != null)
+                        {
+                            Type shapeType = f.GetType();
 
-            //base.Draw(gameTime);
+                            if (f.GetShape() is PolygonShape)
+                            {
+                                PolygonShape polygon = (PolygonShape)f.GetShape();
+
+                                for (int curVert = 0; curVert < polygon.GetVertexCount(); curVert++)
+                                {
+                                    //transform this point based on the body transforms
+                                    Vector2 target = Vector2.Transform(polygon.GetVertex(curVert), Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
+
+                                    if (Vector2.DistanceSquared(light_origin, target) <= ray_length * ray_length * 2)
+                                    {
+                                        float ray_angle = (float)Math.Atan2((target - light_origin).Y, (target - light_origin).X) + (float)Math.PI / 2;
+                                        float light_min = current_rotation - light_spread_angle / 2;
+                                        float light_max = current_rotation + light_spread_angle / 2;
+
+                                        while (ray_angle < light_min) {
+                                            ray_angle += (float)Math.PI * 2;
+                                        }
+
+                                        if (ray_angle < light_max) {
+                                            //Add it to the list for processing
+                                            testPoints.Add(target);
+                                        }
+                                    }
+                                }
+                            }
+                            else if (f.GetShape() is EdgeShape)
+                            {
+                                //Do the same thing, except for edge shapes
+
+                                //only v1 and v2 will count here
+                                EdgeShape line = (EdgeShape)f.GetShape();
+
+                                Vector2 target1 = Vector2.Transform(line._vertex1, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
+                                if (Vector2.DistanceSquared(light_origin, target1) <= ray_length * ray_length * 2)
+                                {
+                                    float ray_angle = (float)Math.Atan2((target1 - light_origin).Y, (target1 - light_origin).X) + (float)Math.PI / 2;
+                                    float light_min = current_rotation - light_spread_angle / 2;
+                                    float light_max = current_rotation + light_spread_angle / 2;
+
+                                    while (ray_angle < light_min) {
+                                        ray_angle += (float)Math.PI * 2;
+                                    }
+
+                                    if (ray_angle < light_max) {
+                                        testPoints.Add(target1);
+                                    }
+                                }
+
+                                Vector2 target2 = Vector2.Transform(line._vertex2, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
+                                if (Vector2.DistanceSquared(light_origin, target2) <= ray_length * ray_length * 2)
+                                {
+                                    float ray_angle = (float)Math.Atan2((target2 - light_origin).Y, (target2 - light_origin).X) + (float)Math.PI / 2;
+                                    float light_min = current_rotation - light_spread_angle / 2;
+                                    float light_max = current_rotation + light_spread_angle / 2;
+
+                                    while (ray_angle < light_min) {
+                                        ray_angle += (float)Math.PI * 2;
+                                    }
+
+                                    if (ray_angle < light_max) {
+                                        testPoints.Add(target2);
+                                    }
+                                }
+                            }
+                                
+                            f = f.GetNext();
+                        }
+                    }
+                b = b.GetNext();
+            }
+
+            //For every test point, calculate the closest intersection
+            foreach (Vector2 point in testPoints)
+            {
+                Vector2 target = point;
+
+                //normalize this point, then multiply it by the length; this will give us a
+                //line originating from the light source, and cast "toward" this corner point
+                //that is exactly the distance of the light's normal max range
+                target -= light_origin;
+                target.Normalize();
+                target = target * ray_length;
+
+                //cast two more rays at slight angle offsets, to deal with corner edge cases
+                //(only 2, so everything after this is doubled, because loops are silly for only 2 elements)
+                Vector2 target_neg = Vector2.Transform(target, Matrix.CreateRotationZ(-0.0001f));
+                Vector2 target_pos = Vector2.Transform(target, Matrix.CreateRotationZ(0.0001f));
+
+                target_neg += light_origin;
+                target_pos += light_origin;
+
+                //perform the ray cast, and figure out what to do about the result
+                float closestFractionNeg = Math.Min(rayCast(light_origin, target_neg), 1f);
+                float closestFractionPos = Math.Min(rayCast(light_origin, target_pos), 1f);
+
+                Vector2 intersectPointPos = light_origin + closestFractionPos * (target_pos - light_origin);
+                Vector2 intersectPointNeg = light_origin + closestFractionNeg * (target_neg - light_origin);
+
+                if (game.input.DevMode)
+                {
+                    game.drawLine(light_origin, intersectPointNeg, (Color.White));
+                    game.drawLine(light_origin, intersectPointPos, (Color.White));
+                }
+
+                intersectionPoints[(float)Math.Atan2((float)(intersectPointNeg - light_origin).Y, (float)(intersectPointNeg - light_origin).X)] = intersectPointNeg;
+                intersectionPoints[(float)Math.Atan2((float)(intersectPointPos - light_origin).Y, (float)(intersectPointPos - light_origin).X)] = intersectPointPos;
+            }
+
+            //now, attempt (poorly) to create a triangle mesh based on our hopefully sorted points
+            GraphicsDevice gd = game.GraphicsDevice;
+
+            //VertexPositionColor[] vertex_list = new VertexPositionColor[_max_rays * 3];
+
+            ArrayList vertex_list = new ArrayList();
+
+            Color vertexColor = Color.FromNonPremultiplied(255, 255, 255, 92);
+
+            bool first = true;
+            foreach (var intersection in intersectionPoints)
+            {
+                if (!first)
+                {
+                    //finish the last triangle
+                    vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), vertexColor));
+                }
+                //start a new triangle leading with this edge
+                vertex_list.Add(new VertexPositionColor(new Vector3(light_origin.X, light_origin.Y, 0), vertexColor));
+                vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), vertexColor));
+
+                first = false;
+            }
+
+            //finish the very last triangle (it loops to the beginning)
+            vertex_list.Add(new VertexPositionColor(new Vector3(intersectionPoints.First().Value.X, intersectionPoints.First().Value.Y, 0), vertexColor));
+
+            buffer.SetData<VertexPositionColor>((VertexPositionColor[])vertex_list.ToArray(typeof(VertexPositionColor)));
+            gd.SetVertexBuffer(buffer);
+
+            //make sure the light shader is set up
+            light_shader.CurrentTechnique.Passes[0].Apply();
+
+            //draw them primitives!
+            gd.DrawPrimitives(PrimitiveType.TriangleList, 0, intersectionPoints.Count);
+
+            
+        }
+
+        float min_distance;
+
+        float ReportFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction)
+        {
+            if (fraction < min_distance)
+            {
+                //check shadow logic
+                if (((PhysicsObject)fixture.GetBody().GetUserData()).cast_shadow) {
+                    min_distance = fraction;
+                }
+            }
+
+            return 1;
+        }
+
+        float rayCast(Vector2 start, Vector2 end)
+        {
+            min_distance = (end - start).Length();
+            game.world.RayCast(ReportFixture, start, end);
+            return min_distance;
         }
 
     }

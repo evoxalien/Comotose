@@ -136,8 +136,8 @@ namespace Comatose
             return current_character >= displayText.Length;
         }
 
-        public int height;
-        public int width;
+        public int height = 0;
+        public int width = 0;
 
         public int maxLines = 3;
         private SortedList<int, string> displayMessage = new SortedList<int, string>();

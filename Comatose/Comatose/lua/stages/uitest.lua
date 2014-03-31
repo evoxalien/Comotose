@@ -33,19 +33,19 @@ light1.y = 62
 --light2.rotation = hero.rotation
 
 chair = PhysicsObject.create()
-chair.x = 50
+chair.x = 40
 chair.y = 15
 chair:sprite("Chair1")
 
-chair2 = PhysicsObject.create()
-chair2.x = 50
-chair2.y = 15
-chair2:sprite("Chair1")
+--chair2 = PhysicsObject.create()
+--chair2.x = 50
+--chair2.y = 15
+--chair2:sprite("Chair1")
 
-chair3 = PhysicsObject.create()
-chair3.x = 50
-chair3.y = 15
-chair3:sprite("Chair1")
+--chair3 = PhysicsObject.create()
+--chair3.x = 60
+--chair3.y = 15
+--chair3:sprite("Chair1")
 
 chair4 = PhysicsObject.create()
 chair4.x = 50
@@ -68,15 +68,14 @@ function chair.click(mx,my)
 
 end
 
-
-function chair2.click(mx,my)
-	if chair2.in_inv== false or chair2.in_inv==nil then
-		ui:AddObject(chair2,"chair 2")
-	else
-		ui:SelectID(chair2.ID())
-	end
-end
-
+--function chair2.click(mx,my)
+--	ui:AddObject(chair2)
+	--chair.z_index=-1
+--end
+--function chair3.click(mx,my)
+--	ui:AddObject(chair3)
+	--chair.z_index=-1
+--end
 
 function chair3.click(mx,my)
 	if chair3.in_inv== false or chair3.in_inv==nil then
@@ -136,8 +135,6 @@ function ui.everyFrame()
 		
 
 end
-
-
 
 
 --function light2:everyFrame()
