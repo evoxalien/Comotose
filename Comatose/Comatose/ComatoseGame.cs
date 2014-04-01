@@ -150,6 +150,9 @@ namespace Comatose {
                 case "TextBox":
                     new_object = (GameObject)new TextBox(this);
                     break; 
+                case "AI":
+                    new_object = (GameObject)new AI(this);
+                    break;
                 default:
                     throw (new NotImplementedException("Spawn Class Not Found! -_-"));
             }
@@ -222,7 +225,8 @@ namespace Comatose {
             //loadStage("mapeditor");
             //loadStage("test");
             //loadStage("textboxtest");
-            loadLevel("demo");
+            loadStage("aitest");
+            //loadLevel("demo");
 
            
         }

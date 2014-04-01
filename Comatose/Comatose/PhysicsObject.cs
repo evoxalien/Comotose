@@ -19,7 +19,7 @@ namespace Comatose
         public Body body;
         protected Fixture fixture;
         public bool cast_shadow = true;
-        private bool _centered = false;
+        protected bool _centered = false;
 
         #region Getters / Setters for body properties
         public float x

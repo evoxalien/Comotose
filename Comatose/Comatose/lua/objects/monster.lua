@@ -1,5 +1,5 @@
 ﻿
-Monster = inherits(PhysicsObject)
+Monster = inherits(AI)
 
 function Monster:init()
 	self:sprite("MonsterV_1")

@@ -119,6 +119,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI.cs" />
     <Compile Include="cDebugDraw.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GameObject.cs" />
@@ -227,6 +228,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="lua\stages\textboxtest.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="lua\stages\aitest.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="lua\stages\uitest.lua">
