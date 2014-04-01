@@ -32,6 +32,7 @@ function Hero:init()
 
 	--setup the sanity and flashlight bars
 	self.sanity = 100
+	self.sanity_cooldown = 0
 
 	self.sanity_bar = Bar.create()
 	self.sanity_bar:set(100,100,1280/2,720-100,1280/2,50)
@@ -74,7 +75,14 @@ function Hero:everyFrame()
 	--update my sanity based on the flashlight and darkness status
 	--TODO: Handle "lit rooms" where the flashlight can be off safely
 	if not self.flashlight.on then
-		self.sanity = math.max(self.sanity - 0.1, 0)
+		self.sanity = math.max(self.sanity - (1 / 60), 0)
+		self.sanity_cooldown = 5 * 60 --10 second cooldown
+	end
+
+	--process sanity cooldowns, and restore sanity when I am safe
+	self.sanity_cooldown = math.max(self.sanity_cooldown - 1, 0)
+	if self.sanity_cooldown == 0 then
+		self.sanity = math.min(self.sanity + (10 / 60), 100)
 	end
 
 	--update the UI
