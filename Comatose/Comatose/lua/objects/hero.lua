@@ -39,7 +39,7 @@ function Hero:init()
 	self.sanity_bar:color(128,128,128,255)
 	
 	self.flashlight_bar = Bar.create()
-	self.flashlight_bar:set(100,100,1280/2,720-50,1280/2,50)
+	self.flashlight_bar:set(300,300,1280/2,720-50,1280/2,50)
 	self.flashlight_bar:color(255,255,64,255)
 end
 
