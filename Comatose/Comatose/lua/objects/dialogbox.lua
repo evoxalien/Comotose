@@ -23,7 +23,6 @@ function DialogBox:init()
 	self.z_index = 900
 	self.portrait_box.z_index = 950
 	self.button.z_index = 950
-
 end
 
 function DialogBox:portrait(sprite)

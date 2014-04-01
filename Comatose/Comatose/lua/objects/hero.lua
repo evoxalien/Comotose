@@ -8,62 +8,78 @@ function Hero:init()
 	self.z_index = 0
 	self.centered = true
 	
-	self.sanity = 100
-	self.flashlight = 100
-
-	self.light = LightSource.create({
-		ray_length=50,
-		rays_to_cast=2500,
-		light_spread_angle=(math.pi / 3)})
-
+	--add ourselves to the stage as a global object
 	stage.hero = self
+	
+	--set up flashlight stuff
+	self.flashlight = Flashlight.create()
+	--offset the light so it's in the hero's "hand"
+	self.flashlight.x = self.x - 1.2
+	self.flashlight.y = self.y + 1.5
 
+	self.flashlight:join(self.ID())
+
+	--setup the hero camera
 	self.camera = HeroCamera.create()
 	self.camera.target = self
 
+	--the hero only exists once, so he will control the stage dialog and UI
 	stage.dialog = DialogBox.create()
 	stage.dialog:position(80, 720 - 100)
-	stage.dialog.width = 1280 - 80
+	stage.dialog.width = 1280 / 2 - 80
 	stage.dialog.height = 100
 	stage.dialog.character_delay = 3
 
-	--do weird things with the light
-	self.light.x = self.x - 1.2
-	self.light.y = self.y + 1.5
+	--setup the sanity and flashlight bars
+	self.sanity = 100
 
-	self.light:join(self.ID())
-
-
+	self.sanity_bar = Bar.create()
+	self.sanity_bar:set(100,100,1280/2,720-100,1280/2,50)
+	self.sanity_bar:color(128,128,128,255)
+	
+	self.flashlight_bar = Bar.create()
+	self.flashlight_bar:set(100,100,1280/2,720-50,1280/2,50)
+	self.flashlight_bar:color(255,255,64,255)
 end
 
 function Hero:everyFrame()
+	--root the aiming function, so that subsequent calls will have the correct angle
 	Input:setAimCenter(self.x, self.y)
 
-	Particle:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
+	--FUN TIMES
+	--Particle:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
+
 	if not Input:MovementDeadzone() then
 		direction = Input:GetMovementDirection()
 		self.vx = direction.X * self.speed
 		self.vy = direction.Y * self.speed
 
-		--rotationey things
+		--if we're not using the right-stick, then rotate to face the direction we're walking
 		if Input:AimingDeadzone() then
 			self:rotateTo(math.atan2(direction.X, -direction.Y))
 		end
 	else
+		--kill off any momemtum we might have
 		self.vx = 0
 		self.vy = 0
 		self.vr = 0
 	end
 
+	--if we're using the right stick, aim that way (regardless of movement direction)
 	if not Input:AimingDeadzone() then
 		aim_direction = Input:GetAimDirection()
 		self:rotateTo(math.atan2(aim_direction.X, -aim_direction.Y))
 	end
 
-	--self.light.rotation = self.rotation
+	--update my sanity based on the flashlight and darkness status
+	--TODO: Handle "lit rooms" where the flashlight can be off safely
+	if not self.flashlight.on then
+		self.sanity = math.max(self.sanity - 0.1, 0)
+	end
 
-	--self.light.x = self.x
-	--self.light.y = self.y
+	--update the UI
+	self.flashlight_bar:setCurrent(self.flashlight.charge)
+	self.sanity_bar:setCurrent(self.sanity)
 end
 
 HeroCamera = inherits(GameObject)

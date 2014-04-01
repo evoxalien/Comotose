@@ -205,7 +205,8 @@ namespace Comatose
 
             ArrayList vertex_list = new ArrayList();
 
-            Color vertexColor = Color.FromNonPremultiplied(255, 255, 255, 0);
+            Color originColor = sprite_color;
+            Color outsideColor = Color.FromNonPremultiplied(sprite_color.R, sprite_color.G, sprite_color.B, 0);
 
             bool first = true;
             foreach (var intersection in intersectionPoints)
@@ -213,17 +214,17 @@ namespace Comatose
                 if (!first)
                 {
                     //finish the last triangle
-                    vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), vertexColor));
+                    vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), outsideColor));
                 }
                 //start a new triangle leading with this edge
-                vertex_list.Add(new VertexPositionColor(new Vector3(light_origin.X, light_origin.Y, 0), Color.FromNonPremultiplied(255, 255, 255, 255)));
-                vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), vertexColor));
+                vertex_list.Add(new VertexPositionColor(new Vector3(light_origin.X, light_origin.Y, 0), sprite_color));
+                vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), outsideColor));
 
                 first = false;
             }
 
             //finish the very last triangle (it loops to the beginning)
-            vertex_list.Add(new VertexPositionColor(new Vector3(intersectionPoints.First().Value.X, intersectionPoints.First().Value.Y, 0), vertexColor));
+            vertex_list.Add(new VertexPositionColor(new Vector3(intersectionPoints.First().Value.X, intersectionPoints.First().Value.Y, 0), outsideColor));
 
             buffer.SetData<VertexPositionColor>((VertexPositionColor[])vertex_list.ToArray(typeof(VertexPositionColor)));
             gd.SetVertexBuffer(buffer);
