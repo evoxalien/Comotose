@@ -7,9 +7,10 @@ function Hero:init()
 	self:shape("circle")
 	self.z_index = 0
 	self.centered = true
-	--self.fixedRotation = true;
-
 	
+	self.sanity = 100
+	self.flashlight = 100
+
 	self.light = LightSource.create({
 		ray_length=50,
 		rays_to_cast=2500,
@@ -31,6 +32,8 @@ function Hero:init()
 	self.light.y = self.y + 1.5
 
 	self.light:join(self.ID())
+
+
 end
 
 function Hero:everyFrame()

@@ -1,6 +1,6 @@
-﻿Bar= inherits(GameObject)
+﻿bar = inherits(GameObject)
 
-function Bar:init()
+function bar:init()
 	self.max=0
 	self.cur=0
 	self.z_index=1
@@ -9,7 +9,7 @@ function Bar:init()
 	self.height=0
 end
 
-function Bar:set(m,i,x,y,width,height)
+function bar:set(m,i,x,y,width,height)
 	self.max=m
 	self.cur=i
 	self.percent=self.cur/self.max
@@ -20,11 +20,11 @@ function Bar:set(m,i,x,y,width,height)
 	self:scale(self.percent*self.max,height)
 end
 
-function Bar:setColor(r,g,b,a)
+function bar:setColor(r,g,b,a)
 	self:color(r,g,b,a)
 end
 
-function Bar:setCurrent(c)
+function bar:setCurrent(c)
 	self.cur=c
 	self.percent=self.cur/self.max
 	self:scale(self.percent*self.max,self.height)
