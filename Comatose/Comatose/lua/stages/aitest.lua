@@ -3,8 +3,11 @@ ui=	UI.create()
 cursor=Cursor.create()
 monster=Monster.create()
 
+<<<<<<< HEAD
 monster:Target(hero.ID())
 
+=======
+>>>>>>> starting ai
 chair = PhysicsObject.create()
 chair.x = 40
 chair.y = 15

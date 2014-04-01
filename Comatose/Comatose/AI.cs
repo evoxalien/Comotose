@@ -16,6 +16,7 @@ using System.Collections;
 
 namespace Comatose
 {
+<<<<<<< HEAD
 
     class Triangle
     {
@@ -151,11 +152,27 @@ namespace Comatose
         public enum state { IDLE, SEARCHING, MOVING, ATTACKING }
         NavMesh mesh;
         private PhysicsObject target;
+=======
+    class AI : PhysicsObject
+    {
+        public enum state { IDLE,SEARCHING,MOVING,ATTACKING}
+        private List<Vector2> navmesh=new List<Vector2>();
+
+
+        //stuff to draw mesh
+        /*
+        VertexBuffer buffer;
+        Color vertexColor = Color.FromNonPremultiplied(255,255,255,0);
+        ArrayList vertex_list = new ArrayList();
+        BasicEffect nav_shader;
+         */
+>>>>>>> starting ai
 
 
         public AI(ComatoseGame gm)
             : base(gm)
         {
+<<<<<<< HEAD
             //nice triangle
             mesh = new NavMesh(gm);
             mesh.AddTriangle(new Vector2(0, 0), new Vector2(20, 10), new Vector2(20, 20));
@@ -213,10 +230,23 @@ namespace Comatose
         }
 
 
+=======
+
+
+            //nice triangle
+            navmesh.Add(new Vector2( 10,10));
+            navmesh.Add(new Vector2( 20,10));
+            navmesh.Add(new Vector2( 10,20));
+            navmesh.Add(new Vector2( 20,20));
+
+        }
+
+>>>>>>> starting ai
         public override void Draw(GameTime gameTime)
         {
             if (game.input.DevMode)
             {
+<<<<<<< HEAD
                 if (target!= null)
                 {
                     mesh.Draw(gameTime, new Vector2(target.x,target.y));
@@ -227,6 +257,17 @@ namespace Comatose
 
             rotate(body.GetAngle());
 
+=======
+                game.drawLine(navmesh[0], navmesh[1], Color.FromNonPremultiplied(255, 255, 255, 255));
+                game.drawLine(navmesh[1], navmesh[2], Color.FromNonPremultiplied(255, 255, 255, 255));
+                game.drawLine(navmesh[0], navmesh[2], Color.FromNonPremultiplied(255, 255, 255, 255));
+                game.drawLine(navmesh[3], navmesh[0], Color.FromNonPremultiplied(255, 255, 255, 255));
+            }
+
+
+
+            rotate(body.GetAngle());
+>>>>>>> starting ai
             if (_centered)
             {
                 position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
@@ -239,7 +280,11 @@ namespace Comatose
             }
 
             base.Draw(gameTime);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> starting ai
         }
     }
 }
