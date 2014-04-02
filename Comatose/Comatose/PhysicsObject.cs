@@ -121,7 +121,7 @@ namespace Comatose
         #endregion
 
         #region Collision Groups
-        protected string collision_group;
+        public string collision_group;
 
         public void set_group(string gp)
         {

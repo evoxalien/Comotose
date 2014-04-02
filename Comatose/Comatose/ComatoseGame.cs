@@ -77,6 +77,8 @@ namespace Comatose {
             }
         }
 
+        ContactListener listener;
+
         protected void InitLua()
         {
             //clear out the current gamestate
@@ -84,6 +86,9 @@ namespace Comatose {
             world = new World(new Vector2(0f, gravity), true);
             world.DebugDraw = new cDebugDraw(this);
             world.DebugDraw.Flags = DebugDrawFlags.Shape;
+
+            listener = new ContactListener(this, vm);
+            world.ContactListener = listener;
 
             //bind in the game object; this means that any public functions
             //or variables will  be accessible by lua, assuming lua understands how
@@ -291,7 +296,7 @@ namespace Comatose {
 
             //process world stuffs
             world.Step(1.0f / 60.0f, 6, 2);
-            //listener.HandleEvents(); //process collisions engineside as needed
+            listener.HandleEvents(); //process collisions engineside as needed
             vm.DoString("destroyObjects()"); //cleanup any objects that need to die
             vm.DoString("processEvent(\"everyFrame\")");
 

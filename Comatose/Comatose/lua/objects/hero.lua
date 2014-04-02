@@ -7,6 +7,8 @@ function Hero:init()
 	self:shape("circle")
 	self.z_index = 0
 	self.centered = true
+
+	self:set_group("hero")
 	
 	--add ourselves to the stage as a global object
 	stage.hero = self

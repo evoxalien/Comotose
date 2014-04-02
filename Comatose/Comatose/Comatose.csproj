@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cDebugDraw.cs" />
+    <Compile Include="ContactListener.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Input.cs" />
