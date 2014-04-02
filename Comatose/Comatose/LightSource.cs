@@ -66,6 +66,9 @@ namespace Comatose
             }
             current_rotation = current_rotation % ((float)Math.PI * 2);
 
+            //thing!
+            rotation = current_rotation;
+
             List<Vector2> testPoints = new List<Vector2>();
             SortedList<float, Vector2> intersectionPoints = new SortedList<float, Vector2>();
 

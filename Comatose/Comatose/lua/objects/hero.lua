@@ -92,6 +92,30 @@ function Hero:everyFrame()
 	self.sanity_bar:setCurrent(self.sanity)
 end
 
+function Hero:insideFlashlight(entity)
+	--get the angle between this object and the flashlight's center
+	angle = math.atan2(entity.y - self.flashlight.y, entity.x - self.flashlight.x)
+
+	--see if that angle is within the flashlight's cone
+	angle = angle - self.flashlight.rotation + math.pi / 2
+	while angle < 0 do
+		angle = angle + math.pi * 2
+	end
+	while angle > math.pi * 2 do
+		angle = angle - math.pi * 2
+	end
+
+	if angle < self.flashlight.light_spread_angle / 2 or angle > math.pi * 2 - self.flashlight.light_spread_angle / 2 then
+		--distance check now
+		if math.abs(entity.x - self.flashlight.x) ^ 2 + math.abs(entity.y - self.flashlight.y) ^ 2 < self.flashlight.ray_length ^ 2 then
+			return true
+		else
+			return false
+		end
+	end
+	return false
+end
+
 HeroCamera = inherits(GameObject)
 
 function HeroCamera:init()

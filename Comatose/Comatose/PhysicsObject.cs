@@ -300,7 +300,7 @@ namespace Comatose
             if (_centered)
             {
                 position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
-                rotation_origin = new Vector2(texture.Width / 2, texture.Height / 2);
+                rotation_origin = new Vector2(sprite_width / 2, sprite_height / 2);
             }
             else
             {

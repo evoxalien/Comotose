@@ -36,7 +36,7 @@ namespace Comatose {
         public GameConsole console;
         public World world;
 
-        public Vector2 camera = new Vector2(0);        
+        public Vector2 camera = new Vector2(0);
 
         #region Lua
         private class LuaCommand : IConsoleCommand
@@ -260,6 +260,49 @@ namespace Comatose {
 
                 drawLine(start * a + end * b, start * a1 + end * b1, finalColor);
             }
+        }
+
+        float last_ray_distance;
+
+        float ReportFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+            if (fraction < last_ray_distance) {
+                //check shadow logic
+                if (((PhysicsObject)fixture.GetBody().GetUserData()).cast_shadow) {
+                    last_ray_distance = fraction;
+                }
+            }
+
+            return 1;
+        }
+
+        public bool hasLineOfSight(int objectA_id, int objectB_id) 
+        {
+            if (game_objects[objectA_id] is PhysicsObject && game_objects[objectB_id] is PhysicsObject) {
+                PhysicsObject objectA = (PhysicsObject) game_objects[objectA_id];
+                PhysicsObject objectB = (PhysicsObject) game_objects[objectB_id];
+
+                Vector2 start = objectA.body.GetPosition();
+                Vector2 end = objectB.body.GetPosition();
+
+                //note: this intentionally uses object centers. If you don't like it, code something better;
+                //the correct solution to this is HARD.
+                last_ray_distance = 1.0f;
+                world.RayCast(ReportFixture, start, end);
+                if (last_ray_distance < 1.0) {
+                    //Console.WriteLine("shadow: " + last_ray_distance);
+                    if (input.DevMode) {
+                        debugBatch.Begin();
+                        drawLine(start, end, (Color.Red));
+                        debugBatch.End();
+                    }
+                    return false;
+                }
+                else {
+                    //Console.WriteLine("seen!: " + last_ray_distance);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void drawLine(Vector2 start, Vector2 end, Color color)
