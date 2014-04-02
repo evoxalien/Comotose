@@ -55,7 +55,7 @@ namespace Comatose
         {
             if (displayMessage.Count <= 0)
             {
-                return;
+                return; //bail if there's nothing to display
             }
             if (current_frame > 0)
             {
@@ -63,7 +63,7 @@ namespace Comatose
             }
             else
             {
-                //see if we need to update our draw variables
+                //Only process animations if we're not finished with them yet
                 if (current_character < displayText.Length)
                 {
                     current_character++;
@@ -78,7 +78,8 @@ namespace Comatose
 
             //figure out screen position (same logic as GameObject base, but we aren't a
             //sprite, so we repeat here)
-            Vector2 draw_position = screen_position - game.camera * camera_weight;
+            Vector2 draw_position = (screen_position + new Vector2(margin_left, margin_top)) - game.camera * camera_weight;
+            
             if (parent_object != null)
                 draw_position += parent_object.screen_position;
 
@@ -139,6 +140,11 @@ namespace Comatose
         public int height = 0;
         public int width = 0;
 
+        public int margin_left = 0;
+        public int margin_right = 0;
+        public int margin_top = 0;
+        public int margin_bottom = 0;
+
         public int maxLines = 3;
         private SortedList<int, string> displayMessage = new SortedList<int, string>();
 
@@ -159,7 +165,7 @@ namespace Comatose
                 {
                     if (currentLine.Length > 0)
                     {
-                        if (sprite_font.MeasureString(currentLine + " " + word).X > width)
+                        if (sprite_font.MeasureString(currentLine + " " + word).X > width - margin_left - margin_right)
                         {
                             displayMessage.Add(lineNum++, currentLine);
                             currentLine = "";

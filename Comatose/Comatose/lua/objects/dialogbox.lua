@@ -17,12 +17,24 @@ function DialogBox:init()
 
 	self.portrait_box = GameObject.create()
 	self.portrait_box:color(0,0,0,0)
-	self.portrait_box:position(8,720 - 100 + 8)
 	self.portrait_box.camera_weight = 0
 
 	self.z_index = 900
 	self.portrait_box.z_index = 950
 	self.button.z_index = 950
+
+	--margins for the textbox
+	self.margin_left = 8 + 50 - 32 + 64
+	self.margin_right = 50 - 32
+	self.margin_top = 8
+	self.margin_bottom = 8
+
+	--background sprite / color thing
+	self.background = GameObject.create()
+	self.background:sprite("pixel")
+	self.background:color(0,0,0,128)
+	self.background.z_index = 890
+	self.background.camera_weight = 0
 end
 
 function DialogBox:portrait(sprite)
@@ -43,11 +55,6 @@ function DialogBox:displayText(text)
 	self.current_section = 1
 	
 	self:text(self.sections[self.current_section])
-
-	--position the button based on the size of the dialog box
-	position = self:getPosition()
-	self.button:position(position.X + self.width - 32, position.Y + self.height - 32)
-	
 end
 
 function DialogBox:everyFrame()
@@ -69,6 +76,14 @@ function DialogBox:everyFrame()
 		self.button:color(0,0,0,0)
 		self.portrait_box:color(0,0,0,0)
 	else
+		position = self:getPosition()
+
+		--position everything correctly, based on our current size and position
+		self.button:position(position.X + self.width - 32 - self.margin_right, position.Y + self.height - 32 - self.margin_bottom)
+		self.portrait_box:position(position.X + 50 - 32, position.Y + 50 - 32)
+		self.background:position(position.X, position.Y)
+		self.background:scale(self.width, self.height)
+
 		self:color(255,255,128,255)
 		self.portrait_box:color(255,255,255,255)
 

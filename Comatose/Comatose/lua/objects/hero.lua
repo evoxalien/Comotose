@@ -25,10 +25,10 @@ function Hero:init()
 
 	--the hero only exists once, so he will control the stage dialog and UI
 	stage.dialog = DialogBox.create()
-	stage.dialog:position(80, 720 - 100)
-	stage.dialog.width = 1280 / 2 - 80
+	stage.dialog:position(0, 720 - 100)
+	stage.dialog.width = 1280 / 2
 	stage.dialog.height = 100
-	stage.dialog.character_delay = 3
+	stage.dialog.character_delay = 1
 
 	--setup the sanity and flashlight bars
 	self.sanity = 100
