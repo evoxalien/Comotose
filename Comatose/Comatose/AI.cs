@@ -30,7 +30,7 @@ namespace Comatose
             points.Add(c);
         }
 
-        public bool InTriangle(Vector2 p)
+        public bool Inside(Vector2 p)
         {
             Vector2 v0, v1, v2;
             float d0, d1, d2, d3, d4;
@@ -61,7 +61,7 @@ namespace Comatose
 
         }
 
-        public bool SamePoint(Vector2 p)
+        public bool SharePoint(Vector2 p)
         {
             foreach(var point in points)
             {
@@ -78,33 +78,81 @@ namespace Comatose
                 game.drawLine(points[2], points[0], c);
         }
     }
+
+    class Polygon
+    {
+        public List<Vector2> points;
+        public Polygon(List <Vector2> p)
+        {
+            points = p;
+        }
+
+        public bool Inside(Vector2 p)
+        {
+            int i;
+            int j;
+            bool r = false;
+
+            for (i = 0, j = points.Count - 1; i < points.Count; j=i++)
+            {
+                if (
+                    ((points[i].Y > p.Y) != (points[j].Y > p.Y)) &&
+                    (p.X < (points[j].X - points[i].X) *
+                    (p.Y - points[i].Y) / (points[j].Y - points[i].Y) + points[i].X))
+                {
+                    r = !r;
+                }
+            }
+            return r;
+        }
+
+        public bool SharePoint(Vector2 p)
+        {
+            return false;
+
+        }
+
+        public void Draw(GameTime gameTime,ComatoseGame game,Color c)
+        {
+
+            for (int i = 0; i < points.Count-1;i++ )
+                game.drawLine(points[i], points[i+1], c);
+
+            //last to first
+                game.drawLine(points.Last(), points[0], c);
+        }
+
+
+
+    }
+
     class NavMesh
     {
-        public List<Triangle> triangles;
+        public List<Polygon> polygons;
         private ComatoseGame game;
         private int count;
         
         public NavMesh(ComatoseGame gm)
         {
             game = gm;
-            triangles = new List<Triangle>();
+            polygons = new List<Polygon>();
             count = 0;
         }
 
-        public void AddTriangle(Vector2 a, Vector2 b, Vector2 c)
+        public void Add(List<Vector2> p)
         {
-            triangles.Add(new Triangle(a,b,c));
+            polygons.Add(new Polygon(p));
             count++;
         }
         //finds triangles that share the same point
-        public List<Triangle> FindNeighbors(Vector2 p)
+        public List<Polygon> FindNeighbors(Vector2 p)
         {
-            List<Triangle> neighbors=new List<Triangle>();
-            foreach (var triangle in triangles)
+            List<Polygon> neighbors=new List<Polygon>();
+            foreach (var poly in polygons)
             {
-                if (triangle.SamePoint(p))
+                if (poly.SharePoint(p))
                 {
-                    neighbors.Add(triangle);
+                    neighbors.Add(poly);
                 }
             }
             return neighbors;
@@ -115,16 +163,16 @@ namespace Comatose
         { 
             for (int i = 0; i < count ; i++ )
             {
-                if (triangles[i].InTriangle(p))
+                if (polygons[i].Inside(p))
                     return i;
             }
             return -1;
         }
         public void Draw(GameTime gameTime)
         {
-            for (int i = 0; i < count*3; i+=3)
+            for (int i = 0; i < count; i++)
             {
-                triangles[i].Draw(gameTime, game, Color.FromNonPremultiplied(255, 255, 255, 255));
+                polygons[i].Draw(gameTime, game, Color.FromNonPremultiplied(255, 255, 255, 255));
             }
         }
         public void Draw(GameTime gameTime, Vector2 p)
@@ -137,11 +185,11 @@ namespace Comatose
             {
                 if (i == found)
                 {
-                    triangles[i].Draw(gameTime, game, Color.FromNonPremultiplied(255, 0, 0, 255));
+                    polygons[i].Draw(gameTime, game, Color.FromNonPremultiplied(255, 0, 0, 255));
                 }
                 else
                 {
-                    triangles[i].Draw(gameTime, game, Color.FromNonPremultiplied(255, 255, 255, 255));
+                    polygons[i].Draw(gameTime, game, Color.FromNonPremultiplied(255, 255, 255, 255));
                 }
             }
         }
@@ -173,11 +221,30 @@ namespace Comatose
             : base(gm)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             //nice triangle
+=======
+>>>>>>> Change to using polygons instead
             mesh = new NavMesh(gm);
-            mesh.AddTriangle(new Vector2(0, 0), new Vector2(20, 10), new Vector2(20, 20));
-            mesh.AddTriangle(new Vector2(20, 30), new Vector2(30, 10), new Vector2(30, 50));
 
+            List<Vector2> temp=new List<Vector2>();
+            temp.Add(new Vector2(0, 0));
+            temp.Add(new Vector2(10, 0));
+            temp.Add(new Vector2(10, 10));
+            temp.Add(new Vector2(20, 10));
+            temp.Add(new Vector2(0, 20));
+            temp.Add(new Vector2(0, 0));
+
+            mesh.Add(temp);
+
+            temp = new List<Vector2>();
+
+            temp.Add(new Vector2(10, 10));
+            temp.Add(new Vector2(20, 10));
+            temp.Add(new Vector2(25, 15));
+            temp.Add(new Vector2(20, 00));
+
+            mesh.Add(temp);
         }
         public void Target(int objectID) 
         {
@@ -210,7 +277,7 @@ namespace Comatose
                     else //we need to do astar!
                     {
                         //first get the points to the triangle we are in
-                        foreach(var point in mesh.triangles[a].points)
+                        foreach(var point in mesh.polygons[a].points)
                         {
 
 

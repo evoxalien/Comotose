@@ -51,7 +51,7 @@ function Hero:everyFrame()
 
 	--FUN TIMES
 	--Particle:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
-	Particle:CreateFire(self.x , self.y, 55)
+	--Particle:CreateFire(self.x , self.y, 55)
 	-- Keep it reasonable
 
 	if not Input:MovementDeadzone() then
