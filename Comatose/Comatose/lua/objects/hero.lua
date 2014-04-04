@@ -5,7 +5,7 @@ function Hero:init()
 	self.framesAlive = 0
 	self.speed = 20
 	self:shape("circle")
-	self.z_index = 0
+	self.z_index = 1
 	self.centered = true
 
 	self:set_group("hero")
@@ -51,6 +51,7 @@ function Hero:everyFrame()
 
 	--FUN TIMES
 	--Particle:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
+	Particle:CreateFire(self.x , self.y, 15)
 
 	if not Input:MovementDeadzone() then
 		direction = Input:GetMovementDirection()

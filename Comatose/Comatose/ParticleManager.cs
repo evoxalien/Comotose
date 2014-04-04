@@ -55,6 +55,21 @@ namespace Comatose
             list[index1] = list[index2];
             list[index2] = temp;
         }
+        #region NextFloat
+        float NextFloat(Random rand, float minValue, float maxValue)
+        {
+            return (float)rand.NextDouble() * (maxValue - minValue) + minValue;
+        }
+        #endregion
+
+        #region NextVector2
+        Vector2 NextVector2(Random rand, float minLength, float maxLength)
+        {
+            double theta = rand.NextDouble() * 2 * Math.PI;
+            float length = NextFloat(rand, minLength, maxLength);
+            return new Vector2(length * (float)Math.Cos(theta), length * (float)Math.Sin(theta));
+        }
+        #endregion
         #endregion
 
         #region CreateParticle
@@ -140,30 +155,11 @@ namespace Comatose
                 var particle = particleList[i];
 
                 Vector2 origin = new Vector2(particle.Texture.Width / 2, particle.Texture.Height / 2);
-                spriteBatch.Draw(particle.Texture, particle.Position - game.camera, null, particle.Tint, particle.Orientation, origin, particle.Scale, 0, 0);
+                spriteBatch.Draw(particle.Texture, particle.Position - game.camera, null, particle.Tint, particle.Orientation, origin, particle.Scale, 0, 0.5f);
 
             }
         }
         #endregion
-
-        #region AdditionalFunctions
-        #region NextFloat
-        float NextFloat(Random rand, float minValue, float maxValue)
-        {
-            return (float)rand.NextDouble() * (maxValue - minValue) + minValue;
-        }
-        #endregion
-
-        #region NextVector2
-        Vector2 NextVector2(Random rand, float minLength, float maxLength)
-        {
-            double theta = rand.NextDouble() * 2 * Math.PI;
-            float length = NextFloat(rand, minLength, maxLength);
-            return new Vector2(length * (float)Math.Cos(theta), length * (float)Math.Sin(theta));
-        }
-        #endregion
-        #endregion
-
 
         #region CreateCalls
         public void CreateExplosion(int x, int y, int count, int r, int b, int g)
@@ -179,10 +175,62 @@ namespace Comatose
                 var state = new ParticleState()
                 {
                     Velocity = NextVector2(rand, speed, speed),
-                    Type = ParticleType.Enemy,
+                    Type = ParticleType.Explosion,
                     LengthMultiplier = 1f
                 };
                 CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 190f, new Vector2(1.0f), state);
+            }
+        }
+
+        public void CreateFire(int x, int y, int count)
+        {
+
+            int r = rand.Next(210, 250);
+            int g = rand.Next(30, 90);
+            int b = rand.Next(30, 50);
+
+            Vector2 Position;
+            Texture2D particleTexture = game.Content.Load<Texture2D>("art/Glow");
+            for (int i = 0; i < count/2; i++)
+            {
+                Position = new Vector2(x = rand.Next(x - 1, x + 1) + 1, y = rand.Next(y - 1, y + 1) + 1) * game.physics_scale;
+                float speed = 3f * (1f - 1 / NextFloat(rand, 1f, 20f));
+                var state = new ParticleState()
+                {
+                    Velocity = NextVector2(rand, speed, speed/2),
+                    Type = ParticleType.Fire,
+                    LengthMultiplier = 1.5f
+                };
+                CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(1.0f), state);
+            }
+            r = rand.Next(220, 240);
+            g = rand.Next(170, 225);
+            b = rand.Next(0, 40);
+            //particleTexture = game.Content.Load<Texture2D>("art/Glow");
+            for (int i = 0; i < count/3; i++)
+            {
+                Position = new Vector2(x = rand.Next(x - 1, x + 1), y = rand.Next(y - 1, y + 1)) * game.physics_scale;
+                float speed = 3f * (1f - 1 / NextFloat(rand, 1f, 5f));
+                var state = new ParticleState()
+                {
+                    Velocity = NextVector2(rand, speed, speed / 5),
+                    Type = ParticleType.Fire,
+                    LengthMultiplier = 1.5f
+                };
+                CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
+            }
+
+            for (int i = 0; i < count / 10; i++)
+            {
+                Position = new Vector2(x = rand.Next(x - 1, x + 1), y = rand.Next(y - 1, y + 1)) * game.physics_scale;
+                float speed = 1f * (1f - 1 / NextFloat(rand, 1f, 5f));
+                var state = new ParticleState()
+                {
+                    Velocity = NextVector2(rand, speed, speed / 5),
+                    Type = ParticleType.Fire,
+                    LengthMultiplier = 1.5f
+                };
+                CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(255, 255, 255, 200), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }
         }
         #endregion

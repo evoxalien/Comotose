@@ -199,7 +199,7 @@ namespace Comatose {
             graphics.ApplyChanges();
 
             //MODIFYING THE FIRST VALUE WILL LIMIT PARTICLE COUNT
-            ParticleManager = new ParticleManager(1024, ParticleState.UpdateParticle, this);
+            ParticleManager = new ParticleManager(1024 * 24, ParticleState.UpdateParticle, this);
 
             base.Initialize();
         }
@@ -357,16 +357,20 @@ namespace Comatose {
             GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
+            
             gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
-            ParticleManager.Draw(gameObjectBatch);
-            foreach (var o in game_objects) {
+            //ParticleManager.Draw(gameObjectBatch);
+            foreach (var o in game_objects)
+            {
                 if (!(o.Value is LightSource))
                 {
                     o.Value.Draw(gameTime);
                 }
             }
             gameObjectBatch.End();
-
+            gameObjectBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
+            ParticleManager.Draw(gameObjectBatch);
+            gameObjectBatch.End();
             //draw lights after the game objects / map (but before debug lines)
             foreach (var o in game_objects)
             {

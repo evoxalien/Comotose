@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Comatose
 {
-    public enum ParticleType { None, Enemy, Bullet, IgnoreGravity }
+    public enum ParticleType { None, Explosion, Fire, Bullet, IgnoreGravity }
 
 
     public struct ParticleState
@@ -72,7 +72,9 @@ namespace Comatose
 
             particle.Tint.A = (byte)(255 * alpha);
 
-            particle.Scale.X = particle.State.LengthMultiplier * Math.Min(Math.Min(1f, 0.2f * speed + 0.1f), alpha);
+            particle.Scale.X = particle.State.LengthMultiplier * Math.Min(Math.Min(1f, 0.2f * speed + 0.2f), alpha);
+            particle.Scale.Y = particle.State.LengthMultiplier * Math.Min(Math.Min(1f, 0.2f * speed + 0.2f), alpha);
+
             //denormalized floats cause significant performance issues
             if (Math.Abs(vel.X) + Math.Abs(vel.Y) < 0.00000000001f)
                 vel = Vector2.Zero;
