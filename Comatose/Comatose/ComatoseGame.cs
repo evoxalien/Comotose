@@ -363,7 +363,6 @@ namespace Comatose {
             // TODO: Add your drawing code here
             
             gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
-            //ParticleManager.Draw(gameObjectBatch);
             foreach (var o in game_objects)
             {
                 if (!(o.Value is LightSource))
