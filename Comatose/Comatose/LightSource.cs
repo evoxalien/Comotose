@@ -210,24 +210,28 @@ namespace Comatose
 
             Color originColor = sprite_color;
             Color outsideColor = Color.FromNonPremultiplied(sprite_color.R, sprite_color.G, sprite_color.B, 0);
+            Color intersectionColor;
 
             bool first = true;
             foreach (var intersection in intersectionPoints)
             {
+                intersectionColor = Color.Lerp(originColor, outsideColor, Math.Min(1.0f, ((intersection.Value - light_origin).Length() / (float)ray_length)));
                 if (!first)
                 {
                     //finish the last triangle
-                    vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), outsideColor));
+                    vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), intersectionColor));
                 }
                 //start a new triangle leading with this edge
                 vertex_list.Add(new VertexPositionColor(new Vector3(light_origin.X, light_origin.Y, 0), sprite_color));
-                vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), outsideColor));
+                vertex_list.Add(new VertexPositionColor(new Vector3(intersection.Value.X, intersection.Value.Y, 0), intersectionColor));
 
                 first = false;
             }
 
+            intersectionColor = Color.Lerp(originColor, outsideColor, Math.Min(1.0f, ((intersectionPoints.First().Value - light_origin).Length() / (float)ray_length)));
+
             //finish the very last triangle (it loops to the beginning)
-            vertex_list.Add(new VertexPositionColor(new Vector3(intersectionPoints.First().Value.X, intersectionPoints.First().Value.Y, 0), outsideColor));
+            vertex_list.Add(new VertexPositionColor(new Vector3(intersectionPoints.First().Value.X, intersectionPoints.First().Value.Y, 0), intersectionColor));
 
             buffer.SetData<VertexPositionColor>((VertexPositionColor[])vertex_list.ToArray(typeof(VertexPositionColor)));
             gd.SetVertexBuffer(buffer);
