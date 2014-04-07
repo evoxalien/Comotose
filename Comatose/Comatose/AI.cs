@@ -108,8 +108,11 @@ namespace Comatose
 
         public bool SharePoint(Vector2 p)
         {
-            return false;
+            foreach (var point in points)
+                if (p == point)
+                    return true;
 
+            return false;
         }
 
         public void Draw(GameTime gameTime,ComatoseGame game,Color c)
@@ -123,7 +126,41 @@ namespace Comatose
         }
 
 
+        //returns a list of points connected by edges to the point
+        public List<Vector2> Connected(Vector2 p)
+        {
+            int i;
+            List<Vector2> connections=new List<Vector2>();
 
+            for(i =0 ;i<points.Count;i++)
+            {
+                if (points[i] == p)
+                {
+                    break;
+                }
+            }
+
+            //its the first point, loop it to the end
+            if(i==0)
+            {
+                connections.Add(points[i+1]);
+                connections.Add(points[points.Count-1]);
+            }
+            //if its the last point, loop it to the front
+            if(i==points.Count-1)
+            {
+                connections.Add(points[i-1]);
+                connections.Add(points[points.Count-1]);
+            }
+
+            //its in between points so we can just use its neighbors in the list
+            {
+                connections.Add(points[i-1]);
+                connections.Add(points[i+1]);
+            }
+
+            return connections;
+        }
     }
 
     class NavMesh
@@ -144,7 +181,7 @@ namespace Comatose
             polygons.Add(new Polygon(p));
             count++;
         }
-        //finds triangles that share the same point
+        //finds polygons that share the same point
         public List<Polygon> FindNeighbors(Vector2 p)
         {
             List<Polygon> neighbors=new List<Polygon>();
@@ -274,16 +311,9 @@ namespace Comatose
 
 
                     }
-                    else //we need to do astar!
-                    {
-                        //first get the points to the triangle we are in
-                        foreach(var point in mesh.polygons[a].points)
-                        {
+                    else //astar here
+                    { }
 
-
-                        }
-
-                    }
 
                 }
             }
@@ -294,6 +324,16 @@ namespace Comatose
         public float FScore(Vector2 p)
         {
             return Vector2.Distance(p, target.body.Position) + Vector2.Distance(body.Position, p);
+        }
+
+        //finds the edge we want to walk through to get from poly i, to poly j to 
+        //make sure that it is wide enough for this ai to go through
+        public float FindEdgeLength(int i,int j)
+        {
+            Vector2 a=new Vector2();
+            Vector2 b = new Vector2();
+
+            return Vector2.Distance(a, b);
         }
 
 
