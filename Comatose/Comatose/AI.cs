@@ -16,7 +16,6 @@ using System.Collections;
 
 namespace Comatose
 {
-
     class Triangle
     {
         public List<Vector2> points;
@@ -231,36 +230,55 @@ namespace Comatose
         }
     }
 
+    class Waypoint
+    {
+        public Vector2 point;
+        public List<Waypoint> edges=new List<Waypoint>();
+        public float fscore;
+
+        public Waypoint(Vector2 p)
+        {
+            point = p;
+        }
+
+        public void AddEdgeNode(Waypoint e)
+        {
+            //add this waypoint to our connected edges
+            edges.Add(e);
+
+            //since this is now connected, add this point to this other point
+            e.edges.Add(this);
+        }
+
+        public void FScore(Vector2 start, Vector2 end)
+        {
+            fscore=Vector2.Distance(point, end) + Vector2.Distance(start, point);
+        }
+
+        public void Draw(GameTime gameTime, ComatoseGame game, Color c)
+        {
+            game.drawLine(point, point, c);
+            foreach (var edge in edges)
+            {
+                game.drawLine(point, edge.point, c);
+            }
+        }
+    }
+
     class AI : PhysicsObject
     {
         public enum state { IDLE, SEARCHING, MOVING, ATTACKING }
-        NavMesh mesh;
+        public List<Waypoint> waypoints; 
         private PhysicsObject target;
 
 
         public AI(ComatoseGame gm)
             : base(gm)
         {
-            mesh = new NavMesh(gm);
-
-            List<Vector2> temp = new List<Vector2>();
-            temp.Add(new Vector2(0, 0));
-            temp.Add(new Vector2(10, 0));
-            temp.Add(new Vector2(10, 10));
-            temp.Add(new Vector2(20, 10));
-            temp.Add(new Vector2(0, 20));
-            temp.Add(new Vector2(0, 0));
-
-            mesh.Add(temp);
-
-            temp = new List<Vector2>();
-
-            temp.Add(new Vector2(10, 10));
-            temp.Add(new Vector2(20, 10));
-            temp.Add(new Vector2(25, 15));
-            temp.Add(new Vector2(20, 00));
-
-            mesh.Add(temp);
+            waypoints = new List<Waypoint>();
+            waypoints.Add(new Waypoint(new Vector2(0, 0)));
+            waypoints[0].AddEdgeNode(new Waypoint(new Vector2(10, 10)));
+            waypoints[0].AddEdgeNode(new Waypoint(new Vector2(25, 20)));
         }
         public void Target(int objectID)
         {
@@ -273,48 +291,33 @@ namespace Comatose
 
         public void Astar()
         {
-            int a, b;
-            //find target in mesh
-            b = mesh.FindInMesh(target.body.Position);
+            List<Waypoint> open = new List<Waypoint>();
+            List<Waypoint> closed = new List<Waypoint>();
+            Waypoint current;
+            bool pathfound = false;
+            int lowest = 0;
 
-            //target is in mesh
-            if (b >= 0)
+            // add the starting point to the list
+            // starting point is the monster, find the closest 
+            List<Waypoint> lineofsightnodes=new List<Waypoint>();
+
+            foreach(var waypoint in waypoints)
             {
-                //find ourselves in the mesh
-                a = mesh.FindInMesh(body.Position);
-
-                if (a >= 0) //if we are in the mesh, navigate to the target
+                if(game.hasVectorLineOfSight(body.Position,waypoint.point))
                 {
-                    if (a == b) //if we are in the same triangle, line of sight, move straight towards target
-                    {
-
-
-                    }
-                    else //astar here
-                    { }
-
-
+                    //add it to the list of nodes within sight
+                    lineofsightnodes.Add(waypoint);
                 }
+            }
+            //we are lost!
+            if(lineofsightnodes.Count==0)
+            {
+
             }
 
 
+
         }
-
-        public float FScore(Vector2 p)
-        {
-            return Vector2.Distance(p, target.body.Position) + Vector2.Distance(body.Position, p);
-        }
-
-        //finds the edge we want to walk through to get from poly i, to poly j to 
-        //make sure that it is wide enough for this ai to go through
-        public float FindEdgeLength(int i, int j)
-        {
-            Vector2 a = new Vector2();
-            Vector2 b = new Vector2();
-
-            return Vector2.Distance(a, b);
-        }
-
 
         public override void Draw(GameTime gameTime)
         {
@@ -322,10 +325,11 @@ namespace Comatose
             {
                 if (target != null)
                 {
-                    mesh.Draw(gameTime, new Vector2(target.x, target.y));
+                    foreach (var point in waypoints)
+                    {
+                        point.Draw(gameTime, game, Color.FromNonPremultiplied(255, 255, 255, 255));
+                    }
                 }
-                else
-                    mesh.Draw(gameTime);
             }
 
             rotate(body.GetAngle());
@@ -343,6 +347,6 @@ namespace Comatose
 
             base.Draw(gameTime);
 
-        }
+    }
     }
 }

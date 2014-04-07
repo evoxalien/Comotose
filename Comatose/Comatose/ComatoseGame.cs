@@ -309,6 +309,27 @@ namespace Comatose {
             return false;
         }
 
+        public bool hasVectorLineOfSight(Vector2 start,Vector2 end)
+        {
+            //note: this intentionally uses object centers. If you don't like it, code something better;
+            //the correct solution to this is HARD.
+            last_ray_distance = 1.0f;
+            world.RayCast(ReportFixture, start, end);
+            if (last_ray_distance < 1.0)
+            {
+                if (input.DevMode)
+                {
+                    debugBatch.Begin();
+                    drawLine(start, end, (Color.Red));
+                    debugBatch.End();
+                }
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public void drawLine(Vector2 start, Vector2 end, Color color)
         {
             start = screenCoordinates(start);
