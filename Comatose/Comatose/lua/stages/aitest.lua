@@ -3,8 +3,9 @@ ui=	UI.create()
 cursor=Cursor.create()
 monster=Monster.create()
 
-print(monster)
-print(monster.Target)
+p1 = Waypoint.create({x=0,y=0})
+p2 = Waypoint.create({x=10,y=10})
+p3 = Waypoint.create({x=25,y=20})
 
 monster:Target(hero.ID())
 

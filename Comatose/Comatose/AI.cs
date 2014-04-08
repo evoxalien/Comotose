@@ -268,29 +268,15 @@ namespace Comatose
     public class AI : PhysicsObject
     {
         public enum state { IDLE, SEARCHING, MOVING, ATTACKING }
-        public List<Waypoint> waypoints; 
         private PhysicsObject target;
+
+        public float testything = 42f;
 
 
         public AI(ComatoseGame gm)
             : base(gm)
         {
-            waypoints = new List<Waypoint>();
-
-            //add in some test points
-            Waypoint p1 = new Waypoint(gm);
-            p1.point = new Vector2(0, 0);
-            waypoints.Add(p1);
-
-            Waypoint p2 = new Waypoint(gm);
-            p2.point = new Vector2(10,10);
-            waypoints.Add(p2);
-
-            Waypoint p3 = new Waypoint(gm);
-            p3.point = new Vector2(25, 20);
-            waypoints.Add(p3);
-
-            Console.WriteLine("Created an AI thing");
+            //Console.WriteLine("Created an AI thing");
         }
 
         public void Target(int objectID)
@@ -314,12 +300,12 @@ namespace Comatose
             // starting point is the monster, find the closest 
             List<Waypoint> lineofsightnodes=new List<Waypoint>();
 
-            foreach(var waypoint in waypoints)
+            foreach(var waypoint in game.waypoints)
             {
-                if(game.hasVectorLineOfSight(body.Position,waypoint.point))
+                if(game.hasVectorLineOfSight(body.Position,waypoint.Value.point))
                 {
                     //add it to the list of nodes within sight
-                    lineofsightnodes.Add(waypoint);
+                    lineofsightnodes.Add(waypoint.Value);
                 }
             }
             //we are lost!

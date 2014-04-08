@@ -159,6 +159,10 @@ namespace Comatose {
                 case "AI":
                     new_object = (GameObject)new AI(this);
                     break;
+                case "Waypoint":
+                    new_object = (GameObject)new Waypoint(this);
+                    waypoints[new_object.ID()] = (Waypoint)new_object;
+                    break;
                 default:
                     throw (new NotImplementedException("Spawn Class Not Found! -_-"));
             }

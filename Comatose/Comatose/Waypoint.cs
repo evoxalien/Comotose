@@ -31,9 +31,11 @@ namespace Comatose {
 
         public Waypoint(ComatoseGame gm)
             : base(gm) {
-
-
-
+                foreach (var waypoint in game.waypoints) {
+                    if (game.hasVectorLineOfSight(this.point, waypoint.Value.point)) {
+                        AddEdgeNode(waypoint.Value);
+                    }
+                }
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime) {
