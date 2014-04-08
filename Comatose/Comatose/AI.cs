@@ -230,11 +230,11 @@ namespace Comatose
         }
     }
 
-    class Waypoint
+    /*class Waypoint
     {
-        public Vector2 point;
-        public List<Waypoint> edges=new List<Waypoint>();
-        public float fscore;
+        //public Vector2 point;
+        //public List<Waypoint> edges=new List<Waypoint>();
+        //public float fscore;
 
         public Waypoint(Vector2 p)
         {
@@ -263,9 +263,9 @@ namespace Comatose
                 game.drawLine(point, edge.point, c);
             }
         }
-    }
+    }*/
 
-    class AI : PhysicsObject
+    public class AI : PhysicsObject
     {
         public enum state { IDLE, SEARCHING, MOVING, ATTACKING }
         public List<Waypoint> waypoints; 
@@ -276,10 +276,23 @@ namespace Comatose
             : base(gm)
         {
             waypoints = new List<Waypoint>();
-            waypoints.Add(new Waypoint(new Vector2(0, 0)));
-            waypoints[0].AddEdgeNode(new Waypoint(new Vector2(10, 10)));
-            waypoints[0].AddEdgeNode(new Waypoint(new Vector2(25, 20)));
+
+            //add in some test points
+            Waypoint p1 = new Waypoint(gm);
+            p1.point = new Vector2(0, 0);
+            waypoints.Add(p1);
+
+            Waypoint p2 = new Waypoint(gm);
+            p2.point = new Vector2(10,10);
+            waypoints.Add(p2);
+
+            Waypoint p3 = new Waypoint(gm);
+            p3.point = new Vector2(25, 20);
+            waypoints.Add(p3);
+
+            Console.WriteLine("Created an AI thing");
         }
+
         public void Target(int objectID)
         {
             if (objectID == -1)
@@ -321,6 +334,8 @@ namespace Comatose
 
         public override void Draw(GameTime gameTime)
         {
+            //moved this to Waypoint class
+            /*
             if (game.input.DevMode)
             {
                 if (target != null)
@@ -330,7 +345,7 @@ namespace Comatose
                         point.Draw(gameTime, game, Color.FromNonPremultiplied(255, 255, 255, 255));
                     }
                 }
-            }
+            }*/
 
             rotate(body.GetAngle());
 

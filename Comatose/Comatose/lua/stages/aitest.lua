@@ -3,6 +3,9 @@ ui=	UI.create()
 cursor=Cursor.create()
 monster=Monster.create()
 
+print(monster)
+print(monster.Target)
+
 monster:Target(hero.ID())
 
 chair = PhysicsObject.create()

@@ -21,6 +21,7 @@ namespace Comatose {
         public SpriteBatch spriteBatch;
         public SpriteBatch debugBatch;
         public Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
+        public Dictionary<int, Waypoint> waypoints = new Dictionary<int, Waypoint>();
         public Input input;
 
         public static ParticleManager ParticleManager { get; private set; }

@@ -14,7 +14,7 @@ using Box2D.XNA;
 
 namespace Comatose
 {
-    class PhysicsObject : GameObject
+    public class PhysicsObject : GameObject
     {
         public Body body;
         protected Fixture fixture;
@@ -22,6 +22,10 @@ namespace Comatose
         protected bool _centered = false;
 
         #region Getters / Setters for body properties
+        public Vector2 point {
+            get { return body.Position; }
+            set { body.Position = value; body.SetAwake(true); }
+        }
         public float x
         {
             get { return body.Position.X; }
