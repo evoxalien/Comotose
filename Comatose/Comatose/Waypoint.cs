@@ -31,21 +31,49 @@ namespace Comatose {
 
         public Waypoint(ComatoseGame gm)
             : base(gm) {
-                foreach (var waypoint in game.waypoints) {
-                    if (game.hasVectorLineOfSight(this.point, waypoint.Value.point)) {
-                        AddEdgeNode(waypoint.Value);
-                    }
+                
+        }
+
+        private bool dirty = true;
+
+        public Vector2 point {
+            get { return body.Position; }
+            set { body.Position = value; body.SetAwake(true); updateEdgeList(); }
+        }
+        public float x {
+            get { return body.Position.X; }
+            set { body.Position = new Vector2(value, body.Position.Y); body.SetAwake(true); dirty = true; }
+        }
+        public float y {
+            get { return body.Position.Y; }
+            set { body.Position = new Vector2(body.Position.X, value); body.SetAwake(true); dirty = true; }
+        }
+
+        public void updateEdgeList() {
+            edges.Clear();
+            foreach (var waypoint in game.waypoints) {
+                if (this != waypoint.Value && game.hasVectorLineOfSight(this.point, waypoint.Value.point)) {
+                    AddEdgeNode(waypoint.Value);
                 }
+            }
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime) {
+            if (dirty) {
+                updateEdgeList();
+                dirty = false;
+            }
+
             //debug lines
             if (game.input.DevMode) {
-                game.drawLine(body.GetPosition(), body.GetPosition(), sprite_color);
-                foreach (var edge in edges) {
-                    game.drawLine(body.GetPosition(), edge.body.GetPosition(), Color.Lerp(sprite_color, Color.White, 0.5f));
+                
+
+                foreach (Waypoint edge in edges) {
+                    game.drawLine(body.GetPosition(), edge.body.GetPosition(), Color.Red);
                 }
+
             }
+
         }
     }
 }

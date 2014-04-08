@@ -115,6 +115,7 @@ namespace Comatose {
         {
             //delete all existing objects
             game_objects.Clear();
+            waypoints.Clear();
             camera = new Vector2(0);
 
             //Initialize lua
@@ -298,16 +299,9 @@ namespace Comatose {
                 last_ray_distance = 1.0f;
                 world.RayCast(ReportFixture, start, end);
                 if (last_ray_distance < 1.0) {
-                    //Console.WriteLine("shadow: " + last_ray_distance);
-                    if (input.DevMode) {
-                        debugBatch.Begin();
-                        drawLine(start, end, (Color.Red));
-                        debugBatch.End();
-                    }
                     return false;
                 }
                 else {
-                    //Console.WriteLine("seen!: " + last_ray_distance);
                     return true;
                 }
             }
@@ -322,12 +316,6 @@ namespace Comatose {
             world.RayCast(ReportFixture, start, end);
             if (last_ray_distance < 1.0)
             {
-                if (input.DevMode)
-                {
-                    debugBatch.Begin();
-                    drawLine(start, end, (Color.Red));
-                    debugBatch.End();
-                }
                 return false;
             }
             else

@@ -226,6 +226,9 @@
     <None Include="lua\objects\WASDcamera.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\objects\waypoint.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\savetable.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
