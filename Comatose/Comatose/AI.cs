@@ -269,9 +269,8 @@ namespace Comatose
     {
         public enum state { IDLE, SEARCHING, MOVING, ATTACKING }
         private PhysicsObject target;
-
         public float testything = 42f;
-
+        public List<Waypoint> path=new List<Waypoint>();
 
         public AI(ComatoseGame gm)
             : base(gm)
@@ -294,7 +293,6 @@ namespace Comatose
             List<Waypoint> closed = new List<Waypoint>();
             Waypoint current;
             bool pathfound = false;
-            int lowest = 0;
 
             // add the starting point to the list
             // starting point is the monster, find the closest 
@@ -308,31 +306,77 @@ namespace Comatose
                     lineofsightnodes.Add(waypoint.Value);
                 }
             }
-            //we are lost!
-            if(lineofsightnodes.Count==0)
+            //we are not lost!
+            if(lineofsightnodes.Count!=0)
             {
+                #region start at closest node
+                //find the closest node to start us off
+                float lowest=Vector2.Distance(body.Position,lineofsightnodes[0].point);
+                current = lineofsightnodes[0];
+
+                foreach(var waypoint in lineofsightnodes)
+                {
+                    float temp;
+                    temp=Vector2.Distance(body.Position,waypoint.point);
+                    if (temp < lowest)
+                    {
+                        lowest = temp;
+                        current = waypoint;
+                    }
+                }
+
+                //calculate the starting points fscore
+                current.FScore(body.Position, target.body.Position);
+
+                open.Add(current);
+
+                #endregion
+
+                #region part that loops
+
+                while (!pathfound &&  open.Count!=0)
+                {
+                    Console.WriteLine(open.Count);
+                    //select the best point from the open list 
+                    foreach (var point in open)
+                    {
+                        if (point.fscore < current.fscore)
+                            current = point;
+                    }
+
+                    //add it to closed list
+                    closed.Add(current);
+                    open.Remove(current);
+
+                    //if this point has line of sight to the target we have a path
+                    if (game.hasVectorLineOfSight(current.point, target.body.Position))
+                    {
+                        pathfound = true;
+                    }
+                    //we need to search the children of this node
+                    else
+                    {
+                        foreach (var child in current.edges)
+                        {
+                            child.FScore(body.Position, target.body.Position);
+                            if (!closed.Contains(child))
+                            {
+                                open.Add(child);
+                            }
+                        }
+                    }
+                }
+
+
+                #endregion
+
+
 
             }
-
-
-
         }
 
         public override void Draw(GameTime gameTime)
         {
-            //moved this to Waypoint class
-            /*
-            if (game.input.DevMode)
-            {
-                if (target != null)
-                {
-                    foreach (var point in waypoints)
-                    {
-                        point.Draw(gameTime, game, Color.FromNonPremultiplied(255, 255, 255, 255));
-                    }
-                }
-            }*/
-
             rotate(body.GetAngle());
 
             if (_centered)

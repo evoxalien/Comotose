@@ -14,7 +14,8 @@ using System.Collections;
 
 namespace Comatose {
     public class Waypoint : PhysicsObject {
-        protected List<Waypoint> edges = new List<Waypoint>();
+        public List<Waypoint> edges = new List<Waypoint>();
+        public Waypoint parent; //used for astar
         public float fscore;
 
         public void FScore(Vector2 start, Vector2 end) {

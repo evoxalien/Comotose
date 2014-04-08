@@ -9,6 +9,7 @@ p3 = Waypoint.create({x=25,y=20})
 
 monster:Target(hero.ID())
 
+
 chair = PhysicsObject.create()
 chair.x = 40
 chair.y = 15

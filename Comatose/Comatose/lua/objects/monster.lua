@@ -31,6 +31,8 @@ function Monster:everyFrame()
 		self.fade_timer = math.max(self.fade_timer - 1, 0)
 	end
 	self:color(255,255,255,255 * (self.fade_timer / 10))
+
+	self:Astar()
 end
 
 registered_objects["Monster"] = "MonsterV_1"
