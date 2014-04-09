@@ -3,6 +3,10 @@ map = Map.create()
 map.debugdraw = true
 mapdata = {edges={}}
 
+transparent_map = Map.create()
+transparent_map.debugdraw = true
+transparent_map.cast_shadow = false
+
 --camera for moving around
 camera = WASDcamera.create()
 
@@ -251,6 +255,15 @@ function stage.click()
 	process_collision()
 end
 
+function toggleShadow(vertex)
+	head = find_chain_begin(vertex)
+	if head.transparent then
+		head.transparent = nil
+	else
+		head.transparent = true
+	end
+end
+
 function stage.everyFrame()
 	if Input:WasKeyPressed("Escape") then
 		clear_selection()
@@ -260,6 +273,12 @@ function stage.everyFrame()
 		if selected_vertex then
 			delete_vertex(selected_vertex)
 			process_collision()
+		end
+	end
+
+	if Input:WasKeyPressed("C") then
+		if selected_vertex then
+			
 		end
 	end
 end
