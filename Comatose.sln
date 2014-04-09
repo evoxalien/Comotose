@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comatose", "Comatose\Comatose\Comatose.csproj", "{2AD48A4D-486A-492C-BF05-B8C23AB60021}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "ComatoseContent", "Comatose\ComatoseContent\ComatoseContent.contentproj", "{2611EC54-6562-40C6-B8A7-7A5B6A17B3DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComatoseContent", "Comatose\ComatoseContent\ComatoseContent.contentproj", "{2611EC54-6562-40C6-B8A7-7A5B6A17B3DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,5 +20,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

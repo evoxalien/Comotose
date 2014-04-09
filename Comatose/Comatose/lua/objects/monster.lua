@@ -33,4 +33,10 @@ function Monster:everyFrame()
 	self:color(255,255,255,255 * (self.fade_timer / 10))
 end
 
-registered_objects["Monster"] = "MonsterV_1"
+--registered_objects["Monster"] = "MonsterV_1"
+registered_objects["Monster"] = {
+	art="MonsterV_1",
+	width=64,
+	height=64,
+	centered=true
+}

@@ -1,7 +1,13 @@
 ﻿
 gameObjects = {}
 function registerObject(c, a)
-	table.insert(gameObjects, {class=c,art=a})
+	if type(a) == "string" then
+		table.insert(gameObjects, {class=c,art=a})
+	end
+	if type(a) == "table" then
+		a.class = c
+		table.insert(gameObjects, a)
+	end
 end
 
 for k,v in pairs(registered_objects) do
@@ -20,17 +26,36 @@ selector.current_index = 1
 selector:sprite(gameObjects[selector.current_index].art)
 selector.z_index = 1
 
+function selector:updateSelector(currentObject)
+	self:sprite(currentObject.art)
+	if currentObject.centered then
+		self.centered = true
+		self:origin(currentObject.width / 2, currentObject.height / 2)
+	else
+		self.centered = false
+		self:origin(0,0)
+	end
+
+	if currentObject.width then
+		self.sprite_width = currentObject.width
+	end
+
+	if currentObject.height then
+		self.sprite_height = currentObject.height
+	end
+end
+
 function selector:scroll_up()
 	if self.current_index > 1 then
 		self.current_index = self.current_index - 1
-		self:sprite(gameObjects[self.current_index].art)
+		self:updateSelector(gameObjects[self.current_index]);
 	end
 end
 
 function selector:scroll_down()
 	if self.current_index < #gameObjects then
 		self.current_index = self.current_index + 1
-		self:sprite(gameObjects[self.current_index].art)
+		self:updateSelector(gameObjects[self.current_index]);
 	end
 end
 
@@ -77,13 +102,29 @@ function stage.click(mx, my)
 				y=my
 			}
 		}
+		currentObject = gameObjects[selector.current_index];
 		placeholders[insert_index] = Placeholder.create()
 		placeholders[insert_index].index = insert_index
-		placeholders[insert_index]:sprite(gameObjects[selector.current_index].art)
+		placeholders[insert_index]:sprite(currentObject.art)
 		placeholders[insert_index].x = mx
 		placeholders[insert_index].y = my
 		placeholders[insert_index]:color(255,255,255,128)
 		placeholders[insert_index].z_index = 0.5
+
+		--handle optional parameters
+		if currentObject.centered then
+			placeholders[insert_index].centered = true
+		else
+			placeholders[insert_index].centered = false
+		end
+
+		if currentObject.width then
+			placeholders[insert_index].width = currentObject.width
+		end
+
+		if currentObject.height then
+			placeholders[insert_index].height = currentObject.height
+		end
 
 		insert_index = insert_index + 1
 	end
@@ -160,13 +201,30 @@ function load(filename)
 	selected_object = nil
 	insert_index = 1
 	for k,v in pairs(current_level.objects) do
+		currentObject = gameObjects[objectByName(v.class)]
 		placeholders[k] = Placeholder.create()
 		placeholders[k].index = k
-		placeholders[k]:sprite(gameObjects[objectByName(v.class)].art)
+		placeholders[k]:sprite(currentObject.art)
 		placeholders[k].x = v.defaults.x
 		placeholders[k].y = v.defaults.y
 		placeholders[k]:color(255,255,255,128)
 		placeholders[k].z_index = 0.5
+
+		--handle optional parameters
+		if currentObject.centered then
+			placeholders[k].centered = true
+		else
+			placeholders[k].centered = false
+		end
+
+		if currentObject.width then
+			placeholders[k].width = currentObject.width
+		end
+
+		if currentObject.height then
+			placeholders[k].height = currentObject.height
+		end
+
 		if v.color then
 			placeholders[k]:color(v.color.r,v.color.g,v.color.b,128)
 		end
