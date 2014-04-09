@@ -15,11 +15,37 @@ using System.Collections;
 namespace Comatose {
     public class Waypoint : PhysicsObject {
         public List<Waypoint> edges = new List<Waypoint>();
-        public Waypoint parent; //used for astar
+        public int parent_id=-1;
         public float fscore;
+        public float gscore;
 
         public void FScore(Vector2 start, Vector2 end) {
-            fscore = Vector2.Distance(body.GetPosition(), end) + Vector2.Distance(start, body.GetPosition());
+
+            //calculate g
+            gscore= GScore(ID(),start);
+
+            float h = Vector2.Distance(body.GetPosition(), end);
+
+            fscore = gscore + h;
+        }
+
+        public float GScore(int id,Vector2 start)
+        {
+            //if the last in the chain
+            if(game.waypoints[id].parent_id==-1)
+            {
+                return Vector2.Distance(game.waypoints[id].point, start);
+            }
+            else
+            {
+                return
+                    Vector2.Distance(
+                    game.waypoints[id].point,  //this point
+                    game.waypoints[game.waypoints[id].parent_id].point) //parent point
+                    +
+                    GScore(game.waypoints[id].parent_id, start); //recursive call to parent
+            }
+
         }
 
         public void AddEdgeNode(Waypoint e) {
@@ -28,6 +54,13 @@ namespace Comatose {
 
             //since this is now connected, add this point to this other point
             e.edges.Add(this);
+        }
+
+        public void Reset()
+        {
+            parent_id = -1;
+            fscore = 0;
+            gscore = 0;
         }
 
         public Waypoint(ComatoseGame gm)

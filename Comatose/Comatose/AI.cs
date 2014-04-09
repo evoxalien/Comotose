@@ -289,89 +289,168 @@ namespace Comatose
 
         public void Astar()
         {
-            List<Waypoint> open = new List<Waypoint>();
-            List<Waypoint> closed = new List<Waypoint>();
-            Waypoint current;
-            bool pathfound = false;
-
-            // add the starting point to the list
-            // starting point is the monster, find the closest 
-            List<Waypoint> lineofsightnodes=new List<Waypoint>();
-
-            foreach(var waypoint in game.waypoints)
+            //only do astar if we dont have line of sight
+            if (!game.hasLineOfSight(ID(), target.ID()))
             {
-                if(game.hasVectorLineOfSight(body.Position,waypoint.Value.point))
+                if (game.waypoints.Count != 0)
                 {
-                    //add it to the list of nodes within sight
-                    lineofsightnodes.Add(waypoint.Value);
-                }
-            }
-            //we are not lost!
-            if(lineofsightnodes.Count!=0)
-            {
-                #region start at closest node
-                //find the closest node to start us off
-                float lowest=Vector2.Distance(body.Position,lineofsightnodes[0].point);
-                current = lineofsightnodes[0];
 
-                foreach(var waypoint in lineofsightnodes)
-                {
-                    float temp;
-                    temp=Vector2.Distance(body.Position,waypoint.point);
-                    if (temp < lowest)
+                    //each store an id of a waypoint
+                    List<int> open = new List<int>();
+                    List<int> closed = new List<int>();
+                    int current = 0;
+                    bool pathfound = false;
+
+                    // add the starting point to the list
+                    // starting point is the monster, find the closest 
+                    List<int> lineofsightnodes = new List<int>();
+
+                    foreach (var w in game.waypoints)
                     {
-                        lowest = temp;
-                        current = waypoint;
-                    }
-                }
-
-                //calculate the starting points fscore
-                current.FScore(body.Position, target.body.Position);
-
-                open.Add(current);
-
-                #endregion
-
-                #region part that loops
-
-                while (!pathfound &&  open.Count!=0)
-                {
-                    Console.WriteLine(open.Count);
-                    //select the best point from the open list 
-                    foreach (var point in open)
-                    {
-                        if (point.fscore < current.fscore)
-                            current = point;
-                    }
-
-                    //add it to closed list
-                    closed.Add(current);
-                    open.Remove(current);
-
-                    //if this point has line of sight to the target we have a path
-                    if (game.hasVectorLineOfSight(current.point, target.body.Position))
-                    {
-                        pathfound = true;
-                    }
-                    //we need to search the children of this node
-                    else
-                    {
-                        foreach (var child in current.edges)
+                        //get this point ready for astar
+                        w.Value.Reset();
+                        if (game.hasVectorLineOfSight(body.Position, w.Value.point))
                         {
-                            child.FScore(body.Position, target.body.Position);
-                            if (!closed.Contains(child))
+                            //add it to the list of nodes within sight
+                            lineofsightnodes.Add(w.Value.ID());
+                        }
+                    }
+                    //we are not lost!
+                    if (lineofsightnodes.Count != 0)
+                    {
+                        #region start at closest node
+
+                        //find the closest node to start us off
+                        float lowest = Vector2.Distance(body.Position, game.waypoints[lineofsightnodes[0]].point);
+                        current = lineofsightnodes[0]; //id of the first in the list
+
+                        foreach (var i in lineofsightnodes)
+                        {
+                            float temp;
+                            temp = Vector2.Distance(body.Position, game.waypoints[i].point);
+                            if (temp < lowest)
                             {
-                                open.Add(child);
+                                lowest = temp;
+                                current = i;
                             }
+                        }
+
+                        //calculate the starting points fscore
+                        game.waypoints[current].FScore(body.Position, target.body.Position);
+
+                        //add the current ID to the open list
+                        open.Add(current);
+
+                        #endregion
+
+                        #region part that loops
+
+                        while (!pathfound && open.Count != 0)
+                        {
+                            int best = 0;
+                            //error here
+                            game.waypoints[open.First()].FScore(body.Position, target.body.Position);
+
+                            //find lowest f cost on the open list
+                            for (int i = 0; i < open.Count; i++)
+                            {
+                                game.waypoints[open[i]].FScore(body.Position, target.body.Position);
+                                if (game.waypoints[open[best]].fscore >= game.waypoints[open[i]].fscore)
+                                {
+                                    best = i; //store the index of the best  so far
+                                    current = open[i]; //get the id of the best
+                                }
+                            }
+
+                            //move current to closed
+                            open.Remove(current);
+                            closed.Add(current);
+
+                            //check if the current node can see the target, if so we have the path!
+                            if (game.hasVectorLineOfSight(game.waypoints[current].point, target.body.Position))
+                            {
+                                pathfound = true;
+                            }
+                            else
+                            {
+
+                                //for all edges of current
+                                foreach (var edge in game.waypoints[current].edges)
+                                {
+
+                                    //if on closed ignore
+                                    if (!closed.Contains(edge.ID()))
+                                    {
+                                        if (!open.Contains(edge.ID()))
+                                        {
+                                            game.waypoints[edge.ID()].parent_id = current;
+                                            game.waypoints[edge.ID()].FScore(body.Position, target.body.Position);
+
+                                            open.Add(edge.ID());
+                                        }
+                                        //already on the list, check to see if this new path is better
+                                        else
+                                        {
+                                            if (game.waypoints[edge.ID()].gscore >
+                                            game.waypoints[edge.ID()].GScore(edge.ID(), body.Position))
+                                            {
+                                                game.waypoints[edge.ID()].parent_id = current;
+                                            }
+                                        }
+                                    }
+
+
+                                }
+
+                            }
+                        }
+
+
+
+
+
+
+                        #endregion
+
+
+
+                    }
+
+
+                    //this will create the path
+                    if (pathfound)
+                    {
+                        while (current != -1)
+                        {
+                            path.Add(game.waypoints[current]);
+
+                            current = game.waypoints[current].parent_id;
                         }
                     }
                 }
 
+            }
+        }
 
-                #endregion
 
-
-
+        public  void MoveTowardsTarget()
+        {
+            if (target == null)
+            {
+                Console.WriteLine("target is null?!");
+            }
+            else
+            {
+                //move straight to the target
+                if (game.hasLineOfSight(ID(), target.ID()))
+                {
+                }
+                //move along path
+                else
+                {
+                    Console.WriteLine("lost line of sight");
+                    //need to do astar and move along the path
+                }
             }
         }
 

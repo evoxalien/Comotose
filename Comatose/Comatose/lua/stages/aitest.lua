@@ -4,8 +4,8 @@ cursor=Cursor.create()
 monster=Monster.create()
 
 p1 = Waypoint.create({x=0,y=0})
-p2 = Waypoint.create({x=10,y=10})
-p3 = Waypoint.create({x=25,y=20})
+p2 = Waypoint.create({x=30,y=30})
+p3 = Waypoint.create({x=0,y=55})
 
 monster:Target(hero.ID())
 
