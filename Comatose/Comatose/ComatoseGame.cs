@@ -23,7 +23,8 @@ namespace Comatose {
         public Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
         public Input input;
 
-        public static ParticleManager ParticleManager { get; private set; }
+        public Effects Effects;
+        public ParticleManager ParticleManager;
 
         public Random rand = new Random();
 
@@ -96,6 +97,7 @@ namespace Comatose {
             vm["GameEngine"] = this;
             vm["Input"] = input;
             vm["Particle"] = ParticleManager;
+            vm["Effect"] = Effects;
             vm.DoFile("lua/main.lua");
 
             loadAllObjects();
@@ -200,7 +202,7 @@ namespace Comatose {
 
             //MODIFYING THE FIRST VALUE WILL LIMIT PARTICLE COUNT
             ParticleManager = new ParticleManager(1024 * 24, ParticleState.UpdateParticle, this);
-
+            Effects = new Effects(this);
             base.Initialize();
         }
 

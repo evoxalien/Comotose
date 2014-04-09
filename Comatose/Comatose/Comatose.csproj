@@ -121,7 +121,10 @@
   <ItemGroup>
     <Compile Include="cDebugDraw.cs" />
     <Compile Include="ContactListener.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Effects.cs" />
+    <Compile Include="Extensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GameObject.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="LightSource.cs" />

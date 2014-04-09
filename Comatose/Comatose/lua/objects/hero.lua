@@ -7,7 +7,7 @@ function Hero:init()
 	self:shape("circle")
 	self.z_index = 1
 	self.centered = true
-
+	self.count = 0
 	self:set_group("hero")
 	
 	--add ourselves to the stage as a global object
@@ -50,8 +50,17 @@ function Hero:everyFrame()
 	Input:setAimCenter(self.x, self.y)
 
 	--FUN TIMES
-	--Particle:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
-	Particle:CreateFire(self.x , self.y, 55)
+	
+	if (self.count % 5) == 0 then
+		--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
+		--Effect:CreateFire(self.x , self.y, 45)
+	end
+	if (self.count % 2) == 0 then
+		--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
+		Effect:CreateFire(self.x , self.y, 45)
+	end
+	
+	
 	-- Keep it reasonable
 
 	if not Input:MovementDeadzone() then
@@ -92,6 +101,8 @@ function Hero:everyFrame()
 	--update the UI
 	self.flashlight_bar:setCurrent(self.flashlight.charge)
 	self.sanity_bar:setCurrent(self.sanity)
+	
+	self.count = self.count + 1
 end
 
 function Hero:insideFlashlight(entity)
