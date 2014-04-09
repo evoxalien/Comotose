@@ -259,8 +259,10 @@ function toggleShadow(vertex)
 	head = find_chain_begin(vertex)
 	if head.transparent then
 		head.transparent = nil
+		print("setting head to solid")
 	else
 		head.transparent = true
+		print("setting head to transparent")
 	end
 end
 
@@ -278,27 +280,33 @@ function stage.everyFrame()
 
 	if Input:WasKeyPressed("C") then
 		if selected_vertex then
-			
+			toggleShadow(selected_vertex)
+			process_collision()
 		end
 	end
 end
 
 function process_collision()
 	map:resetCollision()
+	transparent_map:resetCollision()
 	print("recalculating collision...")
 	for k,chainstart in pairs(mapdata.edges) do
 		if chainstart.next then
+			activeMap = map
+			if chainstart.transparent then
+				activeMap = transparent_map
+			end
 			--this chain is longer than one element, draw it
 			i = 0
-			map:beginChain()
+			activeMap:beginChain()
 			vertex = chainstart
 			while vertex do
-				map:addVertex(vertex.x, vertex.y)
+				activeMap:addVertex(vertex.x, vertex.y)
 				vertex = vertex.next
 				i = i + 1
 			end
-			print("made a chain of " .. i .. " elements")
-			map:endChain(chainstart.looped == true) --todo: handle loops?
+			--print("made a chain of " .. i .. " elements")
+			activeMap:endChain(chainstart.looped == true) --todo: handle loops?
 		end
 	end
 end
@@ -380,6 +388,7 @@ function save(filename)
 	for k,v in pairs(mapdata.edges) do
 		savedata.edges[k] = {}
 		savedata.edges[k].looped = v.looped
+		savedata.edges[k].transparent = v.transparent
 		savedata.edges[k].verticies = {}
 		i = 1
 		current_vertex = v
@@ -451,6 +460,9 @@ function load(filename)
 				if edge.looped then
 					vertex.looped = true
 				end
+				if edge.transparent then
+					vertex.transparent = true
+				end
 				print("head: " .. i)
 			else
 				previous_vertex.next = vertex
@@ -460,6 +472,9 @@ function load(filename)
 
 				if i == edge.length and edge.looped then
 					vertex.looped = true
+				end
+				if i == edge.length and edge.transparent then
+					vertex.transparent = true
 				end
 			end
 			previous_vertex = vertex

@@ -9,6 +9,11 @@ current_map = Map.create()
 current_map.z_index = 0
 current_map:color(32,32,32,255)
 
+--collision for non-shadow objects here
+transparent_map = Map.create()
+transparent_map.cast_shadow = false
+
+
 --cursor, for selecting stuff
 cursor = Cursor.create()
 cursor:color(0, 255, 255, 255)
@@ -21,11 +26,15 @@ function load_map(filename)
 	--load in the collision data
 	for k,edge in pairs(savedata.edges) do
 		if edge.length > 1 then
-			current_map:beginChain()
-			for i = 1, edge.length do
-				current_map:addVertex(edge.verticies[i].x, edge.verticies[i].y)
+			activeMap = current_map
+			if edge.transparent then
+				activeMap = transparent_map
 			end
-			current_map:endChain(edge.looped == true)
+			activeMap:beginChain()
+			for i = 1, edge.length do
+				activeMap:addVertex(edge.verticies[i].x, edge.verticies[i].y)
+			end
+			activeMap:endChain(edge.looped == true)
 		end
 	end
 
