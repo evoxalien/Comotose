@@ -1,0 +1,55 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	["joints"] = {
+	};
+	["objects"] = {
+		[14] = {
+			["class"] = "Chair";
+			["defaults"] = {
+				["x"] = 30.8;
+				["y"] = 62.2;
+			};
+		};
+		[13] = {
+			["class"] = "Chair";
+			["defaults"] = {
+				["x"] = 21.6;
+				["y"] = 62.8;
+			};
+		};
+		[6] = {
+			["class"] = "Hero";
+			["defaults"] = {
+				["x"] = 31.3;
+				["y"] = 21.1;
+			};
+		};
+		[12] = {
+			["class"] = "Chair";
+			["defaults"] = {
+				["x"] = 12.2;
+				["y"] = 62.7;
+			};
+		};
+		[7] = {
+			["class"] = "Recliner";
+			["defaults"] = {
+				["y"] = 19.4;
+				["x"] = 90.9;
+				["cast_shadow"] = false;
+			};
+		};
+		[11] = {
+			["class"] = "Monster";
+			["defaults"] = {
+				["x"] = 55.7;
+				["y"] = 26.9;
+			};
+		};
+	};
+	["map"] = "test";
+}
+return obj1
