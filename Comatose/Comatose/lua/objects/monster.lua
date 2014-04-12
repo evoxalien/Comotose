@@ -32,7 +32,6 @@ function Monster:everyFrame()
 	end
 	self:color(255,255,255,255 * (self.fade_timer / 10))
 
-	self:Astar()
 	self:MoveTowardsTarget()
 end
 

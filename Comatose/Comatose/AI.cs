@@ -275,7 +275,6 @@ namespace Comatose
         public AI(ComatoseGame gm)
             : base(gm)
         {
-            //Console.WriteLine("Created an AI thing");
         }
 
         public void Target(int objectID)
@@ -289,10 +288,7 @@ namespace Comatose
 
         public void Astar()
         {
-            //only do astar if we dont have line of sight
-            if (!game.hasLineOfSight(ID(), target.ID()))
-            {
-                if (game.waypoints.Count != 0)
+            if (game.waypoints.Count != 0)
                 {
 
                     //each store an id of a waypoint
@@ -428,12 +424,10 @@ namespace Comatose
                         }
                     }
                 }
-
-            }
         }
 
 
-        public  void MoveTowardsTarget()
+        public void MoveTowardsTarget()
         {
             if (target == null)
             {
@@ -442,14 +436,40 @@ namespace Comatose
             else
             {
                 //move straight to the target
-                if (game.hasLineOfSight(ID(), target.ID()))
+                if (game.hasLineOfSight(ID(),target.ID()))
                 {
+                    //Console.WriteLine("WE HAVE LINE OF SIGHT");
+                    target.color(255, 255,255, 255);
+                    color(255, 255, 255, 255);
+                }
+                else if(game.hasVectorLineOfSight(body.GetPosition(),target.body.GetPosition()))
+                {
+                    target.color(255, 255,255, 255);
+                    color(255, 255, 255, 255);
                 }
                 //move along path
+                   
                 else
                 {
-                    Console.WriteLine("lost line of sight");
-                    //need to do astar and move along the path
+                    //Console.WriteLine("lost line of sight");
+                    //Console.WriteLine("Check if our last path is still valid");
+                    target.color(255, 255, 0, 255);
+                    color(255, 255, 0, 255);
+
+                    if (path.Count != 0)
+                    {
+                        if (!game.hasVectorLineOfSight(path.Last().point, target.body.Position))
+                        {
+                            //need to do astar and move along the path
+                            Console.WriteLine("we have to do astar!");
+                            Astar();
+                        }
+                    }
+                    else
+                    {
+                            Console.WriteLine("we have to do astar!");
+                            Astar();
+                    }
                 }
             }
         }
