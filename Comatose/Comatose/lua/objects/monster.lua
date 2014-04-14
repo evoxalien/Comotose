@@ -9,12 +9,15 @@ function Monster:init()
 	self.frame_delay = 5
 	self.fixedRotation = true
 	self.cast_shadow = false
+	self.speed=10
 
 	stage.monster = self
 
 	self:set_group("monster")
 	self:add_target("hero")
 	self.fade_timer = 0
+
+	self:Target(stage.hero:ID())
 end
 
 function Monster:handleCollision()
