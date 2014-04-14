@@ -3,143 +3,199 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
+	["joints"] = {
+	};
 	["map"] = "demo";
 	["objects"] = {
 		[1] = {
+			["class"] = "Hero";
 			["defaults"] = {
 				["x"] = 82.6;
 				["y"] = 66.3;
 			};
-			["class"] = "Hero";
 		};
 		[2] = {
+			["class"] = "Log";
 			["defaults"] = {
 				["x"] = 49.9;
 				["y"] = 51.7;
 			};
-			["class"] = "Log";
 		};
 		[3] = {
+			["class"] = "Monster";
 			["defaults"] = {
 				["x"] = 103.4;
 				["y"] = 54.4;
 			};
-			["class"] = "Monster";
 		};
-		[4] = {
+		[27] = {
 			["defaults"] = {
-				["x"] = 47;
-				["y"] = 62.8;
+				["x"] = 124.1;
+				["y"] = 123;
 			};
 			["class"] = "Waypoint";
 		};
-		[5] = {
+		[28] = {
 			["defaults"] = {
-				["x"] = 63.8;
-				["y"] = 57;
+				["x"] = 137.8;
+				["y"] = 122.7;
 			};
 			["class"] = "Waypoint";
 		};
-		[6] = {
+		[29] = {
 			["defaults"] = {
-				["x"] = 87.3;
-				["y"] = 57.2;
+				["x"] = 169;
+				["y"] = 123;
 			};
 			["class"] = "Waypoint";
 		};
-		[7] = {
+		[30] = {
 			["defaults"] = {
-				["x"] = 69.5;
-				["y"] = 71.2;
+				["x"] = 123.8;
+				["y"] = 136.4;
 			};
 			["class"] = "Waypoint";
 		};
-		[8] = {
+		[31] = {
 			["defaults"] = {
-				["x"] = 58.2;
-				["y"] = 82;
+				["x"] = 57.3;
+				["y"] = 140;
 			};
 			["class"] = "Waypoint";
 		};
-		[9] = {
+		[33] = {
 			["defaults"] = {
-				["x"] = 58.2;
-				["y"] = 124.1;
+				["x"] = 38.8;
+				["y"] = 111.2;
 			};
 			["class"] = "Waypoint";
 		};
-		[10] = {
+		[35] = {
 			["defaults"] = {
-				["x"] = 57;
-				["y"] = 110.3;
+				["x"] = 16.1;
+				["y"] = 111.5;
 			};
 			["class"] = "Waypoint";
 		};
-		[11] = {
+		[37] = {
 			["defaults"] = {
-				["x"] = 57.7;
-				["y"] = 95.5;
+				["x"] = 139.2;
+				["y"] = 7.7;
 			};
 			["class"] = "Waypoint";
 		};
-		[12] = {
+		[39] = {
+			["defaults"] = {
+				["x"] = 113.2;
+				["y"] = 7.8;
+			};
+			["class"] = "Waypoint";
+		};
+		[41] = {
+			["defaults"] = {
+				["x"] = 65.1;
+				["y"] = 7.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[43] = {
+			["defaults"] = {
+				["x"] = 35.7;
+				["y"] = 13.6;
+			};
+			["class"] = "Waypoint";
+		};
+		[44] = {
+			["defaults"] = {
+				["x"] = 11.3;
+				["y"] = 13.7;
+			};
+			["class"] = "Waypoint";
+		};
+		[42] = {
+			["defaults"] = {
+				["x"] = 39.6;
+				["y"] = 7.9;
+			};
+			["class"] = "Waypoint";
+		};
+		[40] = {
+			["defaults"] = {
+				["x"] = 89.2;
+				["y"] = 27.6;
+			};
+			["class"] = "Waypoint";
+		};
+		[32] = {
+			["defaults"] = {
+				["x"] = 39;
+				["y"] = 140;
+			};
+			["class"] = "Waypoint";
+		};
+		[36] = {
+			["defaults"] = {
+				["x"] = 15.9;
+				["y"] = 98.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[38] = {
+			["defaults"] = {
+				["x"] = 170.4;
+				["y"] = 8;
+			};
+			["class"] = "Waypoint";
+		};
+		[21] = {
+			["defaults"] = {
+				["x"] = 57.6;
+				["y"] = 124.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[22] = {
+			["defaults"] = {
+				["x"] = 57.8;
+				["y"] = 84.1;
+			};
+			["class"] = "Waypoint";
+		};
+		[23] = {
+			["defaults"] = {
+				["x"] = 58.4;
+				["y"] = 62.7;
+			};
+			["class"] = "Waypoint";
+		};
+		[24] = {
 			["defaults"] = {
 				["x"] = 46.9;
-				["y"] = 144.6;
+				["y"] = 62.6;
 			};
 			["class"] = "Waypoint";
 		};
-		[13] = {
+		[25] = {
 			["defaults"] = {
-				["x"] = 29.8;
-				["y"] = 146.5;
+				["x"] = 139.7;
+				["y"] = 71.9;
 			};
 			["class"] = "Waypoint";
 		};
-		[14] = {
+		[26] = {
 			["defaults"] = {
-				["x"] = 39.8;
-				["y"] = 129.7;
+				["x"] = 123.4;
+				["y"] = 72.2;
 			};
 			["class"] = "Waypoint";
 		};
-		[15] = {
+		[34] = {
 			["defaults"] = {
-				["x"] = 39.8;
-				["y"] = 112.7;
+				["x"] = 26;
+				["y"] = 111.2;
 			};
 			["class"] = "Waypoint";
 		};
-		[16] = {
-			["defaults"] = {
-				["x"] = 27.1;
-				["y"] = 112.2;
-			};
-			["class"] = "Waypoint";
-		};
-		[17] = {
-			["defaults"] = {
-				["x"] = 39.9;
-				["y"] = 99.5;
-			};
-			["class"] = "Waypoint";
-		};
-		[18] = {
-			["defaults"] = {
-				["x"] = 13.1;
-				["y"] = 97.7;
-			};
-			["class"] = "Waypoint";
-		};
-		[19] = {
-			["defaults"] = {
-				["x"] = 8.7;
-				["y"] = 120.5;
-			};
-			["class"] = "Waypoint";
-		};
-	};
-	["joints"] = {
 	};
 }
 return obj1
