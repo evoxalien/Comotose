@@ -9,6 +9,8 @@ function Hero:init()
 	self.centered = true
 	self.count = 0
 	self:set_group("hero")
+
+	self.on_fire = 0
 	
 	--add ourselves to the stage as a global object
 	stage.hero = self
@@ -51,13 +53,21 @@ function Hero:everyFrame()
 
 	--FUN TIMES
 	
-	if (self.count % 5) == 0 then
-		--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
-		--Effect:CreateFire(self.x , self.y, 45)
+	if self.on_fire > 0 then
+		if (self.count % 5) == 0 then
+			--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
+			--Effect:CreateFire(self.x , self.y, 45)
+		end
+		if (self.count % 2) == 0 then
+			--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
+			Effect:CreateFire(self.x , self.y, 45)
+		end
+		self.on_fire = self.on_fire - 1
+		self.sanity = self.sanity - 0.4
 	end
-	if (self.count % 2) == 0 then
-		--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
-		Effect:CreateFire(self.x , self.y, 45)
+
+	if Input:WasKeyPressed("K") then
+		self.on_fire = 60 * 3.0
 	end
 	
 	--Particle:CreateExplosion(self.x , self.y, 10, 255, 255, 255)

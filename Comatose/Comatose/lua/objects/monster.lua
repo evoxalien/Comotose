@@ -34,7 +34,7 @@ function Monster:everyFrame()
 		--hide
 		self.fade_timer = math.max(self.fade_timer - 1, 0)
 	end
-	--self:color(255,255,255,255 * (self.fade_timer / 10))
+	self:color(255,255,255,255 * (self.fade_timer / 10))
 
 	self:MoveTowardsTarget()
 
