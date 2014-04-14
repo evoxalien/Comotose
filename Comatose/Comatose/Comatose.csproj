@@ -119,6 +119,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI.cs" />
     <Compile Include="cDebugDraw.cs" />
     <Compile Include="ContactListener.cs" />
     <Compile Include="Effects.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="ComatoseGame.cs" />
     <Compile Include="TextBox.cs" />
+    <Compile Include="Waypoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -227,10 +229,16 @@
     <None Include="lua\objects\WASDcamera.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\objects\waypoint.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\savetable.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="lua\stages\textboxtest.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="lua\stages\aitest.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="lua\stages\uitest.lua">

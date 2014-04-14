@@ -14,14 +14,18 @@ using Box2D.XNA;
 
 namespace Comatose
 {
-    class PhysicsObject : GameObject
+    public class PhysicsObject : GameObject
     {
         public Body body;
         protected Fixture fixture;
         public bool cast_shadow = true;
-        private bool _centered = false;
+        protected bool _centered = false;
 
         #region Getters / Setters for body properties
+        public Vector2 point {
+            get { return body.Position; }
+            set { body.Position = value; body.SetAwake(true); }
+        }
         public float x
         {
             get { return body.Position.X; }
@@ -117,6 +121,8 @@ namespace Comatose
                 game.world.CreateJoint(def);
             }
         }
+
+        
 
         #endregion
 

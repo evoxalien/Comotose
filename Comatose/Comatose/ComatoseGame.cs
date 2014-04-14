@@ -13,14 +13,16 @@ using NLua;
 using XNAGameConsole;
 using Box2D.XNA;
 
-namespace Comatose {
-    public class ComatoseGame : Microsoft.Xna.Framework.Game 
+namespace Comatose
+{
+    public class ComatoseGame : Microsoft.Xna.Framework.Game
     {
         public GraphicsDeviceManager graphics;
         public GraphicsDevice gDevice;
         public SpriteBatch spriteBatch;
         public SpriteBatch debugBatch;
-        public Dictionary<int, GameObject> game_objects = new Dictionary<int,GameObject>();
+        public Dictionary<int, GameObject> game_objects = new Dictionary<int, GameObject>();
+        public Dictionary<int, Waypoint> waypoints = new Dictionary<int, Waypoint>();
         public Input input;
 
         public Effects Effects;
@@ -116,6 +118,7 @@ namespace Comatose {
         {
             //delete all existing objects
             game_objects.Clear();
+            waypoints.Clear();
             camera = new Vector2(0);
 
             //Initialize lua
@@ -130,7 +133,8 @@ namespace Comatose {
             levelToLoad = filename;
         }
 
-        protected void realLoadLevel() {
+        protected void realLoadLevel()
+        {
             loadStage("levelloader");
             vm.DoString("load(\"" + levelToLoad + "\")");
             levelToLoad = "";
@@ -156,7 +160,14 @@ namespace Comatose {
                     break;
                 case "TextBox":
                     new_object = (GameObject)new TextBox(this);
-                    break; 
+                    break;
+                case "AI":
+                    new_object = (GameObject)new AI(this);
+                    break;
+                case "Waypoint":
+                    new_object = (GameObject)new Waypoint(this);
+                    waypoints[new_object.ID()] = (Waypoint)new_object;
+                    break;
                 default:
                     throw (new NotImplementedException("Spawn Class Not Found! -_-"));
             }
@@ -165,9 +176,11 @@ namespace Comatose {
             return new_object.ID();
         }
 
-        public void destroy(int objectID) {
+        public void destroy(int objectID)
+        {
             //simply pull it from game_objects, and the GC will delete it
-            if (game_objects[objectID] is PhysicsObject) {
+            if (game_objects[objectID] is PhysicsObject)
+            {
                 world.DestroyBody(((PhysicsObject)game_objects[objectID]).body);
             }
             game_objects.Remove(objectID);
@@ -192,9 +205,9 @@ namespace Comatose {
             input = new Input(this);
         }
 
-        protected override void Initialize() 
+        protected override void Initialize()
         {
-            
+
 
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
@@ -211,7 +224,7 @@ namespace Comatose {
             // TODO: Unload any non ContentManager content here
         }
 
-        protected override void LoadContent() 
+        protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -229,9 +242,10 @@ namespace Comatose {
             //loadStage("mapeditor");
             //loadStage("test");
             //loadStage("textboxtest");
+            //loadStage("aitest");
             loadLevel("demo");
 
-           
+
         }
         #endregion
 
@@ -240,7 +254,7 @@ namespace Comatose {
         {
             return new Vector2((physics_coordinates.X * physics_scale) - camera.X, (physics_coordinates.Y * physics_scale) - camera.Y);
         }
-        
+
         public void drawLine(Vector2 start, Vector2 end, Color startColor, Color endColor)
         {
             //divide this line into segments and fake a gradient. Because lazy, and debugging.
@@ -249,7 +263,7 @@ namespace Comatose {
             {
                 float a = (float)(segments - i) / (float)segments;
                 float b = (float)i / (float)segments;
-                
+
                 float a1 = (float)(segments - (i + 1)) / (float)segments;
                 float b1 = (float)(i + 1) / (float)segments;
 
@@ -266,10 +280,13 @@ namespace Comatose {
 
         float last_ray_distance;
 
-        float ReportFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-            if (fraction < last_ray_distance) {
+        float ReportFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction)
+        {
+            if (fraction < last_ray_distance)
+            {
                 //check shadow logic
-                if (((PhysicsObject)fixture.GetBody().GetUserData()).cast_shadow) {
+                if (((PhysicsObject)fixture.GetBody().GetUserData()).cast_shadow)
+                {
                     last_ray_distance = fraction;
                 }
             }
@@ -277,11 +294,13 @@ namespace Comatose {
             return 1;
         }
 
-        public bool hasLineOfSight(int objectA_id, int objectB_id) 
+        public bool hasLineOfSight(int objectA_id, int objectB_id)
         {
-            if (game_objects[objectA_id] is PhysicsObject && game_objects[objectB_id] is PhysicsObject) {
-                PhysicsObject objectA = (PhysicsObject) game_objects[objectA_id];
-                PhysicsObject objectB = (PhysicsObject) game_objects[objectB_id];
+
+            if (game_objects[objectA_id] is PhysicsObject && game_objects[objectB_id] is PhysicsObject)
+            {
+                PhysicsObject objectA = (PhysicsObject)game_objects[objectA_id];
+                PhysicsObject objectB = (PhysicsObject)game_objects[objectB_id];
 
                 Vector2 start = objectA.body.GetPosition();
                 Vector2 end = objectB.body.GetPosition();
@@ -290,23 +309,31 @@ namespace Comatose {
                 //the correct solution to this is HARD.
                 last_ray_distance = 1.0f;
                 world.RayCast(ReportFixture, start, end);
-                if (last_ray_distance < 1.0) {
-                    //Console.WriteLine("shadow: " + last_ray_distance);
-                    if (input.DevMode) {
-                        debugBatch.Begin();
-                        drawLine(start, end, (Color.Red));
-                        debugBatch.End();
-                    }
+                if (last_ray_distance < 1.0)
+                {
                     return false;
                 }
-                else {
-                    //Console.WriteLine("seen!: " + last_ray_distance);
+                else
+                {
                     return true;
                 }
             }
             return false;
         }
 
+        public bool hasVectorLineOfSight(Vector2 start, Vector2 end)
+        {
+            last_ray_distance = 1.0f;
+            world.RayCast(ReportFixture, start, end);
+            if (last_ray_distance < 1.0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public void drawLine(Vector2 start, Vector2 end, Color color)
         {
             start = screenCoordinates(start);
@@ -326,7 +353,7 @@ namespace Comatose {
         #endregion
 
         #region Game Loop
-        protected override void Update(GameTime gameTime) 
+        protected override void Update(GameTime gameTime)
         {
             if (levelToLoad != "")
             {
@@ -353,15 +380,14 @@ namespace Comatose {
 
         public SpriteBatch gameObjectBatch;
 
-        protected override void Draw(GameTime gameTime) 
+        protected override void Draw(GameTime gameTime)
         {
             debugBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Additive);
             GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
-            
+
             gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
-            //ParticleManager.Draw(gameObjectBatch);
             foreach (var o in game_objects)
             {
                 if (!(o.Value is LightSource))

@@ -1,5 +1,5 @@
 ﻿
-Monster = inherits(PhysicsObject)
+Monster = inherits(AI)
 
 function Monster:init()
 	self:sprite("MonsterV_1")
@@ -7,14 +7,18 @@ function Monster:init()
 	self.width = 64
 	self.height = 64
 	self.frame_delay = 5
-	self.fixedRotation = true
+	--self.fixedRotation = true
+	self:shape("circle")
 	self.cast_shadow = false
+	self.speed=10
 
 	stage.monster = self
 
 	self:set_group("monster")
 	self:add_target("hero")
 	self.fade_timer = 0
+
+	self:Target(stage.hero:ID())
 end
 
 function Monster:handleCollision()
@@ -30,7 +34,14 @@ function Monster:everyFrame()
 		--hide
 		self.fade_timer = math.max(self.fade_timer - 1, 0)
 	end
-	self:color(255,255,255,255 * (self.fade_timer / 10))
+	--self:color(255,255,255,255 * (self.fade_timer / 10))
+
+	self:MoveTowardsTarget()
+
+	--turn to face our movement direction
+	rotate_angle = math.atan2(self.vx, -self.vy) + math.pi
+	print(rotate_angle)
+	self:rotateTo(rotate_angle)
 end
 
 --registered_objects["Monster"] = "MonsterV_1"

@@ -60,7 +60,8 @@ function Hero:everyFrame()
 		Effect:CreateFire(self.x , self.y, 45)
 	end
 	
-	
+	--Particle:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
+	--Particle:CreateFire(self.x , self.y, 55)
 	-- Keep it reasonable
 
 	if not Input:MovementDeadzone() then
