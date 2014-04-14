@@ -101,6 +101,10 @@ namespace Comatose
             collision_group = "gameobject";
         }
 
+        public float distanceFrom(float x, float y) {
+            return (body.GetPosition() - new Vector2(x, y)).Length();
+        }
+
         #region Joint Management
 
         public void join(int targetID)

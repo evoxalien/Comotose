@@ -29,7 +29,9 @@ function Monster:everyFrame()
 	if not self:HasTarget() then
 		self:Target(stage.hero:ID())
 	end
-	if GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) and stage.hero:insideFlashlight(self) then
+	if 
+		(GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) and stage.hero:insideFlashlight(self)) or
+		self:distanceFrom(stage.hero.x, stage.hero.y) < 10 then
 		stage.hero.sanity = math.max(stage.hero.sanity - 20 / 60, 0)
 		stage.hero.sanity_cooldown = 5 * 60
 		self.fade_timer = math.min(self.fade_timer + 2, 10)
@@ -43,7 +45,7 @@ function Monster:everyFrame()
 
 	--turn to face our movement direction
 	rotate_angle = math.atan2(self.vx, -self.vy) + math.pi
-	print(rotate_angle)
+	--print(rotate_angle)
 	self:rotateTo(rotate_angle)
 end
 

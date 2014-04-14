@@ -45,6 +45,13 @@ function Hero:init()
 	self.flashlight_bar = Bar.create()
 	self.flashlight_bar:set(300,300,1280/2,720-50,1280/2,50)
 	self.flashlight_bar:color(255,255,64,255)
+
+	--add a light source centered on the player's location that represents the
+	--player's inate short-distance field of view
+	self.near_sight = GameObject.create()
+	self.near_sight:sprite("player_vision")
+	self.near_sight:origin(75,75)
+	self.near_sight:color(255, 255, 255, 64)
 end
 
 function Hero:everyFrame()
@@ -108,6 +115,9 @@ function Hero:everyFrame()
 	if self.sanity_cooldown == 0 then
 		self.sanity = math.min(self.sanity + (10 / 60), 100)
 	end
+
+	--update our near_sight light
+	self.near_sight:position(self.x * 10, self.y * 10)
 
 	--update the UI
 	self.flashlight_bar:setCurrent(self.flashlight.charge)
