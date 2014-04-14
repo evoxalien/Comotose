@@ -486,7 +486,7 @@ namespace Comatose
 
             while(open.Count>0 && !pathfound)
             {
-                Waypoint q= new Waypoint(game);
+                Waypoint q;//= new Waypoint(game);
                 q = open.First();
 
                 q.GScore();
@@ -523,8 +523,8 @@ namespace Comatose
                             path.Add(current);
                         Console.WriteLine(current.point);
                         current = current.parent;
-
                     }
+                    path.Reverse(); //fix it!
                 }
                     //we dont have the path and we need to search the edges
                 else
@@ -588,6 +588,8 @@ namespace Comatose
                     closed.Add(q);
                 }
             }
+            //reset the current path node
+            current_path_node = -1;
         }
 
         public void MoveTowardsTarget()
@@ -607,9 +609,9 @@ namespace Comatose
                 {
                     if (path.Count != 0)
                     {
-                        if (!game.hasVectorLineOfSight(target.body.Position, path.Last().point))
+                        if (!game.hasVectorLineOfSight(target.body.GetPosition(), path.Last().point))
                         {
-                            //Console.WriteLine("path is >0 and the last point in the path lost sight");
+                            Console.WriteLine("path is >0 and the last point in the path lost sight");
                             //need to do astar and move along the path
                             NewAstar();
                         }
@@ -622,20 +624,21 @@ namespace Comatose
                                 current_path_node = 0;
                             }
                             //check if we can see the next point, if so we should move to that one now
-                            if (current_path_node < path.Count - 1)
-                                if (!game.hasVectorLineOfSight(body.Position, path[current_path_node + 1].point))
-                                {
+                            if (current_path_node < path.Count - 1) {
+                                if (game.hasVectorLineOfSight(body.Position, path[current_path_node + 1].point)) {
                                     current_path_node += 1;
                                 }
+                            }
                             Vector2 distance = body.Position - path[current_path_node].point;
                             distance.Normalize();
                             this.vx = -distance.X * speed;
                             this.vy = -distance.Y * speed;
+                            Console.WriteLine("THING");
                         }
                     }
                     else
                     {
-                        //Console.WriteLine("no path!");
+                        Console.WriteLine("no path!");
                         NewAstar();
                     }
                 }
@@ -664,6 +667,12 @@ namespace Comatose
                 for (int i = 0; i < path.Count - 1; i++)
                 {
                     game.drawLine(path[i].point, path[i + 1].point, Color.Yellow);
+                }
+                if (current_path_node != -1) {
+                    game.drawLine(body.GetPosition(), path[current_path_node].point, Color.Green);
+                }
+                if (path.Count > 0) {
+                    game.drawLine(target.body.GetPosition(), path.Last().point, Color.Cyan);
                 }
 
             }
