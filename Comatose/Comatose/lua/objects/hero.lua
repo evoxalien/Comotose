@@ -117,12 +117,13 @@ function Hero:everyFrame()
 	end
 
 	--update our near_sight light
-	self.near_sight:position(self.x * 10, self.y * 10)
+	self.near_sight:position(self.x, self.y)
 
 	--update the UI
 	self.flashlight_bar:setCurrent(self.flashlight.charge)
 	self.sanity_bar:setCurrent(self.sanity)
 	
+	Input:setAimCenter(self.x * 10, self.y * 10)
 	self.count = self.count + 1
 end
 

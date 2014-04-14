@@ -99,7 +99,7 @@ namespace Comatose
         private Vector2 aim_center = new Vector2(0);
         public void setAimCenter(float x, float y)
         {
-            aim_center = new Vector2(x * game.physics_scale, y * game.physics_scale);
+            aim_center = new Vector2(x * game.physics_scale - game.camera.X, y * game.physics_scale - game.camera.Y);
         }
 
         #region Aiming
@@ -107,9 +107,8 @@ namespace Comatose
         {
             if (game.console.Opened)
                 return new Vector2(0);
-            //if (isAimingWithMouse)
-                //if (mouseState.LeftButton == ButtonState.Pressed)
-                    //return GetMouseAimDirection();
+            if (mouseState.LeftButton == ButtonState.Pressed)
+                return GetMouseAimDirection();
 
             Vector2 direction = gamepadState.ThumbSticks.Right;
             direction.Y *= -1;
@@ -143,7 +142,7 @@ namespace Comatose
 
         public bool AimingDeadzone()
         {
-            return /*!isAimingWithMouse &&*/ !(gamepadState.ThumbSticks.Right.Length() > 0.1) && keyboardState.IsKeyUp(Keys.Up) && keyboardState.IsKeyUp(Keys.Down) && keyboardState.IsKeyUp(Keys.Left) && keyboardState.IsKeyUp(Keys.Right);
+            return !isAimingWithMouse && !(gamepadState.ThumbSticks.Right.Length() > 0.1) && keyboardState.IsKeyUp(Keys.Up) && keyboardState.IsKeyUp(Keys.Down) && keyboardState.IsKeyUp(Keys.Left) && keyboardState.IsKeyUp(Keys.Right);
         }
 
         public Vector2 GetMousePosition()
