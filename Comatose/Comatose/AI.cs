@@ -288,6 +288,11 @@ namespace Comatose
                 target = (PhysicsObject)game.game_objects[objectID];
         }
 
+        public bool HasTarget()
+        {
+            return !(target == null);
+        }
+
         /*
         public void Astar()
         {
@@ -521,7 +526,7 @@ namespace Comatose
                     {
                         if (!path.Contains(current))
                             path.Add(current);
-                        Console.WriteLine(current.point);
+                        //Console.WriteLine(current.point);
                         current = current.parent;
                     }
                     path.Reverse(); //fix it!
@@ -611,7 +616,7 @@ namespace Comatose
                     {
                         if (!game.hasVectorLineOfSight(target.body.GetPosition(), path.Last().point))
                         {
-                            Console.WriteLine("path is >0 and the last point in the path lost sight");
+                            //Console.WriteLine("path is >0 and the last point in the path lost sight");
                             //need to do astar and move along the path
                             NewAstar();
                         }
@@ -633,12 +638,12 @@ namespace Comatose
                             distance.Normalize();
                             this.vx = -distance.X * speed;
                             this.vy = -distance.Y * speed;
-                            Console.WriteLine("THING");
+                            //Console.WriteLine("THING");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("no path!");
+                        //Console.WriteLine("no path!");
                         NewAstar();
                     }
                 }

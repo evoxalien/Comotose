@@ -18,7 +18,7 @@ function Monster:init()
 	self:add_target("hero")
 	self.fade_timer = 0
 
-	self:Target(stage.hero:ID())
+	--self:Target(stage.hero:ID())
 end
 
 function Monster:handleCollision()
@@ -26,8 +26,11 @@ function Monster:handleCollision()
 end
 
 function Monster:everyFrame()
+	if not self:HasTarget() then
+		self:Target(stage.hero:ID())
+	end
 	if GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) and stage.hero:insideFlashlight(self) then
-		stage.hero.sanity = math.max(stage.hero.sanity - 3 / 60, 0)
+		stage.hero.sanity = math.max(stage.hero.sanity - 20 / 60, 0)
 		stage.hero.sanity_cooldown = 5 * 60
 		self.fade_timer = math.min(self.fade_timer + 2, 10)
 	else
