@@ -415,27 +415,18 @@ namespace Comatose
         }
 
         public SpriteBatch gameObjectBatch;
-
+        Texture2D lightMap;
         protected override void Draw(GameTime gameTime)
         {
+
+            //section: render to texture for light sources
+            RenderTarget2D lightTarget = new RenderTarget2D(GraphicsDevice, 1280, 720);
+            GraphicsDevice.SetRenderTarget(lightTarget);
+            GraphicsDevice.Clear(Color.FromNonPremultiplied(16,16,16,255));
+
             debugBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Additive);
-            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
-
-            gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
-            foreach (var o in game_objects)
-            {
-                if (!(o.Value is LightSource))
-                {
-                    o.Value.Draw(gameTime);
-                }
-            }
-            gameObjectBatch.End();
-            gameObjectBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
-            ParticleManager.Draw(gameObjectBatch);
-            gameObjectBatch.End();
-            //draw lights after the game objects / map (but before debug lines)
+            //draw lights to this new texture
             foreach (var o in game_objects)
             {
                 if (o.Value is LightSource)
@@ -443,6 +434,45 @@ namespace Comatose
                     o.Value.Draw(gameTime);
                 }
             }
+
+            //switch back to the main device for drawing the scene
+            GraphicsDevice.SetRenderTarget(null);
+            lightMap = (Texture2D)lightTarget;
+
+            //Draw all the main objects in the scene
+            GraphicsDevice.Clear(Color.Black);
+            gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
+            foreach (var o in game_objects)
+            {
+                if (!(o.Value is LightSource)) //only draw non-lights here
+                {
+                    o.Value.Draw(gameTime);
+                }
+            }
+            
+            gameObjectBatch.End();
+
+            //DEBUG: draw the light texture directly (this should occlude the main stuff)
+            BlendState multiply = new BlendState();
+            multiply.ColorBlendFunction = BlendFunction.Add;
+            multiply.ColorSourceBlend = Blend.DestinationColor;
+            multiply.AlphaSourceBlend = Blend.DestinationColor;
+            multiply.ColorDestinationBlend = Blend.Zero;
+
+            gameObjectBatch.Begin(SpriteSortMode.BackToFront, multiply);
+            gameObjectBatch.Draw(lightMap, new Vector2(0), Color.White);
+            gameObjectBatch.End();
+            
+            //Draw all particles using a new batch; this forces particles to be drawn on top of all other sprites,
+            //plus they get a different blend mode for fancy effects
+            gameObjectBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
+            ParticleManager.Draw(gameObjectBatch);
+            gameObjectBatch.End();
+
+            
+            
+
+            
 
             //now draw the debug stuff, if needed
             if (input.DevMode)

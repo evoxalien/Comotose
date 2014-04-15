@@ -7,7 +7,7 @@ current_filename = ""
 
 current_map = Map.create()
 current_map.z_index = 0
-current_map:color(32,32,32,255)
+--current_map:color(32,32,32,255)
 
 --collision for non-shadow objects here
 transparent_map = Map.create()
