@@ -187,6 +187,9 @@ namespace Comatose
                 case "TextBox":
                     new_object = (GameObject)new TextBox(this);
                     break;
+                case "Audio":
+                    new_object = (GameObject)new Audio(this);
+                    break;
                 case "AI":
                     new_object = (GameObject)new AI(this);
                     break;

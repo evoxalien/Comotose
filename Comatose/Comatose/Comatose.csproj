@@ -122,6 +122,7 @@
     <Compile Include="AI.cs" />
     <Compile Include="cDebugDraw.cs" />
     <Compile Include="ContactListener.cs" />
+    <Compile Include="Audio.cs" />
     <Compile Include="Effects.cs" />
     <Compile Include="Extensions.cs">
       <SubType>Code</SubType>

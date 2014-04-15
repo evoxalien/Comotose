@@ -3,6 +3,15 @@ Monster = inherits(AI)
 
 function Monster:init()
 	self:sprite("MonsterV_1")
+
+	--audio test
+	self.audio=Audio.create()
+	self.audio:audioname("chatter")
+	self.audio:attach( self:ID())
+	self.audio:attachListener( stage.hero:ID())
+	self.audio.looped=true
+	self.audio:play()
+
 	self.centered = true
 	self.width = 64
 	self.height = 64
@@ -48,6 +57,9 @@ function Monster:everyFrame()
 	rotate_angle = math.atan2(self.vx, -self.vy) + math.pi
 	--print(rotate_angle)
 	self:rotateTo(rotate_angle)
+
+	self.audio:Calc3D()
+
 end
 
 --registered_objects["Monster"] = "MonsterV_1"
