@@ -1,6 +1,7 @@
 ﻿function static_init(self)
 	self:body_type("static")
 	self:sprite(self.art)
+	self.centered = true
 	if self.body_shape then
 		self:shape(self.body_shape)
 	end
@@ -24,8 +25,17 @@ Recliner = inherits(PhysicsObject)
 Recliner.art = "Chair_Recliner1"
 Recliner.init = static_init
 
+Chair2 = inherits(PhysicsObject)
+Chair2.art = "DY_Chair01"
+Chair2.init = static_init
+
 registered_objects["Chair"] = {
 	art="Chair1",
+	centered=true
+}
+
+registered_objects["Chair2"] = {
+	art="DY_Chair01",
 	centered=true
 }
 
