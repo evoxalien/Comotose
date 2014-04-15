@@ -211,6 +211,9 @@
     <None Include="lua\objects\log.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\objects\screamer.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\objects\monster.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
