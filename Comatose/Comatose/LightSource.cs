@@ -19,7 +19,7 @@ namespace Comatose
     {
         public int ray_length = 50;
         public float light_spread_angle = (float)Math.PI * 2;
-        //public int rays_to_cast = 640;
+        public int rays_to_cast = 64;
         public float max_fraction = 1;
         
         private Vector2 intersectionNormal = new Vector2(0, 0);
@@ -74,9 +74,9 @@ namespace Comatose
 
             //firstly, cast out 9 rays around the circle/cone; this will define the base shape of this light
             //and ensure that lack of collision targets doesn't lead to rendering holes
-            for (int i = -16; i <= 16; i++)
+            for (int i = -rays_to_cast / 2; i <= rays_to_cast / 2; i++)
             {
-                Vector2 target = Vector2.Transform(new Vector2(0, -ray_length), Matrix.CreateRotationZ((light_spread_angle / 32) * i + current_rotation)) + light_origin;
+                Vector2 target = Vector2.Transform(new Vector2(0, -ray_length), Matrix.CreateRotationZ((light_spread_angle / rays_to_cast) * i + current_rotation)) + light_origin;
                 testPoints.Add(target);
             }
 

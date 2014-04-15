@@ -17,6 +17,7 @@ function Hero:init()
 	
 	--set up flashlight stuff
 	self.flashlight = Flashlight.create()
+	self.flashlight.cast_shadow = false
 	--offset the light so it's in the hero's "hand"
 	self.flashlight.x = self.x - 1.0
 	self.flashlight.y = self.y + 1.7
@@ -51,32 +52,61 @@ function Hero:init()
 	self.near_sight = GameObject.create()
 	self.near_sight:sprite("player_vision")
 	self.near_sight:origin(75,75)
-	self.near_sight:color(255, 255, 255, 48)
-	self.near_sight.z_index = 0.5
+	self.near_sight:color(255, 255, 255, 64)
+
+	self.firelight1 = LightSource.create()
+	self.firelight2 = LightSource.create()
+	self.firelight1:shape("none")
+	self.firelight2:shape("none")
+	self.firelight1:color(210, 50, 45, 0)
+	self.firelight2:color(230, 170, 20, 0)
+	self.firelight1.ray_length = 2
+	self.firelight2.ray_length = 2
+
 end
 
 function Hero:everyFrame()
 	--root the aiming function, so that subsequent calls will have the correct angle
 	Input:setAimCenter(self.x, self.y)
-
+	self.firelight1.x = self.x
+	self.firelight1.y = self.y
+	self.firelight2.x = self.x
+	self.firelight2.y = self.y
 	--FUN TIMES
 	
 	if self.on_fire > 0 then
-		if (self.count % 5) == 0 then
+		self.firelight1.ray_length = 20
+		self.firelight2.ray_length = 25
+		self.firelight1:color(210, 50, 45, 0)
+		self.firelight2:color(230, 170, 20, 0)
+		if (self.count % 3) == 0 then
 			--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
 			--Effect:CreateFire(self.x , self.y, 45)
+			self.firelight1:color(210, 50, 45, 128)
 		end
+
 		if (self.count % 2) == 0 then
 			--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
+			self.firelight2:color(230, 170, 20, 200)
 			Effect:CreateFire(self.x , self.y, 45)
+
 		end
+		
 		self.on_fire = self.on_fire - 1
 		self.sanity = self.sanity - 0.4
+	else
+		self.firelight1.ray_length = 2
+		self.firelight2.ray_length = 2
+		self.firelight1:color(210, 50, 45, 0)
+		self.firelight2:color(230, 170, 20, 0)
 	end
+
 
 	if Input:WasKeyPressed("K") then
 		self.on_fire = 60 * 3.0
 	end
+
+
 	
 	--Particle:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
 	--Particle:CreateFire(self.x , self.y, 55)
@@ -127,7 +157,7 @@ function Hero:everyFrame()
 	end
 
 	--update our near_sight light
-	self.near_sight:position(self.x * 10, self.y * 10)
+	self.near_sight:position(self.x, self.y)
 
 	--update the UI
 	self.flashlight_bar:setCurrent(self.flashlight.charge)
