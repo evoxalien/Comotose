@@ -56,6 +56,14 @@ namespace Comatose
             return lastKeyboardState.IsKeyDown(key) && keyboardState.IsKeyUp(key);
         }
 
+        public bool IsKeyHeld(string key_string)
+        {
+            if (game.console.Opened)
+                return false;
+            Keys key = (Keys)Keys.Parse(typeof(Keys), key_string, true);
+            return lastKeyboardState.IsKeyDown(key) && keyboardState.IsKeyDown(key);
+        }
+
         public bool WasButtonReleased(string button_string)
         {
             if (game.console.Opened)
@@ -107,7 +115,7 @@ namespace Comatose
         {
             if (game.console.Opened)
                 return new Vector2(0);
-            if (mouseState.LeftButton == ButtonState.Pressed)
+            if (mouseState.LeftButton == ButtonState.Pressed || mouseState.RightButton == ButtonState.Pressed)
                 return GetMouseAimDirection();
 
             Vector2 direction = gamepadState.ThumbSticks.Right;
