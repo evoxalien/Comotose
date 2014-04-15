@@ -67,7 +67,7 @@ namespace Comatose
         {
 
             Vector2 Position;
-            Texture2D particleTexture = game.Content.Load<Texture2D>("art/Glow");
+            Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud1-128");
 
             //intensity = 100;
             //Red Particles
@@ -75,13 +75,13 @@ namespace Comatose
             int g = rand.Next(30, 90);
             int b = rand.Next(30, 50);
 
-            for (int i = 0; i < intensity / 2; i++)
+            for (int i = 0; i < intensity / 3; i++)
             {
                 Position = new Vector2(x = NextFloat(rand, x + .75f, x - .75f), y = NextFloat(rand, y + .75f, y - .75f)) * game.physics_scale;
                 float speed = 3f * (1f - 1 / NextFloat(rand, 1f, 20f));
                 var state = new ParticleState()
                 {
-                    Velocity = NextVector2(rand, speed, speed / 2),
+                    Velocity = NextVector2(rand, speed, speed / 4),
                     Type = ParticleType.Fire,
                     LengthMultiplier = 1.5f
                 };
@@ -92,22 +92,22 @@ namespace Comatose
             r = rand.Next(220, 240);
             g = rand.Next(170, 225);
             b = rand.Next(0, 40);
-
-            for (int i = 0; i < intensity / 3; i++)
+            particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud2-128");
+            for (int i = 0; i < intensity / 4; i++)
             {
                 Position = new Vector2(x = NextFloat(rand, x + .5f, x - .5f), y = NextFloat(rand, y + .5f, y - .5f)) * game.physics_scale;
                 float speed = 3f * (1f - 1 / NextFloat(rand, 1f, 5f));
                 var state = new ParticleState()
                 {
-                    Velocity = NextVector2(rand, speed, speed / 5),
+                    Velocity = NextVector2(rand, speed, speed / 7),
                     Type = ParticleType.Fire,
                     LengthMultiplier = 1.5f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }
-
+            particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud3-128");
             //particleTexture = game.Content.Load<Texture2D>("art/particle");
-            for (int i = 0; i < intensity / 8; i++)
+            for (int i = 0; i < intensity / 7; i++)
             {
                 Position = new Vector2(x = NextFloat(rand, x + .25f, x - .25f), y = NextFloat(rand, y + .25f, y - .25f)) * game.physics_scale;
                 float speed = .5f * (1f - 1 / NextFloat(rand, 1f, 5f));

@@ -42,6 +42,41 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="art\particles\Cloud1.png">
+      <Name>cloud1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="art\particles\Cloud2.png">
+      <Name>Cloud2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="art\particles\Cloud3.png">
+      <Name>Cloud3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="art\particles\Cloud4.png">
+      <Name>Cloud4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="art\particles\Cloud5.png">
+      <Name>Cloud5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="art\particles\Cloud6.png">
+      <Name>Cloud6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="art\particles\Cloud7.png">
+      <Name>Cloud7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="art\sprites\Chair1.png">
       <Name>Chair1</Name>
       <Importer>TextureImporter</Importer>
@@ -193,14 +228,14 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="art\particle.png">
+    <Compile Include="art\particles\particle.png">
       <Name>particle</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="art\Glow.png">
+    <Compile Include="art\particles\Glow.png">
       <Name>Glow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -216,6 +251,41 @@
   <ItemGroup>
     <Compile Include="art\sprites\player_vision.png">
       <Name>player_vision</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="art\particle.png">
+      <Name>particle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="art\Glow.png">
+      <Name>Glow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="art\particles\Cloud1-128.png">
+      <Name>Cloud1-128</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="art\particles\Cloud2-128.png">
+      <Name>Cloud2-128</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="art\particles\Cloud3-128.png">
+      <Name>Cloud3-128</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
