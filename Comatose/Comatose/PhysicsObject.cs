@@ -265,7 +265,7 @@ namespace Comatose
                     {
                         circle._p = new Vector2((float)sprite_width / 20.0f, (float)sprite_height / 20.0f);
                     }
-                    circle._radius = (float)sprite_width / 20.0f;
+                    circle._radius = (float)sprite_height / 20.0f;
 
                     fdef.shape = circle;
 

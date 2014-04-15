@@ -18,8 +18,8 @@ function Hero:init()
 	--set up flashlight stuff
 	self.flashlight = Flashlight.create()
 	--offset the light so it's in the hero's "hand"
-	self.flashlight.x = self.x - 1.2
-	self.flashlight.y = self.y + 1.5
+	self.flashlight.x = self.x - 1.0
+	self.flashlight.y = self.y + 1.7
 
 	self.flashlight:join(self.ID())
 
@@ -91,11 +91,20 @@ function Hero:everyFrame()
 		if Input:AimingDeadzone() then
 			self:rotateTo(math.atan2(direction.X, -direction.Y))
 		end
+
+		self:sprite("Hero_Move_Quick")
+		self.width = 71
+		self.height = 79
+		self.frame_delay = 6
+		self:shape("circle")
 	else
 		--kill off any momemtum we might have
 		self.vx = 0
 		self.vy = 0
 		self.vr = 0
+
+		self:sprite("Herov3")
+		self.current_frame = 0
 	end
 
 	--if we're using the right stick, aim that way (regardless of movement direction)
