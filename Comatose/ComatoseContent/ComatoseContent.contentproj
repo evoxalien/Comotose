@@ -312,13 +312,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="art\sprites\Image1.png">
-      <Name>Image1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="art\sprites\MonsterV2-move.png">
       <Name>MonsterV2-move</Name>
       <Importer>TextureImporter</Importer>
