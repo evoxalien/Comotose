@@ -208,4 +208,7 @@ function HeroCamera:everyFrame()
 	end
 end
 
-registered_objects["Hero"] = "Herov3"
+registered_objects["Hero"] = {
+	art="Herov3",
+	centered=true
+}

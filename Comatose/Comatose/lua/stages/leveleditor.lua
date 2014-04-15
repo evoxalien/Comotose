@@ -28,13 +28,6 @@ selector.z_index = 1
 
 function selector:updateSelector(currentObject)
 	self:sprite(currentObject.art)
-	if currentObject.centered then
-		self.centered = true
-		self:origin(currentObject.width / 2, currentObject.height / 2)
-	else
-		self.centered = false
-		self:origin(0,0)
-	end
 
 	if currentObject.width then
 		self.sprite_width = currentObject.width
@@ -42,6 +35,14 @@ function selector:updateSelector(currentObject)
 
 	if currentObject.height then
 		self.sprite_height = currentObject.height
+	end
+
+	if currentObject.centered then
+		self.centered = true
+		self:origin(self.sprite_width / 2, self.sprite_height / 2)
+	else
+		self.centered = false
+		self:origin(0,0)
 	end
 end
 
@@ -112,6 +113,9 @@ function PropertyDisplay:everyFrame()
 		end
 		if o.event then
 			display = display .. "Spawns On Event: " .. o.event .. "\n"
+		end
+		if o.rotation then
+			display = display .. "Rotation: " .. math.deg(o.rotation) .. "\n"
 		end
 
 		--display properties that will be set, if any
@@ -286,6 +290,9 @@ function load(filename)
 		placeholders[k].y = v.defaults.y
 		placeholders[k]:color(255,255,255,128)
 		placeholders[k].z_index = 0.5
+		if v.rotation then
+			placeholders[k]:setRotation(v.rotation)
+		end
 
 		--handle optional parameters
 		if currentObject.centered then

@@ -9,6 +9,7 @@ function Log:init()
 	self.title:text("--- Log ---")
 	self.title:attach(self.ID())
 	self.cast_shadow = false
+	self.z_index = 0.5
 end
 
 function Log:click()
