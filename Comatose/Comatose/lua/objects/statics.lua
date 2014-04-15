@@ -8,7 +8,7 @@
 	self.z_index = 0.5
 	--self:color(32,32,32,255)
 	self.cast_shadow = false
-	self:setDensity(4.0)
+	self:setDensity(3.0)
 end
 
 function static_update(self)
