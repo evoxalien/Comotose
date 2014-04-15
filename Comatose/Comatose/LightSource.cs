@@ -47,6 +47,8 @@ namespace Comatose
 
             fixture = body.CreateFixture(fdef);
             body.ResetMassData();
+
+            layer = "light";
         }
 
         const int _max_rays = 1000;

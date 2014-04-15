@@ -9,6 +9,8 @@ function Bar:init()
 	self.height=0
 
 	self.camera_weight = 0
+
+	self:setLayer("ui")
 end
 
 function Bar:set(m,i,x,y,width,height)

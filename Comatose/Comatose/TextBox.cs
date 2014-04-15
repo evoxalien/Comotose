@@ -28,6 +28,7 @@ namespace Comatose
         {
             sprite_font = game.Content.Load<SpriteFont>("art/fonts/segoeprint");
             chatter = game.Content.Load<SoundEffect>("sounds/chatter");
+            layer = "ui";
         }
 
         public void text(string message)

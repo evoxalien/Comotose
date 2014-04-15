@@ -3,6 +3,7 @@
 function Cursor:init()
 	self:sprite("cursor")
 	self.z_index = 1
+	self:setLayer("ui")
 end
 
 function Cursor:everyFrame()

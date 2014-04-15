@@ -422,18 +422,19 @@ namespace Comatose
             //section: render to texture for light sources
             RenderTarget2D lightTarget = new RenderTarget2D(GraphicsDevice, 1280, 720);
             GraphicsDevice.SetRenderTarget(lightTarget);
-            GraphicsDevice.Clear(Color.FromNonPremultiplied(16,16,16,255));
+            GraphicsDevice.Clear(Color.FromNonPremultiplied(32,32,32,255)); //default ambient light
 
             debugBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Additive);
-
+            gameObjectBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
             //draw lights to this new texture
             foreach (var o in game_objects)
             {
-                if (o.Value is LightSource)
+                if (o.Value.layer == "light")
                 {
                     o.Value.Draw(gameTime);
                 }
             }
+            gameObjectBatch.End();
 
             //switch back to the main device for drawing the scene
             GraphicsDevice.SetRenderTarget(null);
@@ -444,7 +445,7 @@ namespace Comatose
             gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
             foreach (var o in game_objects)
             {
-                if (!(o.Value is LightSource)) //only draw non-lights here
+                if (o.Value.layer == "gameobject") //only draw non-lights here
                 {
                     o.Value.Draw(gameTime);
                 }
@@ -452,13 +453,14 @@ namespace Comatose
             
             gameObjectBatch.End();
 
-            //DEBUG: draw the light texture directly (this should occlude the main stuff)
+            //Set up a multiply state for the light layer
             BlendState multiply = new BlendState();
             multiply.ColorBlendFunction = BlendFunction.Add;
             multiply.ColorSourceBlend = Blend.DestinationColor;
             multiply.AlphaSourceBlend = Blend.DestinationColor;
             multiply.ColorDestinationBlend = Blend.Zero;
 
+            //Draw lights; this will multiply the light layer with everything drawn before, and properly darken unlit areas
             gameObjectBatch.Begin(SpriteSortMode.BackToFront, multiply);
             gameObjectBatch.Draw(lightMap, new Vector2(0), Color.White);
             gameObjectBatch.End();
@@ -469,12 +471,29 @@ namespace Comatose
             ParticleManager.Draw(gameObjectBatch);
             gameObjectBatch.End();
 
-            
-            
+            //Draw unlit objects in the game world (these objects ignore lighting)
+            gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
+            foreach (var o in game_objects)
+            {
+                if (o.Value.layer == "unlit") //only draw non-lights here
+                {
+                    o.Value.Draw(gameTime);
+                }
+            }
+            gameObjectBatch.End();
 
-            
+            //Draw UI
+            gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
+            foreach (var o in game_objects)
+            {
+                if (o.Value.layer == "ui") //only draw non-lights here
+                {
+                    o.Value.Draw(gameTime);
+                }
+            }
+            gameObjectBatch.End();
 
-            //now draw the debug stuff, if needed
+            //finally draw the debug stuff, if needed
             if (input.DevMode)
             {
 

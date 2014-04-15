@@ -35,6 +35,8 @@ namespace Comatose
         public int frame_delay = 0; //one cell per frame
         protected int delay_timer = 0;
 
+        public string layer = "gameobject";
+
         public Vector2 screen_position = new Vector2(0);
 
         protected GameObject parent_object = null;
@@ -54,6 +56,11 @@ namespace Comatose
         #endregion
 
         #region Properties
+        public void setLayer(string new_layer)
+        {
+            layer = new_layer;
+        }
+
         public virtual void sprite(string filename)
         {
             texture = game.Content.Load<Texture2D>("art/sprites/" + filename);

@@ -9,8 +9,10 @@ function Hero:init()
 	self.centered = true
 	self.count = 0
 	self:set_group("hero")
+	self:setLayer("unlit")
 
 	self.on_fire = 0
+	
 	
 	--add ourselves to the stage as a global object
 	stage.hero = self
@@ -52,8 +54,9 @@ function Hero:init()
 	self.near_sight = GameObject.create()
 	self.near_sight:sprite("player_vision")
 	self.near_sight:origin(75,75)
-	self.near_sight:color(255, 255, 255, 48)
+	self.near_sight:color(128, 128, 128, 255)
 	self.near_sight.z_index = 0.5
+	self.near_sight:setLayer("light")
 
 
 	self.firelight1 = LightSource.create()

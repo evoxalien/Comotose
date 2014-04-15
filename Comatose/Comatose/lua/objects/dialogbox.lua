@@ -14,10 +14,12 @@ function DialogBox:init()
 	self.button.sprite_height = 32
 	self.button.frame_delay = 30
 	self.button.camera_weight = 0
+	self.button:setLayer("ui")
 
 	self.portrait_box = GameObject.create()
 	self.portrait_box:color(0,0,0,0)
 	self.portrait_box.camera_weight = 0
+	self.portrait_box:setLayer("ui")
 
 	self.z_index = 900
 	self.portrait_box.z_index = 950
@@ -35,6 +37,7 @@ function DialogBox:init()
 	self.background:color(0,0,0,128)
 	self.background.z_index = 890
 	self.background.camera_weight = 0
+	self.background:setLayer("ui")
 end
 
 function DialogBox:portrait(sprite)
