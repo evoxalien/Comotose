@@ -167,6 +167,11 @@ namespace Comatose
         }
         #endregion
 
+        public void impulse(float ix, float iy)
+        {
+            body.ApplyLinearImpulse(new Vector2(ix, iy), body.GetWorldCenter());
+        }
+
         #region Physics Properties
         public void body_type(string type)
         {

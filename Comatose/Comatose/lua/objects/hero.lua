@@ -116,8 +116,12 @@ function Hero:everyFrame()
 
 	if not Input:MovementDeadzone() then
 		direction = Input:GetMovementDirection()
-		self.vx = direction.X * self.speed
-		self.vy = direction.Y * self.speed
+		--self.vx = direction.X * self.speed
+		--self.vy = direction.Y * self.speed
+		self:impulse(direction.X * self.speed * 40, direction.Y * self.speed * 40)
+
+		self.vx = self.vx / 2
+		self.vy = self.vy / 2
 
 		--if we're not using the right-stick, then rotate to face the direction we're walking
 		if Input:AimingDeadzone() then
