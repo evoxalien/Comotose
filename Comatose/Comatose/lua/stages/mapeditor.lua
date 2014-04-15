@@ -445,6 +445,7 @@ function load(filename)
 	if savedata.image then
 		map:sprite(savedata.image)
 		mapdata.image = savedata.image
+		map:setLayer("unlit")
 	end
 
 	--load in all the verticies and re-create the joints and stuff
