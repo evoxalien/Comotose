@@ -293,155 +293,13 @@ namespace Comatose
             return !(target == null);
         }
 
-        /*
-        public void Astar()
-        {
-            current_path_node = -1;
-            if (game.waypoints.Count != 0)
-            {
-
-                //each store an id of a waypoint
-                List<int> open = new List<int>();
-                List<int> closed = new List<int>();
-                int current = 0;
-                bool pathfound = false;
-
-                // add the starting point to the list
-                // starting point is the monster, find the closest 
-                List<int> lineofsightnodes = new List<int>();
-
-                foreach (var w in game.waypoints)
-                {
-                    //get this point ready for astar
-                    w.Value.Reset();
-                    if (game.hasVectorLineOfSight(body.Position, w.Value.point))
-                    {
-                        //add it to the list of nodes within sight
-                        lineofsightnodes.Add(w.Value.ID());
-                    }
-                }
-
-                //find the closest node to start us off
-                if (lineofsightnodes.Count != 0)
-                {
-                    float lowest = Vector2.Distance(body.Position, game.waypoints[lineofsightnodes[0]].point);
-                    current = lineofsightnodes[0]; //id of the first in the list
-
-                    foreach (var i in lineofsightnodes)
-                    {
-                        float temp;
-                        temp = Vector2.Distance(body.Position, game.waypoints[i].point);
-                        if (temp < lowest)
-                        {
-                            lowest = temp;
-                            current = i;
-                        }
-                    }
-                    //calculate the starting points fscore
-                    game.waypoints[current].FScore(body.Position, target.body.Position);
-
-                    //add the current ID to the open list
-                    open.Add(current);
-                }
-
-                #region part that loops
-                while (!pathfound && open.Count > 0)
-                {
-                    //index of our best node
-                    int best = 0;
-                    //calculate our starting points fscore
-                    game.waypoints[open.First()].FScore(body.Position, target.body.Position);
-
-                    //find lowest f cost on the open list
-                    for (int i = 0; i < open.Count; i++)
-                    {
-                        //calc this points fscore
-                        game.waypoints[open[i]].FScore(body.Position, target.body.Position);
-
-                        //see if its lower than the current best node
-                        if (game.waypoints[open[best]].fscore >= game.waypoints[open[i]].fscore)
-                        {
-                            best = i; //store the index of the best  so far
-                            current = open[i]; //get the id of the best
-                        }
-                    }
-
-                    //check if the current node can see the target, if so we have the path!
-                    if (game.hasVectorLineOfSight(target.body.Position, game.waypoints[current].point))
-                    {
-                        Console.WriteLine("PATH WAS FOUND");
-                        Console.WriteLine(current);
-                        pathfound = true;
-                    }
-                    else
-                    {
-                        //for all edges of current
-                        foreach (var edge in game.waypoints[current].edges)
-                        {
-                            //if its the parent node ignore it
-                            if (current!= edge.ID())
-                            {
-
-                                /*
-                                //if on closed ignore
-                                if (!closed.Contains(edge.ID()))
-                                {
-                                    if (!open.Contains(edge.ID()))
-                                    {
-                                        game.waypoints[edge.ID()].parent_id = current;
-                                        game.waypoints[edge.ID()].FScore(body.Position, target.body.Position);
-
-                                        open.Add(edge.ID());
-                                    }
-                                    //already on the list, check to see if this new path is better
-                                    else
-                                    {
-                                        if (game.waypoints[edge.ID()].gscore >
-                                                game.waypoints[edge.ID()].GScore(edge.ID(), body.Position))
-                                        {
-                                            game.waypoints[edge.ID()].parent_id = current;
-                                        }
-                                    }
-                                }
-                              /
-
-                            }
-
-
-                        }
-
-                    }
-                }
-
-                #endregion
-
-
-
-
-
-                //this will create the path
-                if (pathfound)
-                {
-                    while (current != -1)
-                    {
-                        path.Add(game.waypoints[current]);
-
-                        current = game.waypoints[current].parent_id;
-                    }
-                }
-            }
-        }
-
-*/
-
         public void NewAstar()
         {
-
             List<Waypoint> open = new List<Waypoint>();
             List<Waypoint> closed = new List<Waypoint>();
             List<Waypoint> lineofsightnodes = new List<Waypoint>();
             path = new List<Waypoint>();
-            Waypoint current=new Waypoint(game);
+            Waypoint current = new Waypoint(game);
             bool pathfound = false;
 
             //make sure thigns are empty!
@@ -465,7 +323,7 @@ namespace Comatose
             if (lineofsightnodes.Count != 0)
             {
                 float lowest = Vector2.Distance(body.Position, lineofsightnodes.First().point);
-                current = lineofsightnodes.First(); 
+                current = lineofsightnodes.First();
 
                 foreach (var wp in lineofsightnodes)
                 {
@@ -489,7 +347,7 @@ namespace Comatose
                 open.Add(current);
             }
 
-            while(open.Count>0 && !pathfound)
+            while (open.Count > 0 && !pathfound)
             {
                 Waypoint q;//= new Waypoint(game);
                 q = open.First();
@@ -498,14 +356,14 @@ namespace Comatose
                 q.HScore(target.body.Position);
                 q.fscore = q.gscore + q.hscore;
                 //find node with least f value on open list
-                foreach(var wp in open)
+                foreach (var wp in open)
                 {
                     wp.GScore();
                     wp.HScore(target.body.Position);
                     wp.fscore = wp.gscore + wp.hscore;
 
-                    if ( q.fscore > wp.fscore)
-                        q= wp;
+                    if (q.fscore > wp.fscore)
+                        q = wp;
                 }
 
                 //remove q from the list
@@ -522,7 +380,7 @@ namespace Comatose
                     current = q;
 
 
-                    while (current!=null) 
+                    while (current != null)
                     {
                         if (!path.Contains(current))
                             path.Add(current);
@@ -531,11 +389,11 @@ namespace Comatose
                     }
                     path.Reverse(); //fix it!
                 }
-                    //we dont have the path and we need to search the edges
+                //we dont have the path and we need to search the edges
                 else
                 {
                     //for every child node
-                    foreach ( var e in q.edges)
+                    foreach (var e in q.edges)
                     {
                         //avoid grabbing the parent
                         if (e != q.parent)
@@ -545,17 +403,17 @@ namespace Comatose
                             {
                                 //check if the one on the open list is lower...
                                 float oldg = e.gscore;
-                                Waypoint oldparent= e.parent;
+                                Waypoint oldparent = e.parent;
                                 e.parent = q;
 
                                 //old is better, reset
-                                if(oldg<e.GScore())
+                                if (oldg < e.GScore())
                                 {
                                     e.parent = oldparent;
                                     e.gscore = oldg;
                                     continue;
                                 }
-                                      
+
                             }
                             if (closed.Contains(e))
                             {
@@ -629,8 +487,10 @@ namespace Comatose
                                 current_path_node = 0;
                             }
                             //check if we can see the next point, if so we should move to that one now
-                            if (current_path_node < path.Count - 1) {
-                                if (game.hasVectorLineOfSight(body.Position, path[current_path_node + 1].point)) {
+                            if (current_path_node < path.Count - 1)
+                            {
+                                if (game.hasVectorLineOfSight(body.Position, path[current_path_node + 1].point))
+                                {
                                     current_path_node += 1;
                                 }
                             }
@@ -673,10 +533,12 @@ namespace Comatose
                 {
                     game.drawLine(path[i].point, path[i + 1].point, Color.Yellow);
                 }
-                if (current_path_node != -1) {
+                if (current_path_node != -1)
+                {
                     game.drawLine(body.GetPosition(), path[current_path_node].point, Color.Green);
                 }
-                if (path.Count > 0) {
+                if (path.Count > 0)
+                {
                     game.drawLine(target.body.GetPosition(), path.Last().point, Color.Cyan);
                 }
 
