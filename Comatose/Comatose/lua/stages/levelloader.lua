@@ -58,6 +58,9 @@ function load_objects(objects, event_name)
 			if v.color then
 				loaded_objects[k]:color(v.color.r, v.color.g, v.color.b, v.color.a)
 			end
+			if v.rotation then
+				loaded_objects[k]:setRotation(v.rotation)
+			end
 		else
 			print("Error loading object -- bad classname: " .. v.class);
 		end

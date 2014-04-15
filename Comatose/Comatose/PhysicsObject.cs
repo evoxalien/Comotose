@@ -198,6 +198,14 @@ namespace Comatose
             body.ApplyTorque(torque);
         }
 
+        public void setRotation(float angle)
+        {
+            //rotate here NOW dammit
+            //(useful for object spawns)
+            body.Rotation = angle;
+            body.SetAngularVelocity(0f);
+        }
+
         public void resetPosition()
         {
             body.SetTransform(new Vector2(0, 0), 0);

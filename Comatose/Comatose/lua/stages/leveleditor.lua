@@ -78,6 +78,7 @@ function select_object(index, type)
 			placeholders[index]:color(current_level.objects[index].color.r, current_level.objects[index].color.g, current_level.objects[index].color.b, 255)
 		end
 	end
+	Input:setAimCenter(placeholders[index].x, placeholders[index].y)
 end
 
 PropertyDisplay = inherits(TextBox)
@@ -133,8 +134,8 @@ property_display = PropertyDisplay.create()
 Placeholder = inherits(PhysicsObject)
 
 function Placeholder:init()
-	self:body_type("static")
-	self.active = false
+	self:body_type("kinematic")
+	self.active = true
 end
 
 function Placeholder:right_click()
@@ -211,11 +212,12 @@ function stage.everyFrame()
 		GameEngine:editMap(current_level.map)
 	end
 
-	if Input:IsHeld("R") and selected_object and not Input:AimingDeadzone() then
+	if Input:IsKeyHeld("R") and selected_object and (not Input:AimingDeadzone()) then
 		aim_direction = Input:GetAimDirection()
 		aim_angle = math.atan2(aim_direction.X, -aim_direction.Y)
+		print(aim_angle)
 		current_level.objects[selected_object].rotation = aim_angle
-		placeholders[selected_object]:rotateTo(aim_angle)
+		placeholders[selected_object]:setRotation(aim_angle)
 	end
 end
 

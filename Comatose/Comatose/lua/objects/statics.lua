@@ -4,6 +4,7 @@
 	if self.body_shape then
 		self:shape(self.body_shape)
 	end
+	self.z_index = 0.5
 end
 
 Chair = inherits(PhysicsObject)
@@ -23,7 +24,20 @@ Recliner = inherits(PhysicsObject)
 Recliner.art = "Chair_Recliner1"
 Recliner.init = static_init
 
-registered_objects["Chair"] = "Chair1"
-registered_objects["Sofa"] = "Sofa"
-registered_objects["Table"] = "Table_Round1"
-registered_objects["Recliner"] = "Chair_Recliner1"
+registered_objects["Chair"] = {
+	art="Chair1",
+	centered=true
+}
+
+registered_objects["Sofa"] = {
+	art="Sofa",
+	centered=true
+}
+registered_objects["Table"] = {
+	art="Table_Round1",
+	centered=true
+}
+registered_objects["Recliner"] = {
+	art="Chair_Recliner1",
+	centered=true
+}
