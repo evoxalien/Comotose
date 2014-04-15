@@ -133,11 +133,37 @@ namespace Comatose
             levelToLoad = filename;
         }
 
+        string levelToEdit = "";
+        public void editLevel(string filename)
+        {
+            levelToEdit = filename;
+        }
+
+        string mapToEdit = "";
+        public void editMap(string filename)
+        {
+            mapToEdit = filename;
+        }
+
         protected void realLoadLevel()
         {
             loadStage("levelloader");
             vm.DoString("load(\"" + levelToLoad + "\")");
             levelToLoad = "";
+        }
+
+        protected void realEditLevel()
+        {
+            loadStage("leveleditor");
+            vm.DoString("load(\"" + levelToEdit + "\")");
+            levelToEdit = "";
+        }
+
+        protected void realEditMap()
+        {
+            loadStage("mapeditor");
+            vm.DoString("load(\"" + mapToEdit + "\")");
+            mapToEdit = "";
         }
 
         public int spawn(string classname)
@@ -358,6 +384,16 @@ namespace Comatose
             if (levelToLoad != "")
             {
                 realLoadLevel();
+            }
+
+            if (levelToEdit != "")
+            {
+                realEditLevel();
+            }
+
+            if (mapToEdit != "")
+            {
+                realEditMap();
             }
 
             // Allows the game to exit

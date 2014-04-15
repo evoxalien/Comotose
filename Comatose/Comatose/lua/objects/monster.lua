@@ -18,6 +18,8 @@ function Monster:init()
 	self:add_target("hero")
 	self.fade_timer = 0
 
+	self.z_index = 0.5
+
 	--self:Target(stage.hero:ID())
 end
 

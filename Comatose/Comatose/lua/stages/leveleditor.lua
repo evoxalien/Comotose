@@ -80,6 +80,56 @@ function select_object(index, type)
 	end
 end
 
+PropertyDisplay = inherits(TextBox)
+
+function PropertyDisplay:init()
+	self.width = 1280 / 2
+	self.height = 720 / 2
+	self.maxLines = 100
+	self.z_index = 500
+	self.camera_weight = 0
+	self:position(0,720/2)
+
+	--shadow copy of self
+	self.shadow = TextBox.create()
+	self.shadow.width = 1280 / 2
+	self.shadow.height = 720 / 2
+	self.shadow:position(1, 720/2 + 1)
+	self.shadow.maxLines = 100
+	self.shadow.z_index = 499
+	self.shadow:color(0,0,0,192)
+	self.shadow.camera_weight = 0
+end
+
+function PropertyDisplay:everyFrame()
+	if selected_object then
+		o = current_level.objects[selected_object]
+
+		display = "Classname: " .. o.class .. "\n"
+		if o.color then
+			display = display .. "color: " .. o.color.r .. ", " .. o.color.g .. ", " .. o.color.b .. ", " .. o.color.a .. "\n"
+		end
+		if o.event then
+			display = display .. "Spawns On Event: " .. o.event .. "\n"
+		end
+
+		--display properties that will be set, if any
+		if o.defaults then
+			display = display .. "Properties: \n"
+			for k,v in pairs(o.defaults) do
+				display = display .. "  " .. k .. ": " .. v .. "\n"
+			end
+		end
+		self:text(display)
+		self.shadow:text(display)
+	else
+		self:text("-- No Selection --")
+		self.shadow:text("-- No Selection --")
+	end
+end
+
+property_display = PropertyDisplay.create()
+
 Placeholder = inherits(PhysicsObject)
 
 function Placeholder:init()
@@ -150,12 +200,30 @@ function stage.everyFrame()
 		save()
 		loadlevel(current_filename)
 	end
+
+	if Input:WasKeyReleased("F12") and current_filename then
+		save()
+		GameEngine:loadLevel(current_filename)
+	end
+
+	if Input:WasKeyReleased("F11") and current_filename and current_level.map then
+		save()
+		GameEngine:editMap(current_level.map)
+	end
 end
 
 function color(red, green, blue, alpha)
 	if selected_object then
 		current_level.objects[selected_object].color = {r=red,g=green,b=blue,a=alpha}
 		placeholders[selected_object]:color(red,green,blue,255)
+	else
+		print("No object selected!")
+	end
+end
+
+function event(event_name)
+	if selected_object then
+		current_level.objects[selected_object].event = event_name
 	else
 		print("No object selected!")
 	end
