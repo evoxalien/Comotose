@@ -140,6 +140,7 @@ Placeholder = inherits(PhysicsObject)
 function Placeholder:init()
 	self:body_type("kinematic")
 	self.active = true
+	self:setLayer("unlit")
 end
 
 function Placeholder:right_click()
@@ -325,6 +326,7 @@ end
 
 levelmap = Map.create()
 levelmap.z_index = 0
+levelmap:setLayer("unlit")
 
 function map(filename)
 	--load the file

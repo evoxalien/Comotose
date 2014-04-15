@@ -2,6 +2,7 @@
 map = Map.create()
 map.debugdraw = true
 mapdata = {edges={}}
+map:setLayer("unlit")
 
 transparent_map = Map.create()
 transparent_map.debugdraw = true
@@ -29,6 +30,7 @@ function VertexHandle:init()
 	self:shape("circle")
 	self.centered = true
 	self.z_index = 0.5
+	self:setLayer("unlit")
 
 	self.previous = nil
 	self.next = nil

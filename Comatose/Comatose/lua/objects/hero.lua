@@ -70,6 +70,10 @@ function Hero:init()
 
 end
 
+function Hero:canSee(entity)
+	--todo: this
+end
+
 function Hero:everyFrame()
 	--root the aiming function, so that subsequent calls will have the correct angle
 	Input:setAimCenter(self.x, self.y)

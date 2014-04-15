@@ -15,6 +15,10 @@ end
 function Log:click()
 	stage.dialog:portrait("VoiceRecorder")
 	stage.dialog:displayText(logdata["demotext1"])
+	if self.trigger_event then
+		trigger_event(self.trigger_event)
+		self.trigger_event = nil -- prevent repeated triggerings
+	end
 end
 
 registered_objects["Log"] = "recorder-for-table"
@@ -24,8 +28,5 @@ registered_objects["Log"] = "recorder-for-table"
 logdata = {}
 
 logdata["demotext1"] = {
-	"Hmmm...where am I? It's the map for the game, but it is not complete.",
-	"Who releases an incomplete game?\nOH!!! This must be the demo. Which means ....",
-	"Hey everybody, welcome to the demo for Comatose!",
-	"Today we will be revealing enough to show you that we are doing stuff, but not to much to spoil the game."
+	"BOW TO ME!!!\n(demo time, spawn monsters now)"
 }

@@ -1,7 +1,7 @@
 ﻿Screamer = inherits(AI)
 
 function Screamer:init()
-	self:sprite("ScreamerV2-move")
+	self:sprite("MonsterV2-move")
 	self.centered = true
 	self.width = 64
 	self.height = 64
@@ -52,7 +52,7 @@ end
 
 --registered_objects["Screamer"] = "ScreamerV_1"
 registered_objects["Screamer"] = {
-	art="ScreamerV2-move",
+	art="MonsterV2-move",
 	width=64,
 	height=64,
 	centered=true

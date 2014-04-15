@@ -422,7 +422,7 @@ namespace Comatose
             //section: render to texture for light sources
             RenderTarget2D lightTarget = new RenderTarget2D(GraphicsDevice, 1280, 720);
             GraphicsDevice.SetRenderTarget(lightTarget);
-            GraphicsDevice.Clear(Color.FromNonPremultiplied(32,32,32,255)); //default ambient light
+            GraphicsDevice.Clear(Color.FromNonPremultiplied(24,24,24,255)); //default ambient light
 
             debugBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Additive);
             gameObjectBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);

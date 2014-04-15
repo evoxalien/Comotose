@@ -182,7 +182,7 @@ namespace Comatose
             game.vm.DoString("mouse.x = " + transformed_mouse.X);
             game.vm.DoString("mouse.y = " + transformed_mouse.Y);
 
-
+            List<PhysicsObject> objectsToHandle = new List<PhysicsObject>();
             if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
             {
                 foreach (var o in game.game_objects)
@@ -193,13 +193,16 @@ namespace Comatose
                         while (thing != null)
                         {
                             if (thing.TestPoint(transformed_mouse))
-                                game.vm.DoString("if objects[" + physics_object.ID() + "].click then objects[" + physics_object.ID() + "]:click(mouse.x - " + physics_object.x + ", mouse.y - " + physics_object.y + ") end");
-                            
+                                objectsToHandle.Add(physics_object);
                             thing = thing.GetNext();
                         }
                     }
                 }
                 game.vm.DoString("if stage.click then stage.click(mouse.x, mouse.y) end");
+                foreach (var o in objectsToHandle)
+                {
+                    game.vm.DoString("if objects[" + o.ID() + "].click then objects[" + o.ID() + "]:click(mouse.x - " + o.x + ", mouse.y - " + o.y + ") end");
+                }
             }
 
             if (mouseState.RightButton == ButtonState.Pressed && lastMouseState.RightButton == ButtonState.Released)
