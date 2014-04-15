@@ -249,10 +249,14 @@ namespace Comatose
             // If the player pressed one of the arrow keys or is using a gamepad to aim, we want to disable mouse aiming. Otherwise,
             // if the player moves the mouse, enable mouse aiming.
 
+            /*
             if (new[] { Keys.Left, Keys.Right, Keys.Up, Keys.Down }.Any(x => keyboardState.IsKeyDown(x)) || gamepadState.ThumbSticks.Right != Vector2.Zero)
                 isAimingWithMouse = false;
             else if (MousePosition != new Vector2(lastMouseState.X, lastMouseState.Y))
                 isAimingWithMouse = true;
+             */
+
+            isAimingWithMouse = (mouseState.LeftButton == ButtonState.Pressed || mouseState.RightButton == ButtonState.Pressed);
 
             GamePausePressed();
             DevModeButtonPressed();

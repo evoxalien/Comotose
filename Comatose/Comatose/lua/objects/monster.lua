@@ -7,7 +7,6 @@ function Monster:init()
 	self.width = 64
 	self.height = 64
 	self.frame_delay = 5
-	--self.fixedRotation = true
 	self:shape("circle")
 	self.cast_shadow = false
 	self.speed=10

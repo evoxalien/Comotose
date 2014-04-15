@@ -210,6 +210,13 @@ function stage.everyFrame()
 		save()
 		GameEngine:editMap(current_level.map)
 	end
+
+	if Input:IsHeld("R") and selected_object and not Input:AimingDeadzone() then
+		aim_direction = Input:GetAimDirection()
+		aim_angle = math.atan2(aim_direction.X, -aim_direction.Y)
+		current_level.objects[selected_object].rotation = aim_angle
+		placeholders[selected_object]:rotateTo(aim_angle)
+	end
 end
 
 function color(red, green, blue, alpha)
