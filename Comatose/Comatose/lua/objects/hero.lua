@@ -51,7 +51,8 @@ function Hero:init()
 	self.near_sight = GameObject.create()
 	self.near_sight:sprite("player_vision")
 	self.near_sight:origin(75,75)
-	self.near_sight:color(255, 255, 255, 64)
+	self.near_sight:color(255, 255, 255, 48)
+	self.near_sight.z_index = 0.5
 end
 
 function Hero:everyFrame()
@@ -117,7 +118,7 @@ function Hero:everyFrame()
 	end
 
 	--update our near_sight light
-	self.near_sight:position(self.x, self.y)
+	self.near_sight:position(self.x * 10, self.y * 10)
 
 	--update the UI
 	self.flashlight_bar:setCurrent(self.flashlight.charge)
