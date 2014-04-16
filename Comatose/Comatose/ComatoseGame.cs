@@ -371,7 +371,7 @@ namespace Comatose
             float angle = (float)Math.Atan2(edge.Y, edge.X);
 
             debugBatch.Draw(pixel,
-                new Rectangle((int)(start.X), (int)(start.Y), (int)(edge.Length()), 2),
+                new Rectangle((int)(start.X), (int)(start.Y), (int)(edge.Length()), 1),
                 null,
                 color,
                 angle,
