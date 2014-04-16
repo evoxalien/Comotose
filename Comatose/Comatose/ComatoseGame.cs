@@ -271,8 +271,8 @@ namespace Comatose
             //loadStage("mapeditor");
             //loadStage("test");
             //loadStage("textboxtest");
-            //loadStage("aitest");
-            loadLevel("demo");
+            loadStage("aitest");
+            //loadLevel("demo");
 
 
         }

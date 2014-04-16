@@ -268,18 +268,19 @@ namespace Comatose
 
     public class AI : PhysicsObject
     {
-        public enum state { IDLE, SEARCHING, MOVING, ATTACKING }
-        private PhysicsObject target;
+        //public enum state { IDLE, SEARCHING, MOVING, ATTACKING }
+        public PhysicsObject target;
         public List<Waypoint> path = new List<Waypoint>();
         private int current_path_node = -1;
         public float speed = 0;
+        private Vector2 random_point;
 
         public AI(ComatoseGame gm)
             : base(gm)
         {
         }
 
-        public void Target(int objectID)
+        public void setTarget(int objectID)
         {
             if (objectID == -1)
                 target = null;
@@ -293,7 +294,7 @@ namespace Comatose
             return !(target == null);
         }
 
-        public void NewAstar()
+        public void NewAstar(Vector2 t)
         {
             List<Waypoint> open = new List<Waypoint>();
             List<Waypoint> closed = new List<Waypoint>();
@@ -353,7 +354,7 @@ namespace Comatose
                 q = open.First();
 
                 q.GScore();
-                q.HScore(target.body.Position);
+                q.HScore(t);
                 q.fscore = q.gscore + q.hscore;
                 //find node with least f value on open list
                 foreach (var wp in open)
@@ -373,7 +374,7 @@ namespace Comatose
 
 
                 //if it is the goal node create the path!
-                if (game.hasVectorLineOfSight(target.body.Position, q.point))
+                if (game.hasVectorLineOfSight(t, q.point))
                 {
                     //we have the path!
                     pathfound = true;
@@ -438,7 +439,7 @@ namespace Comatose
 
                             e.parent = q;
                             e.GScore();
-                            e.HScore(target.body.Position);
+                            e.HScore(t);
                             e.fscore = e.gscore + e.hscore;
 
                             open.Add(e);
@@ -455,61 +456,172 @@ namespace Comatose
             current_path_node = -1;
         }
 
-        public void MoveTowardsTarget()
+        public void MoveTowardsTarget(Vector2 t)
         {
-            if (target != null)
+            //move straight to the target
+            if (game.hasVectorLineOfSight(t, body.Position))
             {
-                //move straight to the target
-                if (game.hasLineOfSight(target.ID(), ID()))
+                Vector2 distance = body.Position - t;
+                distance.Normalize();
+                this.vx = -distance.X * speed;
+                this.vy = -distance.Y * speed;
+            }
+            //move along path
+            else
+            {
+                if (path.Count != 0)
                 {
-                    Vector2 distance = body.Position - target.body.Position;
-                    distance.Normalize();
-                    this.vx = -distance.X * speed;
-                    this.vy = -distance.Y * speed;
-                }
-                //move along path
-                else
-                {
-                    if (path.Count != 0)
+                    if (!game.hasVectorLineOfSight(t, path.Last().point))
                     {
-                        if (!game.hasVectorLineOfSight(target.body.GetPosition(), path.Last().point))
-                        {
-                            //Console.WriteLine("path is >0 and the last point in the path lost sight");
-                            //need to do astar and move along the path
-                            NewAstar();
-                        }
-                        //we have a good path! follow it!
-                        else
-                        {
-                            //start fresh at the first point
-                            if (current_path_node == -1)
-                            {
-                                current_path_node = 0;
-                            }
-                            //check if we can see the next point, if so we should move to that one now
-                            if (current_path_node < path.Count - 1)
-                            {
-                                if (game.hasVectorLineOfSight(body.Position, path[current_path_node + 1].point))
-                                {
-                                    current_path_node += 1;
-                                }
-                            }
-                            Vector2 distance = body.Position - path[current_path_node].point;
-                            distance.Normalize();
-                            this.vx = -distance.X * speed;
-                            this.vy = -distance.Y * speed;
-                            //Console.WriteLine("THING");
-                        }
+                        //Console.WriteLine("path is >0 and the last point in the path lost sight");
+                        //need to do astar and move along the path
+                        NewAstar(t);
                     }
+                    //we have a good path! follow it!
                     else
                     {
-                        //Console.WriteLine("no path!");
-                        NewAstar();
+                        //start fresh at the first point
+                        if (current_path_node == -1)
+                        {
+                            current_path_node = 0;
+                        }
+                        //check if we can see the next point, if so we should move to that one now
+                        if (current_path_node < path.Count - 1)
+                        {
+                            if (game.hasVectorLineOfSight(body.Position, path[current_path_node + 1].point))
+                            {
+                                current_path_node += 1;
+                            }
+                        }
+                        Vector2 distance = body.Position - path[current_path_node].point;
+                        distance.Normalize();
+                        this.vx = -distance.X * speed;
+                        this.vy = -distance.Y * speed;
+                        //Console.WriteLine("THING");
                     }
+                }
+                else
+                {
+                    //Console.WriteLine("no path!");
+                    NewAstar(t);
                 }
             }
         }
 
+        public void MoveTowardsTarget(float x,float y)
+        {
+            Vector2 t = new Vector2(x, y);
+            //move straight to the target
+            if (game.hasVectorLineOfSight(t, body.Position))
+            {
+                Vector2 distance = body.Position - t;
+                distance.Normalize();
+                this.vx = -distance.X * speed;
+                this.vy = -distance.Y * speed;
+            }
+            //move along path
+            else
+            {
+                if (path.Count != 0)
+                {
+                    if (!game.hasVectorLineOfSight(t, path.Last().point))
+                    {
+                        //Console.WriteLine("path is >0 and the last point in the path lost sight");
+                        //need to do astar and move along the path
+                        NewAstar(t);
+                    }
+                    //we have a good path! follow it!
+                    else
+                    {
+                        //start fresh at the first point
+                        if (current_path_node == -1)
+                        {
+                            current_path_node = 0;
+                        }
+                        //check if we can see the next point, if so we should move to that one now
+                        if (current_path_node < path.Count - 1)
+                        {
+                            if (game.hasVectorLineOfSight(body.Position, path[current_path_node + 1].point))
+                            {
+                                current_path_node += 1;
+                            }
+                        }
+                        Vector2 distance = body.Position - path[current_path_node].point;
+                        distance.Normalize();
+                        this.vx = -distance.X * speed;
+                        this.vy = -distance.Y * speed;
+                        //Console.WriteLine("THING");
+                    }
+                }
+                else
+                {
+                    //Console.WriteLine("no path!");
+                    NewAstar(t);
+                }
+            }
+        }
+
+        public void RandomWaypoint()
+        {
+            //choose a random waypoint
+            Random r = new Random();
+            random_point= game.waypoints.ElementAt(r.Next(0, game.waypoints.Count - 1)).Value.point;
+            Console.WriteLine("choosing a new point");
+        }
+
+        public void Wander()
+        {
+            Vector2 t = random_point;
+            
+            //move straight to the target
+            if (game.hasVectorLineOfSight(t, body.Position))
+            {
+                Vector2 distance = body.Position - t;
+                distance.Normalize();
+                this.vx = -distance.X * speed;
+                this.vy = -distance.Y * speed;
+            }
+            else if (Vector2.Distance(body.Position, t) < 5)
+            {
+                RandomWaypoint();
+            }
+            //move along path
+            else
+            {
+                if (path.Count != 0)
+                {
+                    if (!game.hasVectorLineOfSight(t, path.Last().point))
+                    {
+                        NewAstar(t);
+                    }
+                                        else
+                    {
+                        if (current_path_node == -1)
+                        {
+                            current_path_node = 0;
+                        }
+                        if (current_path_node < path.Count - 1)
+                        {
+                            if (game.hasVectorLineOfSight(body.Position, path[current_path_node + 1].point))
+                            {
+                                current_path_node += 1;
+                            }
+                        }
+                        Vector2 distance = body.Position - path[current_path_node].point;
+                        distance.Normalize();
+                        this.vx = -distance.X * speed;
+                        this.vy = -distance.Y * speed;
+                    }
+                }
+                else
+                {
+                    NewAstar(t);
+                }
+            }
+        
+
+
+        }
         public override void Draw(GameTime gameTime)
         {
             rotate(body.GetAngle());
@@ -549,5 +661,6 @@ namespace Comatose
             base.Draw(gameTime);
 
         }
+
     }
 }

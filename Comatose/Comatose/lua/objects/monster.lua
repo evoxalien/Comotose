@@ -37,7 +37,7 @@ end
 
 function Monster:everyFrame()
 	if not self:HasTarget() then
-		self:Target(stage.hero:ID())
+		self:setTarget(stage.hero:ID())
 	end
 	if 
 		(GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) and stage.hero:insideFlashlight(self)) or

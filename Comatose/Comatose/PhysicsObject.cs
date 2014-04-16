@@ -20,7 +20,6 @@ namespace Comatose
         protected Fixture fixture;
         public bool cast_shadow = true;
         protected bool _centered = false;
-        //public Audio audio;
 
         #region Getters / Setters for body properties
         public Vector2 point {
@@ -100,7 +99,6 @@ namespace Comatose
 
             body.SetUserData(this);
             collision_group = "gameobject";
-            //audio = new Audio(game);
         }
 
         public float distanceFrom(float x, float y) {

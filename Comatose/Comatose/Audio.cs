@@ -78,18 +78,9 @@ namespace Comatose
         {
             if (playing)
             {
-                //set the directoin the player is facing
-                //Vector2 direction = Vector2.Transform(new Vector2(0f,1f),Matrix.CreateRotationZ(listener_object.body.Rotation));
-
                 listener.Position = new Vector3(listener_object.body.Position, 0);
-                //listener.Forward = new Vector3(direction, 0);
-                //listener.Up = new Vector3(0f, 1f, 0);
-                //Console.WriteLine(new Vector3(-direction, 0));
 
-                //direction = Vector2.Transform(new Vector2(0f,1f),Matrix.CreateRotationZ(parent_object.body.Rotation));
                 emitter.Position = new Vector3(parent_object.body.Position, 0);
-                //emitter.Forward = new Vector3(direction, 0);
-                //emitter.Up = new Vector3(0f, 1f, 0);
 
                 sfx.Apply3D(listener, emitter);
             }
