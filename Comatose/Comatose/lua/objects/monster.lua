@@ -30,7 +30,9 @@ function Monster:init()
 
 
 
-	self.searchtimer=120
+	--state machine stuff
+	self.searchtimer=700
+	self.wandertimer=1000
 	self.state="wander"
 
 	--self:Target(stage.hero:ID())
@@ -76,7 +78,6 @@ function Monster:StateMachine()
 
 
 	if self.state=="searching" then --goto last known space % of time
-		print("searching")
 
 		if GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) then
 			self.state="attacking"
@@ -94,7 +95,6 @@ function Monster:StateMachine()
 																	
 
 	elseif self.state=="attacking" then
-		print("attacking")
 		self:MoveTowardsTarget(stage.hero.x,stage.hero.y)
 
 		if not GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) then
@@ -107,15 +107,20 @@ function Monster:StateMachine()
 
 
 	elseif self.state=="idle" then --dont do anything,can only enter this from out of the state machine
-		print("idle")
 
 	elseif self.state=="wander" then --pick a random location on waypoint and goto
-		print("wander")
 
 		--if we see the player while wandering, attack it
 		if GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) then
 			self.state="attacking"
 		else --we are going to wander the path by pick a random node and going to it
+
+			self.wandertimer= self.wandertimer-1
+			if self.wandertimer<0 then
+				self.RandomWaypoint()
+				self.wandertimer=1000
+			end
+
 
 			--choose a random point
 			if not self.wandering then

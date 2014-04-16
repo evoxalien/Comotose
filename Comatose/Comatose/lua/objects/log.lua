@@ -3,6 +3,7 @@ Log = inherits(PhysicsObject)
 
 function Log:init()
 	self:sprite("recorder-for-table")
+	self:body_type("static")
 
 	--create an itembubble
 	self.title = ItemBubble.create()

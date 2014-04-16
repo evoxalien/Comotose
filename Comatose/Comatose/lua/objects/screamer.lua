@@ -20,10 +20,9 @@ function Screamer:init()
 	self.z_index = 0.5
 
 	--state machine stuff
-
-	self.searchtimer=120
+	self.searchtimer=700
+	self.wandertimer=1000
 	self.state="wander"
-	--self:Target(stage.hero:ID())
 end
 
 function Screamer:handleCollision()
@@ -71,7 +70,7 @@ function Screamer:StateMachine()
 
 			if self.searchtimer < 0  then
 				self.state="wander"
-				self.searchtimer=400
+				self.searchtimer=1000
 			end
 		end
 																	
@@ -99,11 +98,21 @@ function Screamer:StateMachine()
 		if GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) then
 			self.state="attacking"
 		else --we are going to wander the path by pick a random node and going to it
-
+			
+		
+			--make sure we actually reach this point after a certain amount of time,
+			--if not choose a new point to try to goto	
+			self.wandertimer= self.wandertimer-1
+			if self.wandertimer<0 then
+				self.RandomWaypoint()
+				self.wandertimer=1000
+			end
+				
 			--choose a random point
 			if not self.wandering then
 				self.RandomWaypoint()
 				self.wandering =true
+				self.wandertimer=1000
 			end
 			self.Wander()
 		end
