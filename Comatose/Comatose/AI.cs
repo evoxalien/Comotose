@@ -512,7 +512,7 @@ namespace Comatose
         {
             Vector2 t = new Vector2(x, y);
             //move straight to the target
-            if (game.hasVectorLineOfSight(t, body.Position))
+            if (game.hasVectorLineOfSight(t, body.Position)) 
             {
                 Vector2 distance = body.Position - t;
                 distance.Normalize();
@@ -565,7 +565,7 @@ namespace Comatose
         {
             //choose a random waypoint
             Random r = new Random();
-            random_point= game.waypoints.ElementAt(r.Next(0, game.waypoints.Count - 1)).Value.point;
+            random_point= game.waypoints.ElementAt(r.Next(0, game.waypoints.Count)).Value.point;
             Console.WriteLine("choosing a new point");
         }
 
@@ -574,7 +574,7 @@ namespace Comatose
             Vector2 t = random_point;
             
             //move straight to the target
-            if (game.hasVectorLineOfSight(t, body.Position))
+            if (game.hasVectorLineOfSight(t, body.Position) && Vector2.Distance(body.Position,t) >=5)
             {
                 Vector2 distance = body.Position - t;
                 distance.Normalize();
