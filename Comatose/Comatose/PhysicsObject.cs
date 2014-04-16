@@ -109,22 +109,36 @@ namespace Comatose
 
         #region Joint Management
 
-        public void join(int targetID)
+        public void join(int targetID, string type)
         {
             if (game.game_objects[targetID] is PhysicsObject)
             {
                 PhysicsObject target = (PhysicsObject)game.game_objects[targetID];
 
-                WeldJointDef def = new WeldJointDef();
-                def.bodyA = body;
-                def.bodyB = target.body;
+                switch(type) {
+                    case "weld":
+                        WeldJointDef def = new WeldJointDef();
+                        def.bodyA = body;
+                        def.bodyB = target.body;
 
-                def.localAnchorA = body.GetPosition() - target.body.GetPosition();
-                def.localAnchorB = target.body.GetPosition() - body.GetPosition();
+                        def.localAnchorA = body.GetPosition() - target.body.GetPosition();
+                        def.localAnchorB = target.body.GetPosition() - body.GetPosition();
 
-                def.collideConnected = false;
+                        def.collideConnected = false;
+                        game.world.CreateJoint(def);
+                        break;
+                    case "revolute":
+                        RevoluteJointDef rdef = new RevoluteJointDef();
 
-                game.world.CreateJoint(def);
+                        rdef.Initialize(body, target.body, body.GetWorldCenter());
+
+                        rdef.collideConnected = false;
+                        game.world.CreateJoint(rdef);
+
+                        break;
+                }
+
+                
             }
         }
 
