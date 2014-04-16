@@ -39,7 +39,7 @@ function Monster:init()
 end
 
 function Monster:handleCollision()
-	stage.hero.sanity = 0
+	--stage.hero.sanity = 0
 end
 
 function Monster:everyFrame()
@@ -52,8 +52,13 @@ function Monster:everyFrame()
 	--	self:distanceFrom(stage.hero.x, stage.hero.y) < 10 then
 
 	if stage.hero:canSee(self) then
-		stage.hero.sanity = math.max(stage.hero.sanity - 20 / 60, 0)
-		stage.hero.sanity_cooldown = 5 * 60
+		if stage.hero.flashlight:isIlluminating(self:ID()) then
+			stage.hero.sanity = math.max(stage.hero.sanity - 20 / 60, 0)
+			stage.hero.sanity_cooldown = 5 * 60
+		else
+			stage.hero.sanity = math.max(stage.hero.sanity - 5 / 60, 0)
+			stage.hero.sanity_cooldown = 5 * 60
+		end
 		self.fade_timer = math.min(self.fade_timer + 2, 10)
 	else
 		--hide
