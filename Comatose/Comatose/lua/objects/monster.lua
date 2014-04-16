@@ -51,7 +51,7 @@ function Monster:everyFrame()
 	end
 	self:color(255,255,255,255 * (self.fade_timer / 10))
 
-	self:MoveTowardsTarget()
+	self:MoveTowardsTarget(stage.hero.x,stage.hero.y)
 
 	--turn to face our movement direction
 	rotate_angle = math.atan2(self.vx, -self.vy) + math.pi
