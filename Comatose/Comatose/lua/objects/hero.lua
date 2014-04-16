@@ -68,6 +68,8 @@ function Hero:init()
 	self.firelight1.ray_length = 2
 	self.firelight2.ray_length = 2
 
+	
+
 end
 
 function Hero:canSee(entity)
