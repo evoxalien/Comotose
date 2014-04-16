@@ -467,12 +467,6 @@ namespace Comatose
             gameObjectBatch.Begin(SpriteSortMode.BackToFront, multiply);
             gameObjectBatch.Draw(lightMap, new Vector2(0), Color.White);
             gameObjectBatch.End();
-            
-            //Draw all particles using a new batch; this forces particles to be drawn on top of all other sprites,
-            //plus they get a different blend mode for fancy effects
-            gameObjectBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
-            ParticleManager.Draw(gameObjectBatch);
-            gameObjectBatch.End();
 
             //Draw unlit objects in the game world (these objects ignore lighting)
             gameObjectBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
@@ -483,6 +477,12 @@ namespace Comatose
                     o.Value.Draw(gameTime);
                 }
             }
+            gameObjectBatch.End();
+
+            //Draw all particles using a new batch; this forces particles to be drawn on top of all other sprites,
+            //plus they get a different blend mode for fancy effects
+            gameObjectBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
+            ParticleManager.Draw(gameObjectBatch);
             gameObjectBatch.End();
 
             //Draw UI
