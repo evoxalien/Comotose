@@ -46,9 +46,12 @@ function Monster:everyFrame()
 	if not self:HasTarget() then
 		self:setTarget(stage.hero:ID())
 	end
-	if 
-		(GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) and stage.hero:insideFlashlight(self)) or
-		self:distanceFrom(stage.hero.x, stage.hero.y) < 10 then
+	
+	--if 
+	--	(GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) and stage.hero.flashlight:isIlluminating(self:ID())) or
+	--	self:distanceFrom(stage.hero.x, stage.hero.y) < 10 then
+
+	if stage.hero:canSee(self) then
 		stage.hero.sanity = math.max(stage.hero.sanity - 20 / 60, 0)
 		stage.hero.sanity_cooldown = 5 * 60
 		self.fade_timer = math.min(self.fade_timer + 2, 10)

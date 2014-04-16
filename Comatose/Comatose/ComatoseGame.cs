@@ -379,6 +379,23 @@ namespace Comatose
                 SpriteEffects.None,
                 .5f);
         }
+
+        public bool isIlluminated(int targetID) 
+        {
+            if (game_objects[targetID] is PhysicsObject) {
+                PhysicsObject target = (PhysicsObject)game_objects[targetID];
+                foreach (var o in game_objects) {
+                    if (o.Value is LightSource) {
+                        LightSource light = (LightSource)o.Value;
+                        if (light.isIlluminating(targetID)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
         #endregion
 
         #region Game Loop

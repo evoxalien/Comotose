@@ -58,7 +58,6 @@ function Hero:init()
 	self.near_sight.z_index = 0.5
 	self.near_sight:setLayer("light")
 
-
 	self.firelight1 = LightSource.create()
 	self.firelight2 = LightSource.create()
 	self.firelight1:shape("none")
@@ -67,13 +66,6 @@ function Hero:init()
 	self.firelight2:color(230, 170, 20, 0)
 	self.firelight1.ray_length = 2
 	self.firelight2.ray_length = 2
-
-	
-
-end
-
-function Hero:canSee(entity)
-	--todo: this
 end
 
 function Hero:everyFrame()
@@ -180,6 +172,23 @@ function Hero:everyFrame()
 	
 	Input:setAimCenter(self.x * 10, self.y * 10)
 	self.count = self.count + 1
+end
+
+function Hero:canSee(entity)
+	--if this object is very close to us, return true regardless of anything else
+	if self:distanceFrom(entity.x, entity.y) < 10 then
+		return true
+	end
+	
+	--first, we can only see things that we have line of sight with
+	if GameEngine:hasLineOfSight(self:ID(), entity:ID()) then
+		--if this object is illuminated by *any* light in the scene, we can see it
+		if GameEngine:isIlluminated(entity:ID()) then
+			return true
+		end
+	end
+
+	return false
 end
 
 function Hero:insideFlashlight(entity)

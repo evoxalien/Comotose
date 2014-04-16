@@ -24,6 +24,41 @@ namespace Comatose
         
         private Vector2 intersectionNormal = new Vector2(0, 0);
 
+        float angle = 0;
+
+        public bool isIlluminating(int targetID) 
+        {
+            if (game.game_objects[targetID] is PhysicsObject)
+            {
+                PhysicsObject target = (PhysicsObject)game.game_objects[targetID];
+
+                if (target.distanceFrom(x, y) <= ray_length && game.hasVectorLineOfSight(body.GetPosition(), target.body.GetPosition())) {
+                    //make sure this is inside the "cone" for light sources that are not 360 degrees
+
+                    angle = (float)Math.Atan2(target.y - y, target.x - x) - body.GetAngle() + (float)Math.PI / 2;
+                    while (angle < 0) {
+                        angle += (float)Math.PI * 2;
+                    }
+                    while (angle > Math.PI * 2) {
+                        angle -= (float)Math.PI * 2;
+                    }
+
+                    if (angle < light_spread_angle / 2 || angle > Math.PI * 2 - light_spread_angle / 2) {
+                        //Console.WriteLine("success!");
+                        return true;
+                    }
+
+                }
+                else {
+                    //Console.WriteLine("distance check failed");
+                }
+            }
+
+            //Console.WriteLine("angle: " + angle);
+
+            return false;
+        }
+
         public LightSource(ComatoseGame gm) : base(gm)
         {
             //body.SetActive(false);
