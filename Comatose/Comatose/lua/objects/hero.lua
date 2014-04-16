@@ -24,7 +24,7 @@ function Hero:init()
 	self.flashlight.x = self.x - 1.0
 	self.flashlight.y = self.y + 1.7
 
-	self.flashlight:join(self.ID())
+	self.flashlight:join(self.ID(), "weld")
 
 	--setup the hero camera
 	self.camera = HeroCamera.create()
@@ -68,6 +68,8 @@ function Hero:init()
 	self.firelight1.ray_length = 2
 	self.firelight2.ray_length = 2
 
+	
+
 end
 
 function Hero:canSee(entity)
@@ -86,8 +88,8 @@ function Hero:everyFrame()
 	if self.on_fire > 0 then
 		self.firelight1.ray_length = 20
 		self.firelight2.ray_length = 25
-		self.firelight1:color(210, 50, 45, 0)
-		self.firelight2:color(230, 170, 20, 0)
+		self.firelight1:color(210, 50, 45, 64)
+		self.firelight2:color(230, 170, 20, 100)
 		if (self.count % 3) == 0 then
 			--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
 			--Effect:CreateFire(self.x , self.y, 45)

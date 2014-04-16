@@ -18,7 +18,7 @@ function Monster:init()
 	self.frame_delay = 5
 	self:shape("circle")
 	self.cast_shadow = false
-	self.speed = 10
+	self.speed = 7.5
 
 	stage.monster = self
 

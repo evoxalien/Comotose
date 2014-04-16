@@ -6,6 +6,18 @@ function Flashlight:init()
 
 	self.on = true
 	self.charge = 300
+
+	--audio things
+	self.sounds = {}
+	self.sounds.on = Audio.create()
+	self.sounds.on:audioname("FlashlightOn00")
+	self.sounds.on:attach(self:ID())
+	self.sounds.on:attachListener(self:ID())
+
+	self.sounds.off = Audio.create()
+	self.sounds.off:audioname("FlashlightOff00")
+	self.sounds.off:attach(self:ID())
+	self.sounds.off:attachListener(self:ID())
 end
 
 function Flashlight:addCharge(battery_level)
@@ -15,7 +27,13 @@ end
 function Flashlight:everyFrame()
 	--listen for the flashlight button and toggle ourselves
 	if Input:WasButtonPressed("B") or Input:WasKeyPressed("F") then
-		self.on = not self.on
+		if self.on then
+			self.on = false
+			self.sounds.off:play()
+		else
+			self.on = true
+			self.sounds.on:play()
+		end
 		--TODO: play "flashlight click" sound here
 	end
 

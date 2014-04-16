@@ -3,344 +3,358 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
-	["joints"] = {
-	};
-	["map"] = "demo";
 	["objects"] = {
 		[64] = {
+			["class"] = "Chair2";
 			["rotation"] = -1.6060758002571;
 			["defaults"] = {
-				["x"] = 147.3;
 				["y"] = 57.8;
+				["x"] = 147.3;
 			};
-			["class"] = "Chair2";
 		};
 		[27] = {
-			["defaults"] = {
-				["x"] = 124.1;
-				["y"] = 123;
-			};
 			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 123;
+				["x"] = 124.1;
+			};
 		};
 		[36] = {
-			["defaults"] = {
-				["x"] = 15.9;
-				["y"] = 98.5;
-			};
 			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 98.5;
+				["x"] = 15.9;
+			};
 		};
 		[29] = {
-			["defaults"] = {
-				["x"] = 169;
-				["y"] = 123;
-			};
 			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 123;
+				["x"] = 169;
+			};
 		};
 		[40] = {
-			["defaults"] = {
-				["x"] = 89.2;
-				["y"] = 27.6;
-			};
 			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 27.6;
+				["x"] = 89.2;
+			};
 		};
 		[31] = {
-			["defaults"] = {
-				["x"] = 57.3;
-				["y"] = 140;
-			};
 			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 140;
+				["x"] = 57.3;
+			};
 		};
 		[35] = {
-			["defaults"] = {
-				["x"] = 16.1;
-				["y"] = 111.5;
-			};
 			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 111.5;
+				["x"] = 16.1;
+			};
 		};
 		[70] = {
 			["class"] = "Waypoint";
 			["defaults"] = {
-				["x"] = 7.8;
 				["y"] = 74;
+				["x"] = 7.8;
 			};
 		};
 		[3] = {
-			["event"] = "test";
-			["defaults"] = {
-				["x"] = 103.4;
-				["y"] = 54.4;
-			};
-			["rotation"] = -0.62356075762603;
 			["class"] = "Monster";
+			["event"] = "test";
+			["rotation"] = -0.62356075762603;
+			["defaults"] = {
+				["y"] = 54.4;
+				["x"] = 103.4;
+			};
 		};
 		[24] = {
-			["defaults"] = {
-				["x"] = 46.9;
-				["y"] = 62.6;
-			};
 			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 62.6;
+				["x"] = 46.9;
+			};
 		};
 		[48] = {
 			["event"] = "test";
-			["defaults"] = {
-				["x"] = 38.1;
-				["y"] = 99.8;
-			};
 			["class"] = "Monster";
+			["defaults"] = {
+				["y"] = 99.8;
+				["x"] = 38.1;
+			};
 		};
 		[69] = {
 			["class"] = "Waypoint";
 			["defaults"] = {
-				["x"] = 28.6;
 				["y"] = 77.6;
+				["x"] = 28.6;
 			};
 		};
-		[54] = {
-			["rotation"] = 2.299261279655;
+		[75] = {
 			["defaults"] = {
-				["x"] = 35.6;
-				["y"] = 26.4;
+				["y"] = 87.7;
+				["x"] = 57.5;
 			};
-			["class"] = "Chair2";
-		};
-		[26] = {
-			["defaults"] = {
-				["x"] = 123.4;
-				["y"] = 72.2;
-			};
-			["class"] = "Waypoint";
+			["class"] = "Campfire";
 		};
 		[34] = {
-			["defaults"] = {
-				["x"] = 26;
-				["y"] = 111.2;
-			};
 			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 111.2;
+				["x"] = 26;
+			};
+		};
+		[73] = {
+			["class"] = "Door";
+			["defaults"] = {
+				["y"] = 63;
+				["x"] = 47.3;
+			};
+		};
+		[59] = {
+			["class"] = "Chair2";
+			["rotation"] = 1.5782035953803;
+			["defaults"] = {
+				["y"] = 34.8;
+				["x"] = 170.4;
+			};
+		};
+		[26] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 72.2;
+				["x"] = 123.4;
+			};
+		};
+		[61] = {
+			["class"] = "Chair2";
+			["rotation"] = -1.6059576960656;
+			["defaults"] = {
+				["y"] = 23.8;
+				["x"] = 147.1;
+			};
 		};
 		[68] = {
+			["class"] = "Hero";
 			["rotation"] = 2.150016238226;
 			["defaults"] = {
-				["x"] = 8.8;
 				["y"] = 63.2;
+				["x"] = 8.8;
 			};
-			["class"] = "Hero";
 		};
 		[43] = {
+			["class"] = "Waypoint";
 			["defaults"] = {
-				["x"] = 35.7;
 				["y"] = 13.6;
+				["x"] = 35.7;
 			};
-			["class"] = "Waypoint";
 		};
-		[50] = {
+		[62] = {
+			["class"] = "Chair2";
+			["rotation"] = -1.5639471190351;
 			["defaults"] = {
-				["x"] = 170.8;
-				["y"] = 72.1;
-			};
-			["class"] = "Waypoint";
-		};
-		[44] = {
-			["defaults"] = {
-				["x"] = 11.3;
-				["y"] = 13.7;
-			};
-			["class"] = "Waypoint";
-		};
-		[63] = {
-			["rotation"] = -1.5962145797384;
-			["defaults"] = {
+				["y"] = 34.7;
 				["x"] = 147;
-				["y"] = 46.4;
 			};
-			["class"] = "Chair2";
-		};
-		[28] = {
-			["defaults"] = {
-				["x"] = 137.8;
-				["y"] = 122.7;
-			};
-			["class"] = "Waypoint";
-		};
-		[38] = {
-			["defaults"] = {
-				["x"] = 170.4;
-				["y"] = 8;
-			};
-			["class"] = "Waypoint";
-		};
-		[67] = {
-			["rotation"] = 2.1309179018379;
-			["defaults"] = {
-				["x"] = 80.1;
-				["y"] = 101.2;
-			};
-			["class"] = "Chair2";
 		};
 		[45] = {
 			["event"] = "test";
+			["class"] = "Monster";
 			["defaults"] = {
-				["x"] = 100.6;
 				["y"] = 26.8;
+				["x"] = 100.6;
 			};
-			["class"] = "Monster";
-		};
-		[53] = {
-			["defaults"] = {
-				["x"] = 144;
-				["y"] = 72.4;
-			};
-			["class"] = "Waypoint";
-		};
-		[21] = {
-			["defaults"] = {
-				["x"] = 57.6;
-				["y"] = 124.5;
-			};
-			["class"] = "Waypoint";
-		};
-		[55] = {
-			["rotation"] = 1.5707963267949;
-			["defaults"] = {
-				["x"] = 170.4;
-				["y"] = 23.4;
-			};
-			["class"] = "Chair2";
-		};
-		[30] = {
-			["defaults"] = {
-				["x"] = 123.8;
-				["y"] = 136.4;
-			};
-			["class"] = "Waypoint";
-		};
-		[33] = {
-			["defaults"] = {
-				["x"] = 38.8;
-				["y"] = 111.2;
-			};
-			["class"] = "Waypoint";
-		};
-		[66] = {
-			["defaults"] = {
-				["x"] = 107.1;
-				["y"] = 106.6;
-			};
-			["class"] = "Chair2";
-		};
-		[46] = {
-			["event"] = "test";
-			["defaults"] = {
-				["x"] = 39.5;
-				["y"] = 15.5;
-			};
-			["rotation"] = -1.4536875787459;
-			["class"] = "Monster";
-		};
-		[52] = {
-			["defaults"] = {
-				["x"] = 113.9;
-				["y"] = 4.9;
-			};
-			["class"] = "Waypoint";
-		};
-		[42] = {
-			["defaults"] = {
-				["x"] = 39.6;
-				["y"] = 7.9;
-			};
-			["class"] = "Waypoint";
-		};
-		[51] = {
-			["defaults"] = {
-				["x"] = 65.4;
-				["y"] = 4.9;
-			};
-			["class"] = "Waypoint";
-		};
-		[23] = {
-			["defaults"] = {
-				["x"] = 58.4;
-				["y"] = 62.7;
-			};
-			["class"] = "Waypoint";
-		};
-		[37] = {
-			["defaults"] = {
-				["x"] = 139.2;
-				["y"] = 7.7;
-			};
-			["class"] = "Waypoint";
-		};
-		[65] = {
-			["defaults"] = {
-				["x"] = 93.8;
-				["y"] = 106.2;
-			};
-			["class"] = "Chair2";
-		};
-		[60] = {
-			["rotation"] = 1.5946013536007;
-			["defaults"] = {
-				["x"] = 170.2;
-				["y"] = 46.1;
-			};
-			["class"] = "Chair2";
-		};
-		[58] = {
-			["rotation"] = 1.5707963267949;
-			["defaults"] = {
-				["x"] = 169.8;
-				["y"] = 57.8;
-			};
-			["class"] = "Chair2";
-		};
-		[2] = {
-			["defaults"] = {
-				["x"] = 49.9;
-				["y"] = 51.7;
-				["trigger_event"] = "test";
-			};
-			["class"] = "Log";
 		};
 		[47] = {
 			["event"] = "test";
-			["defaults"] = {
-				["x"] = 33.5;
-				["y"] = 74.8;
-			};
 			["class"] = "Monster";
-		};
-		[62] = {
-			["rotation"] = -1.5639471190351;
 			["defaults"] = {
-				["x"] = 147;
-				["y"] = 34.7;
+				["y"] = 74.8;
+				["x"] = 33.5;
 			};
-			["class"] = "Chair2";
 		};
-		[59] = {
-			["rotation"] = 1.5782035953803;
+		[28] = {
+			["class"] = "Waypoint";
 			["defaults"] = {
+				["y"] = 122.7;
+				["x"] = 137.8;
+			};
+		};
+		[38] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 8;
 				["x"] = 170.4;
-				["y"] = 34.8;
 			};
+		};
+		[67] = {
 			["class"] = "Chair2";
+			["rotation"] = 2.1309179018379;
+			["defaults"] = {
+				["y"] = 101.2;
+				["x"] = 80.1;
+			};
+		};
+		[58] = {
+			["class"] = "Chair2";
+			["rotation"] = 1.5707963267949;
+			["defaults"] = {
+				["y"] = 57.8;
+				["x"] = 169.8;
+			};
+		};
+		[65] = {
+			["class"] = "Chair2";
+			["defaults"] = {
+				["y"] = 106.2;
+				["x"] = 93.8;
+			};
+		};
+		[55] = {
+			["class"] = "Chair2";
+			["rotation"] = 1.5707963267949;
+			["defaults"] = {
+				["y"] = 23.4;
+				["x"] = 170.4;
+			};
+		};
+		[33] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 111.2;
+				["x"] = 38.8;
+			};
+		};
+		[30] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 136.4;
+				["x"] = 123.8;
+			};
+		};
+		[60] = {
+			["class"] = "Chair2";
+			["rotation"] = 1.5946013536007;
+			["defaults"] = {
+				["y"] = 46.1;
+				["x"] = 170.2;
+			};
+		};
+		[66] = {
+			["class"] = "Chair2";
+			["defaults"] = {
+				["y"] = 106.6;
+				["x"] = 107.1;
+			};
+		};
+		[52] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 4.9;
+				["x"] = 113.9;
+			};
+		};
+		[51] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 4.9;
+				["x"] = 65.4;
+			};
+		};
+		[42] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 7.9;
+				["x"] = 39.6;
+			};
+		};
+		[46] = {
+			["class"] = "Monster";
+			["event"] = "test";
+			["rotation"] = -1.4536875787459;
+			["defaults"] = {
+				["y"] = 15.5;
+				["x"] = 39.5;
+			};
+		};
+		[23] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 62.7;
+				["x"] = 58.4;
+			};
+		};
+		[37] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 7.7;
+				["x"] = 139.2;
+			};
+		};
+		[21] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 124.5;
+				["x"] = 57.6;
+			};
+		};
+		[53] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 72.4;
+				["x"] = 144;
+			};
+		};
+		[2] = {
+			["class"] = "Log";
+			["defaults"] = {
+				["y"] = 51.7;
+				["x"] = 49.9;
+				["trigger_event"] = "test";
+			};
+		};
+		[63] = {
+			["class"] = "Chair2";
+			["rotation"] = -1.5962145797384;
+			["defaults"] = {
+				["y"] = 46.4;
+				["x"] = 147;
+			};
+		};
+		[44] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 13.7;
+				["x"] = 11.3;
+			};
+		};
+		[50] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["y"] = 72.1;
+				["x"] = 170.8;
+			};
 		};
 		[32] = {
-			["defaults"] = {
-				["x"] = 39;
-				["y"] = 140;
-			};
 			["class"] = "Waypoint";
-		};
-		[61] = {
-			["rotation"] = -1.6059576960656;
 			["defaults"] = {
-				["x"] = 147.1;
-				["y"] = 23.8;
+				["y"] = 140;
+				["x"] = 39;
 			};
-			["class"] = "Chair2";
 		};
+		[54] = {
+			["class"] = "Chair2";
+			["rotation"] = 2.299261279655;
+			["defaults"] = {
+				["y"] = 26.4;
+				["x"] = 35.6;
+			};
+		};
+	};
+	["map"] = "demo";
+	["joints"] = {
 	};
 }
 return obj1
