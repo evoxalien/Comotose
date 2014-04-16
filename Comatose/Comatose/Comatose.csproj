@@ -200,6 +200,9 @@
     <None Include="lua\objects\Bar.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\objects\campfire.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\objects\dialogbox.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
