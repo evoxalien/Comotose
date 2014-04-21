@@ -19,7 +19,7 @@ namespace Comatose
     {
         public int ray_length = 50;
         public float light_spread_angle = (float)Math.PI * 2;
-        public int rays_to_cast = 64;
+        public int rays_to_cast = 16;
         public float max_fraction = 1;
         
         private Vector2 intersectionNormal = new Vector2(0, 0);
@@ -144,10 +144,14 @@ namespace Comatose
                                         float light_min = current_rotation - light_spread_angle / 2;
                                         float light_max = current_rotation + light_spread_angle / 2;
 
+                                        while (ray_angle > Math.PI)
+                                        {
+                                            ray_angle -= (float)Math.PI * 2;
+                                        }
                                         while (ray_angle < light_min) {
                                             ray_angle += (float)Math.PI * 2;
                                         }
-
+                                        
                                         if (ray_angle < light_max) {
                                             //Add it to the list for processing
                                             testPoints.Add(target);
@@ -169,6 +173,10 @@ namespace Comatose
                                     float light_min = current_rotation - light_spread_angle / 2;
                                     float light_max = current_rotation + light_spread_angle / 2;
 
+                                    while (ray_angle > Math.PI)
+                                    {
+                                        ray_angle -= (float)Math.PI * 2;
+                                    }
                                     while (ray_angle < light_min) {
                                         ray_angle += (float)Math.PI * 2;
                                     }
