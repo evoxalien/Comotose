@@ -8,7 +8,10 @@ function Monster:init()
 	self.audio=Audio.create()
 	self.audio:audioname("chatter")
 	self.audio:attach( self:ID())
-	self.audio:attachListener( stage.hero:ID())
+	if stage.hero ~= null then
+		self.listenerset=true
+		self.audio:attachListener( stage.hero:ID())
+	end
 	self.audio.looped=true
 	self.audio:play()
 
@@ -46,6 +49,12 @@ function Monster:everyFrame()
 	if not self:HasTarget() then
 		self:setTarget(stage.hero:ID())
 	end
+
+	if stage.listener~= true then
+		self.listenerset=true
+		self.audio:attachListener( stage.hero:ID())
+	end
+
 	
 	--if 
 	--	(GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) and stage.hero.flashlight:isIlluminating(self:ID())) or
