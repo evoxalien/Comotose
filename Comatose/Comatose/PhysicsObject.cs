@@ -37,6 +37,12 @@ namespace Comatose
             set { body.Position = new Vector2(body.Position.X, value); body.SetAwake(true); }
         }
 
+        public bool is_sensor
+        {
+            get { return fixture.IsSensor(); }
+            set { fixture.SetSensor(value); }
+        }
+
         public float vx
         {
             get { return body.GetLinearVelocity().X; }

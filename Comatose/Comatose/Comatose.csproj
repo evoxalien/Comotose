@@ -224,6 +224,7 @@
     <None Include="lua\objects\monster.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\objects\trigger.lua" />
     <None Include="lua\objects\ui.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
