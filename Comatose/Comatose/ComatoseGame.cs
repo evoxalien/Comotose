@@ -252,10 +252,9 @@ namespace Comatose
 
         protected override void Initialize()
         {
-
-
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
+            this.IsFixedTimeStep = false;
             graphics.ApplyChanges();
 
             //MODIFYING THE FIRST VALUE WILL LIMIT PARTICLE COUNT
