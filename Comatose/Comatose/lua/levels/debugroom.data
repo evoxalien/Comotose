@@ -3,72 +3,88 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
+	["map"] = "debugroom";
 	["joints"] = {
 	};
-	["map"] = "debugroom";
-	["music"] = "debugroom";
 	["objects"] = {
-		[9] = {
-			["defaults"] = {
-				["x"] = 68.9;
-				["target"] = "uitest";
-				["y"] = 88.4;
-			};
-			["class"] = "StageWarp";
-		};
 		[1] = {
 			["defaults"] = {
-				["x"] = 43.4;
 				["y"] = 48.3;
+				["x"] = 43.4;
 			};
 			["class"] = "Hero";
 		};
 		[2] = {
 			["defaults"] = {
-				["x"] = 14.2;
 				["target"] = "demo";
 				["y"] = 23.6;
+				["x"] = 14.2;
+			};
+			["class"] = "LevelWarp";
+		};
+		[3] = {
+			["defaults"] = {
+				["target"] = "test";
+				["y"] = 24.7;
+				["x"] = 46.1;
 			};
 			["class"] = "LevelWarp";
 		};
 		[4] = {
 			["defaults"] = {
-				["x"] = 13.2;
 				["y"] = 87.7;
+				["x"] = 13.2;
 			};
 			["class"] = "Campfire";
 		};
-		[8] = {
-			["defaults"] = {
-				["x"] = 47.5;
-				["target"] = "textboxtest";
-				["y"] = 88.3;
-			};
-			["class"] = "StageWarp";
-		};
-		[3] = {
-			["defaults"] = {
-				["x"] = 46.1;
-				["target"] = "test";
-				["y"] = 24.7;
-			};
-			["class"] = "LevelWarp";
-		};
 		[5] = {
 			["defaults"] = {
-				["x"] = 84.1;
 				["y"] = 88.1;
+				["x"] = 84.1;
 			};
 			["class"] = "Campfire";
 		};
 		[7] = {
 			["defaults"] = {
-				["x"] = 27.1;
 				["target"] = "aitest";
 				["y"] = 88;
+				["x"] = 27.1;
 			};
 			["class"] = "StageWarp";
 		};
+		[8] = {
+			["defaults"] = {
+				["target"] = "textboxtest";
+				["y"] = 88.3;
+				["x"] = 47.5;
+			};
+			["class"] = "StageWarp";
+		};
+		[9] = {
+			["defaults"] = {
+				["target"] = "uitest";
+				["y"] = 88.4;
+				["x"] = 68.9;
+			};
+			["class"] = "StageWarp";
+		};
+		[10] = {
+			["class"] = "StageWarp";
+			["defaults"] = {
+				["target"] = "mapeditor";
+				["y"] = 53.3;
+				["x"] = 13.7;
+			};
+		};
+		[11] = {
+			["class"] = "StageWarp";
+			["defaults"] = {
+				["target"] = "leveleditor";
+				["y"] = 53.1;
+				["x"] = 83.1;
+			};
+		};
 	};
+	["music"] = "debugroom";
 }
 return obj1

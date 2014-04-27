@@ -70,6 +70,7 @@ end
 
 function StageWarp:handleCollision()
 	if self.target then
+		GameEngine:playSound("door-enter")
 		loadstage(self.target)
 	end
 end
