@@ -110,6 +110,7 @@ namespace Comatose
         public void playMusic(string filename)
         {
             current_song = Content.Load<Song>("music/" + filename);
+            MediaPlayer.Volume = 0.5f;
             MediaPlayer.Play(current_song);
         }
 
@@ -282,7 +283,7 @@ namespace Comatose
             //loadStage("test");
             //loadStage("textboxtest");
             //loadStage("aitest");
-            loadLevel("demo");
+            loadLevel("debugroom");
 
 
         }

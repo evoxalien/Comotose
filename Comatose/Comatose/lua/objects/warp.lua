@@ -11,6 +11,7 @@ function LocalWarp:init()
 	self:body_type("static")
 	self.cast_shadow = false
 	self.z_index = 0.5
+	self:setLayer("unlit")
 
 	self:set_group("warp")
 	self:add_target("hero")
@@ -58,6 +59,7 @@ function StageWarp:init()
 	self.cast_shadow = false
 	self:body_type("static")
 	self.z_index = 0.5
+	self:setLayer("unlit")
 
 	self:set_group("warp")
 	self:add_target("hero")
@@ -81,6 +83,7 @@ function LevelWarp:init()
 	self.cast_shadow = false
 	self:body_type("static")
 	self.z_index = 0.5
+	self:setLayer("unlit")
 
 	self:set_group("warp")
 	self:add_target("hero")
