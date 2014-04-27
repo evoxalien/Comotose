@@ -166,6 +166,10 @@ processEvent = function(event)
 			GameEngine.toggleDebug()
 		end
 	end
+
+	if Input:WasKeyReleased("F5") then
+		loadlevel("debugroom")
+	end
 end
 
 --Collision handling

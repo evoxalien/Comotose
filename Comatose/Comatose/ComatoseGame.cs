@@ -114,6 +114,11 @@ namespace Comatose
             MediaPlayer.Play(current_song);
         }
 
+        public void playSound(string filename)
+        {
+            Content.Load<SoundEffect>("sounds/" + filename).Play();
+        }
+
         public void loadAllObjects()
         {
             List<string> files = new List<string>(Directory.EnumerateFiles("lua/objects"));

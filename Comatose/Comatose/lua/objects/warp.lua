@@ -97,6 +97,7 @@ end
 
 function LevelWarp:handleCollision()
 	if self.target then
+		GameEngine:playSound("door-enter")
 		loadlevel(self.target)
 	end
 end
