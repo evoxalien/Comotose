@@ -44,9 +44,6 @@ function LocalWarp:handleCollision()
 	end
 end
 
-function LocalWarp:everyFrame()
-end
-
 StageWarp = inherits(PhysicsObject)
 
 function StageWarp:init()
@@ -63,6 +60,12 @@ function StageWarp:init()
 
 	self:set_group("warp")
 	self:add_target("hero")
+
+	--item bubble, for display purposes
+	self.title = ItemBubble.create()
+	self.title:text(self.target)
+	self.title.target = self
+	self.title.centered = true
 end
 
 function StageWarp:handleCollision()

@@ -3,48 +3,72 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
-	["map"] = "debugroom";
 	["joints"] = {
 	};
+	["map"] = "debugroom";
+	["music"] = "debugroom";
 	["objects"] = {
+		[9] = {
+			["defaults"] = {
+				["x"] = 68.9;
+				["target"] = "uitest";
+				["y"] = 88.4;
+			};
+			["class"] = "StageWarp";
+		};
 		[1] = {
-			["class"] = "Hero";
 			["defaults"] = {
 				["x"] = 43.4;
 				["y"] = 48.3;
 			};
+			["class"] = "Hero";
 		};
 		[2] = {
-			["class"] = "LevelWarp";
 			["defaults"] = {
 				["x"] = 14.2;
-				["y"] = 23.6;
 				["target"] = "demo";
+				["y"] = 23.6;
 			};
+			["class"] = "LevelWarp";
 		};
 		[4] = {
-			["class"] = "Campfire";
 			["defaults"] = {
-				["y"] = 87.7;
 				["x"] = 13.2;
+				["y"] = 87.7;
 			};
+			["class"] = "Campfire";
+		};
+		[8] = {
+			["defaults"] = {
+				["x"] = 47.5;
+				["target"] = "textboxtest";
+				["y"] = 88.3;
+			};
+			["class"] = "StageWarp";
 		};
 		[3] = {
-			["class"] = "LevelWarp";
 			["defaults"] = {
 				["x"] = 46.1;
-				["y"] = 24.7;
 				["target"] = "test";
+				["y"] = 24.7;
 			};
+			["class"] = "LevelWarp";
 		};
 		[5] = {
-			["class"] = "Campfire";
 			["defaults"] = {
-				["y"] = 88.1;
 				["x"] = 84.1;
+				["y"] = 88.1;
 			};
+			["class"] = "Campfire";
+		};
+		[7] = {
+			["defaults"] = {
+				["x"] = 27.1;
+				["target"] = "aitest";
+				["y"] = 88;
+			};
+			["class"] = "StageWarp";
 		};
 	};
-	["music"] = "debugroom";
 }
 return obj1
