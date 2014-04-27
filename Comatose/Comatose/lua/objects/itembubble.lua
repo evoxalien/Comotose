@@ -2,7 +2,6 @@
 ItemBubble = inherits(TextBox)
 
 function ItemBubble:init()
-	self:position(-55,-62)
 	self.width = 200
 	self.height = 50
 	self.maxLine = 1
@@ -11,5 +10,7 @@ function ItemBubble:init()
 end
 
 function ItemBubble:everyFrame()
-	--todo: make this less awful
+	if self.target then
+		self:position(self.target.x * 10, self.target.y * 10 - 60)
+	end
 end

@@ -87,6 +87,12 @@ function LevelWarp:init()
 
 	self:set_group("warp")
 	self:add_target("hero")
+
+	--item bubble, for display purposes
+	self.title = ItemBubble.create()
+	self.title:text(self.target)
+	self.title.target = self
+	self.title.centered = true
 end
 
 function LevelWarp:handleCollision()

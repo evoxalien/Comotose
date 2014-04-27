@@ -52,6 +52,8 @@ namespace Comatose
             sprite_font = game.Content.Load<SpriteFont>("art/fonts/" + name);
         }
 
+        public bool centered = false;
+
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
             if (displayMessage.Count <= 0)
@@ -83,6 +85,12 @@ namespace Comatose
             
             if (parent_object != null)
                 draw_position += parent_object.screen_position;
+
+            //if we are centered, adjust for that here
+            if (centered)
+            {
+                draw_position.X -= pixelWidth(displayText) / 2;
+            }
 
             //figure out our current line and draw just that line (for now)
             int line = currentLine();
@@ -148,6 +156,11 @@ namespace Comatose
 
         public int maxLines = 3;
         private SortedList<int, string> displayMessage = new SortedList<int, string>();
+
+        public float pixelWidth(string text)
+        {
+            return sprite_font.MeasureString(text).X;
+        }
 
         private void textWrap()
         {

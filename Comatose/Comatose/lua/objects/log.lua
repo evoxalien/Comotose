@@ -4,13 +4,15 @@ Log = inherits(PhysicsObject)
 function Log:init()
 	self:sprite("recorder-for-table")
 	self:body_type("static")
+	self.cast_shadow = false
+	self.z_index = 0.5
+	self.centered = true
 
 	--create an itembubble
 	self.title = ItemBubble.create()
-	self.title:text("--- Log ---")
-	self.title:attach(self.ID())
-	self.cast_shadow = false
-	self.z_index = 0.5
+	self.title:text("Log")
+	self.title.target = self
+	self.title.centered = true
 end
 
 function Log:click()
