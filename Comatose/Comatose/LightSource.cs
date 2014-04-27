@@ -21,35 +21,40 @@ namespace Comatose
         public float light_spread_angle = (float)Math.PI * 2;
         public int rays_to_cast = 16;
         public float max_fraction = 1;
-        
+
         private Vector2 intersectionNormal = new Vector2(0, 0);
 
         float angle = 0;
 
-        public bool isIlluminating(int targetID) 
+        public bool isIlluminating(int targetID)
         {
             if (game.game_objects[targetID] is PhysicsObject)
             {
                 PhysicsObject target = (PhysicsObject)game.game_objects[targetID];
 
-                if (target.distanceFrom(x, y) <= ray_length && game.hasVectorLineOfSight(body.GetPosition(), target.body.GetPosition())) {
+                if (target.distanceFrom(x, y) <= ray_length && game.hasVectorLineOfSight(body.GetPosition(), target.body.GetPosition()))
+                {
                     //make sure this is inside the "cone" for light sources that are not 360 degrees
 
                     angle = (float)Math.Atan2(target.y - y, target.x - x) - body.GetAngle() + (float)Math.PI / 2;
-                    while (angle < 0) {
+                    while (angle < 0)
+                    {
                         angle += (float)Math.PI * 2;
                     }
-                    while (angle > Math.PI * 2) {
+                    while (angle > Math.PI * 2)
+                    {
                         angle -= (float)Math.PI * 2;
                     }
 
-                    if (angle < light_spread_angle / 2 || angle > Math.PI * 2 - light_spread_angle / 2) {
+                    if (angle < light_spread_angle / 2 || angle > Math.PI * 2 - light_spread_angle / 2)
+                    {
                         //Console.WriteLine("success!");
                         return true;
                     }
 
                 }
-                else {
+                else
+                {
                     //Console.WriteLine("distance check failed");
                 }
             }
@@ -59,7 +64,8 @@ namespace Comatose
             return false;
         }
 
-        public LightSource(ComatoseGame gm) : base(gm)
+        public LightSource(ComatoseGame gm)
+            : base(gm)
         {
             //body.SetActive(false);
             buffer = new VertexBuffer(game.GraphicsDevice, typeof(VertexPositionColor), _max_rays * 3, BufferUsage.None);
@@ -95,7 +101,7 @@ namespace Comatose
         {
             //position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
 
-            Vector2 light_origin = new Vector2(x,y);
+            Vector2 light_origin = new Vector2(x, y);
             float current_rotation = body.GetAngle();
             while (current_rotation < 0)
             {
@@ -148,11 +154,13 @@ namespace Comatose
                                         {
                                             ray_angle -= (float)Math.PI * 2;
                                         }
-                                        while (ray_angle < light_min) {
+                                        while (ray_angle < light_min)
+                                        {
                                             ray_angle += (float)Math.PI * 2;
                                         }
-                                        
-                                        if (ray_angle < light_max) {
+
+                                        if (ray_angle < light_max)
+                                        {
                                             //Add it to the list for processing
                                             testPoints.Add(target);
                                         }
@@ -177,11 +185,13 @@ namespace Comatose
                                     {
                                         ray_angle -= (float)Math.PI * 2;
                                     }
-                                    while (ray_angle < light_min) {
+                                    while (ray_angle < light_min)
+                                    {
                                         ray_angle += (float)Math.PI * 2;
                                     }
 
-                                    if (ray_angle < light_max) {
+                                    if (ray_angle < light_max)
+                                    {
                                         testPoints.Add(target1);
                                     }
                                 }
@@ -193,16 +203,18 @@ namespace Comatose
                                     float light_min = current_rotation - light_spread_angle / 2;
                                     float light_max = current_rotation + light_spread_angle / 2;
 
-                                    while (ray_angle < light_min) {
+                                    while (ray_angle < light_min)
+                                    {
                                         ray_angle += (float)Math.PI * 2;
                                     }
 
-                                    if (ray_angle < light_max) {
+                                    if (ray_angle < light_max)
+                                    {
                                         testPoints.Add(target2);
                                     }
                                 }
                             }
-                                
+
                             f = f.GetNext();
                         }
                     }
@@ -288,7 +300,7 @@ namespace Comatose
             //draw them primitives!
             gd.DrawPrimitives(PrimitiveType.TriangleList, 0, intersectionPoints.Count);
 
-            
+
         }
 
         float min_distance;
@@ -298,7 +310,8 @@ namespace Comatose
             if (fraction < min_distance)
             {
                 //check shadow logic
-                if (((PhysicsObject)fixture.GetBody().GetUserData()).cast_shadow) {
+                if (((PhysicsObject)fixture.GetBody().GetUserData()).cast_shadow)
+                {
                     min_distance = fraction;
                 }
             }

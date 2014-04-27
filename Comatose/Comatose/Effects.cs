@@ -92,7 +92,7 @@ namespace Comatose
             r = rand.Next(220, 240);
             g = rand.Next(170, 225);
             b = rand.Next(0, 40);
-            particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud2-128");
+            //particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud2-128");
             for (int i = 0; i < intensity / 4; i++)
             {
                 Position = new Vector2(x = NextFloat(rand, x + .5f, x - .5f), y = NextFloat(rand, y + .5f, y - .5f)) * game.physics_scale;
@@ -105,7 +105,9 @@ namespace Comatose
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }
-            particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud3-128");
+
+
+            //particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud3-128");
             //particleTexture = game.Content.Load<Texture2D>("art/particle");
             for (int i = 0; i < intensity / 7; i++)
             {

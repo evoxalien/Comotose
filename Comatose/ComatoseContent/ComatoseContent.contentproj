@@ -332,7 +332,7 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup>  
+  <ItemGroup>
     <Compile Include="sounds\FlashlightOff00.wav">
       <Name>FlashlightOff00</Name>
       <Importer>WavImporter</Importer>
@@ -359,7 +359,21 @@
   <ItemGroup>
     <Compile Include="art\sprites\logs.png">
       <Name>logs</Name>
-	    <Importer>TextureImporter</Importer>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="art\sprites\particle.png">
+      <Name>particle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="art\sprites\Pyro.png">
+      <Name>Pyro</Name>
+      <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
