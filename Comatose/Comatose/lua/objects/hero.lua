@@ -3,7 +3,8 @@
 function Hero:init()
 	self:sprite("Herov3")
 	self.framesAlive = 0
-	self.speed = 20
+	self.speed = 700
+	self.run_speed = 1400
 	self:shape("circle")
 	self.z_index = 1
 	self.centered = true
@@ -109,17 +110,17 @@ function Hero:everyFrame()
 		self.on_fire = 60 * 3.0
 	end
 
-
-	
-	--Particle:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
-	--Particle:CreateFire(self.x , self.y, 55)
-	-- Keep it reasonable
+	-- Keep it reasonable	
+	local speed = self.speed
+	if Input:IsKeyHeld("LeftShift") then
+		speed = self.run_speed
+	end
 
 	if not Input:MovementDeadzone() then
 		direction = Input:GetMovementDirection()
 		--self.vx = direction.X * self.speed
 		--self.vy = direction.Y * self.speed
-		self:impulse(direction.X * self.speed * 40, direction.Y * self.speed * 40)
+		self:impulse(direction.X * speed, direction.Y * speed)
 
 		self.vx = self.vx / 2
 		self.vy = self.vy / 2
