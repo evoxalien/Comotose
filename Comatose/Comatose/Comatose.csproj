@@ -243,6 +243,9 @@
     <None Include="lua\objects\statics.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\objects\warp.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\objects\WASDcamera.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

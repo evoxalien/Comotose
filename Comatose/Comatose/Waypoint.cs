@@ -125,7 +125,7 @@ namespace Comatose
                 }
             }
         }
-
+        /*
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -148,7 +148,7 @@ namespace Comatose
                     return true;
             }
             return false;
-        }
+        }*/
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {

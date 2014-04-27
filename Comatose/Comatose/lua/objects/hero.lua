@@ -13,6 +13,8 @@ function Hero:init()
 	self:setLayer("unlit")
 
 	self.on_fire = 0
+	self.warp_cooldown = 0
+	self.active_cooldown = 0
 	
 	
 	--add ourselves to the stage as a global object
@@ -173,6 +175,15 @@ function Hero:everyFrame()
 	
 	Input:setAimCenter(self.x * 10, self.y * 10)
 	self.count = self.count + 1
+	self.warp_cooldown = math.max(0, self.warp_cooldown - 1)
+
+	if self.active_cooldown == 0 then
+		self.active = true
+		self:color(255,255,255,255)
+	else
+		self:color(255,0,0,255)
+	end
+	self.active_cooldown = math.max(0, self.active_cooldown - 1)
 end
 
 function Hero:canSee(entity)

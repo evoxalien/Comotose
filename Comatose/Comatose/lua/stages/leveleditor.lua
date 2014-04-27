@@ -122,14 +122,18 @@ function PropertyDisplay:everyFrame()
 		if o.defaults then
 			display = display .. "Properties: \n"
 			for k,v in pairs(o.defaults) do
-				display = display .. "  " .. k .. ": " .. v .. "\n"
+				if type(v) == "table" then
+					display = display .. "  " .. k .. ": TABLE\n"
+				else
+					display = display .. "  " .. k .. ": " .. v .. "\n"
+				end
 			end
 		end
 		self:text(display)
 		self.shadow:text(display)
 	else
-		self:text("-- No Selection --")
-		self.shadow:text("-- No Selection --")
+		self:text("-- Placing Object: " .. gameObjects[selector.current_index].class .. " --")
+		self.shadow:text("-- Placing Object: " .. gameObjects[selector.current_index].class .. " --")
 	end
 end
 
