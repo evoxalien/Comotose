@@ -81,6 +81,10 @@ function load(name)
 	--load up all the objects
 	load_objects(current_level.objects)
 	print("Loaded all objects")
+
+	if current_level.music then
+		GameEngine:playMusic(current_level.music)
+	end
 end
 
 function stage.everyFrame()

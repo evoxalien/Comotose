@@ -41,6 +41,8 @@ namespace Comatose
 
         public Vector2 camera = new Vector2(0);
 
+        Song current_song;
+
         #region Lua
         private class LuaCommand : IConsoleCommand
         {
@@ -105,6 +107,12 @@ namespace Comatose
             loadAllObjects();
         }
 
+        public void playMusic(string filename)
+        {
+            current_song = Content.Load<Song>("music/" + filename);
+            MediaPlayer.Play(current_song);
+        }
+
         public void loadAllObjects()
         {
             List<string> files = new List<string>(Directory.EnumerateFiles("lua/objects"));
@@ -116,6 +124,7 @@ namespace Comatose
 
         public void loadStage(string filename)
         {
+            MediaPlayer.Stop();
             //delete all existing objects
             game_objects.Clear();
             waypoints.Clear();
@@ -130,6 +139,7 @@ namespace Comatose
         string levelToLoad = "";
         public void loadLevel(string filename)
         {
+            MediaPlayer.Stop();
             levelToLoad = filename;
         }
 

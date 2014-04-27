@@ -247,6 +247,10 @@ function event(event_name)
 	end
 end
 
+function music(filename)
+	current_level.music = filename
+end
+
 --WASD camera, for moving around the level and stuff
 camera = WASDcamera.create()
 

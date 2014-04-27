@@ -295,10 +295,6 @@ namespace Comatose
                     fixture = body.CreateFixture(fdef);
                     body.ResetMassData();
                     break;
-                case "diamond":
-                    //TODO: THIS
-                    throw (new NotImplementedException("Diamond Shapes Not Implemented"));
-                    break;
                 case "box":
                 default:
                     PolygonShape box = new PolygonShape();
