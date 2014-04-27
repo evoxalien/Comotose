@@ -10,7 +10,7 @@ function registerObject(c, a)
 	end
 end
 
-for k,v in pairs(registered_objects) do
+for k,v in orderedPairs(registered_objects) do
 	registerObject(k,v)
 end
 
@@ -103,6 +103,20 @@ function PropertyDisplay:init()
 	self.shadow.camera_weight = 0
 end
 
+function displayTable(tbl, indent)
+	output = ""
+	indent = indent or ""
+	for k,v in orderedPairs(tbl) do
+		if type(v) == "table" then
+			output = output .. indent .. "  " .. k .. ": \n"
+			output = output .. displayTable(v, indent .. "-")
+		else
+			output = output .. indent .. "  " .. k .. ": " .. v .. "\n"
+		end
+	end
+	return output
+end
+
 function PropertyDisplay:everyFrame()
 	if selected_object then
 		o = current_level.objects[selected_object]
@@ -120,14 +134,8 @@ function PropertyDisplay:everyFrame()
 
 		--display properties that will be set, if any
 		if o.defaults then
-			display = display .. "Properties: \n"
-			for k,v in pairs(o.defaults) do
-				if type(v) == "table" then
-					display = display .. "  " .. k .. ": TABLE\n"
-				else
-					display = display .. "  " .. k .. ": " .. v .. "\n"
-				end
-			end
+			display = display .. "[Properties]\n"
+			display = display .. displayTable(o.defaults)
 		end
 		self:text(display)
 		self.shadow:text(display)

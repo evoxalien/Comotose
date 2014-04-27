@@ -3,48 +3,48 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
-	["music"] = "debugroom";
 	["map"] = "debugroom";
 	["joints"] = {
 	};
 	["objects"] = {
 		[1] = {
+			["class"] = "Hero";
 			["defaults"] = {
 				["x"] = 43.4;
 				["y"] = 48.3;
 			};
-			["class"] = "Hero";
 		};
 		[2] = {
+			["class"] = "LevelWarp";
 			["defaults"] = {
 				["x"] = 14.2;
-				["target"] = "demo";
 				["y"] = 23.6;
+				["target"] = "demo";
 			};
-			["class"] = "LevelWarp";
 		};
 		[4] = {
+			["class"] = "Campfire";
 			["defaults"] = {
-				["x"] = 13.2;
 				["y"] = 87.7;
+				["x"] = 13.2;
 			};
-			["class"] = "Campfire";
-		};
-		[5] = {
-			["defaults"] = {
-				["x"] = 84.1;
-				["y"] = 88.1;
-			};
-			["class"] = "Campfire";
 		};
 		[3] = {
+			["class"] = "LevelWarp";
 			["defaults"] = {
 				["x"] = 46.1;
-				["target"] = "test";
 				["y"] = 24.7;
+				["target"] = "test";
 			};
-			["class"] = "LevelWarp";
+		};
+		[5] = {
+			["class"] = "Campfire";
+			["defaults"] = {
+				["y"] = 88.1;
+				["x"] = 84.1;
+			};
 		};
 	};
+	["music"] = "debugroom";
 }
 return obj1

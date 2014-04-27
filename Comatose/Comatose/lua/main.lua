@@ -2,6 +2,8 @@
 debug = true
 debugpath = "../../../"
 
+dofile("lua/orderedPairs.lua")
+
 --Object Inheretance; handles derived classes in a cleanish manner
 function inherits(parent_class)
 	local new_class = {}
