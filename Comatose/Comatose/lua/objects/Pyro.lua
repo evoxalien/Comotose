@@ -41,7 +41,7 @@ function Pyro:init()
 	self.fireballs={}
 	self.fireball_count=1
 	self.fireball_time=5
-	self.fireball_limit=15
+	self.fireball_limit=20
 	self.fireball_timer=self.fireball_time
 	self.fireball_oldest=1
 

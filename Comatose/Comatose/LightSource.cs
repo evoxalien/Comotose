@@ -305,6 +305,7 @@ namespace Comatose
 
         float min_distance;
 
+        /*
         float ReportFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction)
         {
             if (fraction < min_distance)
@@ -315,10 +316,25 @@ namespace Comatose
                     min_distance = fraction;
                 }
             }
-
             return 1;
         }
+        */
 
+        float ReportFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction)
+        {
+            if (((PhysicsObject)fixture.GetBody().GetUserData()).cast_shadow)
+            {
+                if (fraction < min_distance)
+                {
+                    //check shadow logic
+                    {
+                        min_distance = fraction;
+                    }
+                }
+            }
+            return -1;
+            //return 1;
+        }
         float rayCast(Vector2 start, Vector2 end)
         {
             min_distance = (end - start).Length();
