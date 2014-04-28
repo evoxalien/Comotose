@@ -141,7 +141,7 @@ namespace Comatose
             overlapping_fixtures.Clear();
             game.world.QueryAABB(QueryCallback, ref aabb);
 
-            Console.WriteLine(overlapping_fixtures.Count());
+            //Console.WriteLine(overlapping_fixtures.Count());
 
             //Gather a list of all test points in the scene
             foreach (Fixture f in overlapping_fixtures) {
