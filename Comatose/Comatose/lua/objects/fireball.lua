@@ -8,21 +8,26 @@ function Fireball:init()
 	self.z_index = 0.5
 	self.centered = true
 	self.cast_shadow = false
+	self.width=50
+	self.height=50
 
 	--copied from hero shamelessly
-	--self.firelight1 = LightSource.create()
+	self.firelight1 = LightSource.create()
+	self.firelight1.cast_shadow=false
+	self.firelight1:shape("none")
+	self.firelight1:color(210, 50, 45, 128)
+	self.firelight1.ray_length = 15
+
+
 	--self.firelight2 = LightSource.create()
-	--self.firelight1:shape("none")
 	--self.firelight2:shape("none")
-	--self.firelight1:color(210, 50, 45, 128)
 	--self.firelight2:color(230, 170, 20, 200)
-	--self.firelight1.ray_length = 10
 	--self.firelight2.ray_length = 25
 
 	self.count = 0
 
 	--how long this fire will burn
-	self.timer=1200
+	self.timer=5
 	self.on=true
 
 	self:set_group("monster")
@@ -36,8 +41,8 @@ end
 function Fireball:everyFrame()
 
 	if self.on	 then
-		--self.firelight1.x = self.x
-		--self.firelight1.y = self.y - 1
+		self.firelight1.x = self.x
+		self.firelight1.y = self.y
 		--self.firelight2.x = self.x
 		--self.firelight2.y = self.y - 1
 
@@ -49,10 +54,10 @@ function Fireball:everyFrame()
 			--self.firelight1:color(210, 50, 45, 128)
 		end
 
-		if (self.count % 2) == 0 then
+		if (self.count % 4) == 0 then
 			--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
 			--self.firelight2:color(230, 170, 20, 200)
-			Effect:CreateFire(self.x , self.y - 1, 5)
+			Effect:CreateFire(self.x , self.y - 1, 55)
 		end
 
 		--if the player gets too close, set them on FIRE!!! (super fun time)
@@ -82,7 +87,7 @@ function Fireball:Spawn()
 	self:shape("box")
 	self.z_index=1
 	self.on=true
-	self.timer=1200
+	self.timer=5
 	--self.vx=0
 	--self.vy=0
 end

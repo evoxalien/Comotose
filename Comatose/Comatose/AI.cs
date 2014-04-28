@@ -564,9 +564,11 @@ namespace Comatose
         public void RandomWaypoint()
         {
             //choose a random waypoint
-            Random r = new Random();
-            random_point= game.waypoints.ElementAt(r.Next(0, game.waypoints.Count)).Value.point;
-            Console.WriteLine("choosing a new point");
+            if (game.waypoints.Count > 0)
+            {
+                Random r = new Random();
+                random_point = game.waypoints.ElementAt(r.Next(0, game.waypoints.Count)).Value.point;
+            }
         }
 
         public void Wander()

@@ -288,6 +288,7 @@ namespace Comatose
             //loadStage("textboxtest");
             //loadStage("aitest");
             loadLevel("debugroom");
+            //loadLevel("demo");
 
 
         }

@@ -146,7 +146,13 @@
     <Content Include="lua52.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="lua\levels\debugroom.data">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\levels\demo.data">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="lua\maps\debugroom.data">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="lua\maps\demo.data">
