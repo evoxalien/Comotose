@@ -312,21 +312,6 @@ namespace Comatose
 
         float min_distance;
 
-        /*
-        float ReportFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction)
-        {
-            if (fraction < min_distance)
-            {
-                //check shadow logic
-                if (((PhysicsObject)fixture.GetBody().GetUserData()).cast_shadow)
-                {
-                    min_distance = fraction;
-                }
-            }
-            return 1;
-        }
-        */
-
         float ReportFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction)
         {
             if (((PhysicsObject)fixture.GetBody().GetUserData()).cast_shadow)
@@ -344,8 +329,29 @@ namespace Comatose
         }
         float rayCast(Vector2 start, Vector2 end)
         {
+            /*
             min_distance = (end - start).Length();
             game.world.RayCast(ReportFixture, start, end);
+            return min_distance;
+             * */
+
+            //rewrite of rayCast, instead of doing world querying, we're going to query only the fixtures in our list of happy fun things
+            min_distance = (end - start).Length();
+            foreach (Fixture f in overlapping_fixtures)
+            {
+                RayCastOutput result;
+                RayCastInput input;
+                input.p1 = start;
+                input.p2 = end;
+                input.maxFraction = min_distance;
+                if (f.RayCast(out result, ref input, 0))
+                {
+                    if (result.fraction < min_distance)
+                    {
+                        min_distance = result.fraction;
+                    }
+                }
+            }
             return min_distance;
         }
 
