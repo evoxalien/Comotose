@@ -22,7 +22,7 @@ function Fireball:init()
 	self.count = 0
 
 	--how long this fire will burn
-	self.timer=1200
+	self.timer=10
 	self.on=true
 
 	self:set_group("monster")
@@ -52,7 +52,7 @@ function Fireball:everyFrame()
 		if (self.count % 2) == 0 then
 			--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
 			--self.firelight2:color(230, 170, 20, 200)
-			Effect:CreateFire(self.x , self.y - 1, 5)
+			Effect:CreateFireBall(self.x , self.y - 1, 25)
 		end
 
 		--if the player gets too close, set them on FIRE!!! (super fun time)
@@ -82,7 +82,7 @@ function Fireball:Spawn()
 	self:shape("box")
 	self.z_index=1
 	self.on=true
-	self.timer=1200
+	self.timer=10
 	--self.vx=0
 	--self.vy=0
 end
