@@ -97,6 +97,17 @@ namespace Comatose
         VertexBuffer buffer;
         BasicEffect light_shader;
 
+        List<Fixture> overlapping_fixtures = new List<Fixture>();
+
+        bool QueryCallback(FixtureProxy fProxy)
+        {
+            if (fProxy.fixture.GetBody().GetUserData() is PhysicsObject && ((PhysicsObject)fProxy.fixture.GetBody().GetUserData()).cast_shadow)
+            {
+                overlapping_fixtures.Add(fProxy.fixture);
+            }
+            return true;
+        }
+
         public override void Draw(GameTime gameTime)
         {
             //position(body.GetPosition().X * game.physics_scale, body.GetPosition().Y * game.physics_scale);
@@ -123,102 +134,98 @@ namespace Comatose
                 testPoints.Add(target);
             }
 
+            //Gather a list of all nearby fixtures; we'll use these to generate test points and cast rays
+            AABB aabb;
+            aabb.lowerBound = body.GetPosition() - new Vector2(ray_length, ray_length);
+            aabb.upperBound = body.GetPosition() + new Vector2(ray_length, ray_length);
+            overlapping_fixtures.Clear();
+            game.world.QueryAABB(QueryCallback, ref aabb);
+
+            Console.WriteLine(overlapping_fixtures.Count());
+
             //Gather a list of all test points in the scene
-            Body b = game.world.GetBodyList();
-            while (b != null)
-            {
-                if (b.GetUserData() is PhysicsObject)
-                    if (((PhysicsObject)b.GetUserData()).cast_shadow)
+            foreach (Fixture f in overlapping_fixtures) {
+                Type shapeType = f.GetType();
+
+                if (f.GetShape() is PolygonShape)
+                {
+                    PolygonShape polygon = (PolygonShape)f.GetShape();
+
+                    for (int curVert = 0; curVert < polygon.GetVertexCount(); curVert++)
                     {
-                        Fixture f = b.GetFixtureList();
-                        while (f != null)
+                        //transform this point based on the body transforms
+                        Vector2 target = Vector2.Transform(polygon.GetVertex(curVert), Matrix.CreateRotationZ(f.GetBody().GetAngle())) + f.GetBody().GetPosition();
+
+                        if (Vector2.DistanceSquared(light_origin, target) <= ray_length * ray_length * 2)
                         {
-                            Type shapeType = f.GetType();
+                            float ray_angle = (float)Math.Atan2((target - light_origin).Y, (target - light_origin).X) + (float)Math.PI / 2;
+                            float light_min = current_rotation - light_spread_angle / 2;
+                            float light_max = current_rotation + light_spread_angle / 2;
 
-                            if (f.GetShape() is PolygonShape)
+                            while (ray_angle > Math.PI)
                             {
-                                PolygonShape polygon = (PolygonShape)f.GetShape();
-
-                                for (int curVert = 0; curVert < polygon.GetVertexCount(); curVert++)
-                                {
-                                    //transform this point based on the body transforms
-                                    Vector2 target = Vector2.Transform(polygon.GetVertex(curVert), Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
-
-                                    if (Vector2.DistanceSquared(light_origin, target) <= ray_length * ray_length * 2)
-                                    {
-                                        float ray_angle = (float)Math.Atan2((target - light_origin).Y, (target - light_origin).X) + (float)Math.PI / 2;
-                                        float light_min = current_rotation - light_spread_angle / 2;
-                                        float light_max = current_rotation + light_spread_angle / 2;
-
-                                        while (ray_angle > Math.PI)
-                                        {
-                                            ray_angle -= (float)Math.PI * 2;
-                                        }
-                                        while (ray_angle < light_min)
-                                        {
-                                            ray_angle += (float)Math.PI * 2;
-                                        }
-
-                                        if (ray_angle < light_max)
-                                        {
-                                            //Add it to the list for processing
-                                            testPoints.Add(target);
-                                        }
-                                    }
-                                }
+                                ray_angle -= (float)Math.PI * 2;
                             }
-                            else if (f.GetShape() is EdgeShape)
+                            while (ray_angle < light_min)
                             {
-                                //Do the same thing, except for edge shapes
-
-                                //only v1 and v2 will count here
-                                EdgeShape line = (EdgeShape)f.GetShape();
-
-                                Vector2 target1 = Vector2.Transform(line._vertex1, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
-                                if (Vector2.DistanceSquared(light_origin, target1) <= ray_length * ray_length * 2)
-                                {
-                                    float ray_angle = (float)Math.Atan2((target1 - light_origin).Y, (target1 - light_origin).X) + (float)Math.PI / 2;
-                                    float light_min = current_rotation - light_spread_angle / 2;
-                                    float light_max = current_rotation + light_spread_angle / 2;
-
-                                    while (ray_angle > Math.PI)
-                                    {
-                                        ray_angle -= (float)Math.PI * 2;
-                                    }
-                                    while (ray_angle < light_min)
-                                    {
-                                        ray_angle += (float)Math.PI * 2;
-                                    }
-
-                                    if (ray_angle < light_max)
-                                    {
-                                        testPoints.Add(target1);
-                                    }
-                                }
-
-                                Vector2 target2 = Vector2.Transform(line._vertex2, Matrix.CreateRotationZ(b.GetAngle())) + b.GetPosition();
-                                if (Vector2.DistanceSquared(light_origin, target2) <= ray_length * ray_length * 2)
-                                {
-                                    float ray_angle = (float)Math.Atan2((target2 - light_origin).Y, (target2 - light_origin).X) + (float)Math.PI / 2;
-                                    float light_min = current_rotation - light_spread_angle / 2;
-                                    float light_max = current_rotation + light_spread_angle / 2;
-
-                                    while (ray_angle < light_min)
-                                    {
-                                        ray_angle += (float)Math.PI * 2;
-                                    }
-
-                                    if (ray_angle < light_max)
-                                    {
-                                        testPoints.Add(target2);
-                                    }
-                                }
+                                ray_angle += (float)Math.PI * 2;
                             }
 
-                            f = f.GetNext();
+                            if (ray_angle < light_max)
+                            {
+                                //Add it to the list for processing
+                                testPoints.Add(target);
+                            }
                         }
                     }
-                b = b.GetNext();
+                }
+                else if (f.GetShape() is EdgeShape)
+                {
+                    //Do the same thing, except for edge shapes
+
+                    //only v1 and v2 will count here
+                    EdgeShape line = (EdgeShape)f.GetShape();
+
+                    Vector2 target1 = Vector2.Transform(line._vertex1, Matrix.CreateRotationZ(f.GetBody().GetAngle())) + f.GetBody().GetPosition();
+                    if (Vector2.DistanceSquared(light_origin, target1) <= ray_length * ray_length * 2)
+                    {
+                        float ray_angle = (float)Math.Atan2((target1 - light_origin).Y, (target1 - light_origin).X) + (float)Math.PI / 2;
+                        float light_min = current_rotation - light_spread_angle / 2;
+                        float light_max = current_rotation + light_spread_angle / 2;
+
+                        while (ray_angle > Math.PI)
+                        {
+                            ray_angle -= (float)Math.PI * 2;
+                        }
+                        while (ray_angle < light_min)
+                        {
+                            ray_angle += (float)Math.PI * 2;
+                        }
+
+                        if (ray_angle < light_max)
+                        {
+                            testPoints.Add(target1);
+                        }
+                    }
+
+                    Vector2 target2 = Vector2.Transform(line._vertex2, Matrix.CreateRotationZ(f.GetBody().GetAngle())) + f.GetBody().GetPosition();
+                    if (Vector2.DistanceSquared(light_origin, target2) <= ray_length * ray_length * 2)
+                    {
+                        float ray_angle = (float)Math.Atan2((target2 - light_origin).Y, (target2 - light_origin).X) + (float)Math.PI / 2;
+                        float light_min = current_rotation - light_spread_angle / 2;
+                        float light_max = current_rotation + light_spread_angle / 2;
+
+                        while (ray_angle < light_min)
+                        {
+                            ray_angle += (float)Math.PI * 2;
+                        }
+
+                        if (ray_angle < light_max)
+                        {
+                            testPoints.Add(target2);
+                        }
+                    }
+                }
             }
 
             //For every test point, calculate the closest intersection
