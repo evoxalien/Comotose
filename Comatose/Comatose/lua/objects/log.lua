@@ -15,12 +15,15 @@ function Log:init()
 	self.title.centered = true
 end
 
-function Log:click()
-	stage.dialog:portrait("VoiceRecorder")
-	stage.dialog:displayText(logdata["demotext1"])
-	if self.trigger_event then
-		trigger_event(self.trigger_event)
-		self.trigger_event = nil -- prevent repeated triggerings
+function Log:use()
+	distance = stage.hero:distanceFrom(self.x, self.y)
+	if distance <= 15 then
+		stage.dialog:portrait("VoiceRecorder")
+		stage.dialog:displayText(logdata["demotext1"])
+		if self.trigger_event then
+			trigger_event(self.trigger_event)
+			self.trigger_event = nil -- prevent repeated triggerings
+		end
 	end
 end
 

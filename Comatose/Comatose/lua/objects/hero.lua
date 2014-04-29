@@ -184,6 +184,11 @@ function Hero:everyFrame()
 		self:color(255,0,0,255)
 	end
 	self.active_cooldown = math.max(0, self.active_cooldown - 1)
+
+	--process "using" things
+	if Input:WasKeyReleased("E") or Input:WasButtonReleased("A") then
+		processEvent("use")
+	end
 end
 
 function Hero:canSee(entity)
