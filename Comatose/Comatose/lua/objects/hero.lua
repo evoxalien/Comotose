@@ -80,6 +80,8 @@ function Hero:everyFrame()
 	self.firelight2.y = self.y
 	--FUN TIMES
 	
+	--Effect:CreateSprinkler(self.x, self.y, 5)
+
 	if self.on_fire > 0 then
 		self.firelight1.ray_length = 20
 		self.firelight2.ray_length = 25

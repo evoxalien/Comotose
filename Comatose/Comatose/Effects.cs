@@ -49,7 +49,7 @@ namespace Comatose
             Vector2 Position = new Vector2(x, y) * game.physics_scale;
             //Texture2D particleTexture = game.Content.Load<Texture2D>("art/particle");
 
-            Texture2D particleTexture = game.Content.Load<Texture2D>("art/FlappyBird");
+            Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Glow");
             for (int i = 0; i < count; i++)
             {
                 float speed = 6f * (1f - 1 / NextFloat(rand, 1f, 10f));
@@ -195,5 +195,28 @@ namespace Comatose
             }
         }
         #endregion
+
+        public void CreateSprinkler(float x, float y, int intensity)
+        {
+            Vector2 Position = new Vector2(x, y) * game.physics_scale;
+
+            Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Glow");
+            
+            int r = 32;
+            int g = 50;
+            int b = 50;
+
+            for (int i = 0; i < intensity; i++)
+            {
+                float speed = 6f * (1f - 1 / NextFloat(rand, 1f, 10f));
+                var state = new ParticleState()
+                {
+                    Velocity = NextVector2(rand, speed, speed),
+                    Type = ParticleType.Explosion,
+                    LengthMultiplier = 1f
+                };
+                game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 128), 190f, new Vector2(1.0f), state);
+            }
+        }
     }
 }
