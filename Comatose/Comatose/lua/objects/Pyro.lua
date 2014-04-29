@@ -12,7 +12,7 @@ function Pyro:init()
 		self.listenerset=true
 		self.audio:attachListener( stage.hero:ID())
 	end
-	self.audio.looped=true
+	self.audio.looped = true
 	self.audio:play()
 
 	--position & collision
@@ -46,6 +46,15 @@ function Pyro:init()
 	self.fireball_oldest=1
 
 	--self:Target(stage.hero:ID())
+	self.firelight1 = LightSource.create()
+	self.firelight2 = LightSource.create()
+	self.firelight1:shape("none")
+	self.firelight2:shape("none")
+	self.firelight1:color(210, 50, 45, 0)
+	self.firelight2:color(230, 170, 20, 0)
+	self.firelight1.ray_length = 2
+	self.firelight2.ray_length = 2
+	self.on_fire = 0
 end
 
 function Pyro:handleCollision()
@@ -90,6 +99,37 @@ function Pyro:everyFrame()
 	--ai logic
 	self:StateMachine()
 
+	self.firelight1.x = self.x
+	self.firelight1.y = self.y
+	self.firelight2.x = self.x
+	self.firelight2.y = self.y
+	--FUN TIMES
+	
+	if self.on_fire > 0 then
+		self.firelight1.ray_length = 20
+		self.firelight2.ray_length = 25
+		self.firelight1:color(210, 50, 45, 64)
+		self.firelight2:color(230, 170, 20, 100)
+		if (self.count % 3) == 0 then
+			--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
+			--Effect:CreateFire(self.x , self.y, 45)
+			self.firelight1:color(210, 50, 45, 128)
+		end
+
+		if (self.count % 2) == 0 then
+			--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
+			self.firelight2:color(230, 170, 20, 200)
+			Effect:CreateFire(self.x , self.y, 45)
+
+		end
+		
+		
+	else
+		self.firelight1.ray_length = 2
+		self.firelight2.ray_length = 2
+		self.firelight1:color(210, 50, 45, 0)
+		self.firelight2:color(230, 170, 20, 0)
+	end
 end
 
 

@@ -22,7 +22,7 @@ function Fireball:init()
 	self.count = 0
 
 	--how long this fire will burn
-	self.timer=10
+	self.timer=30
 	self.on=true
 
 	self:set_group("monster")
@@ -35,7 +35,7 @@ end
 
 function Fireball:everyFrame()
 
-	if self.on	 then
+	if self.on then
 		--self.firelight1.x = self.x
 		--self.firelight1.y = self.y - 1
 		--self.firelight2.x = self.x
@@ -59,8 +59,8 @@ function Fireball:everyFrame()
 
 
 		self.count = self.count + 1
-		self.timer=self.timer-1
-		if self.timer <0 then
+		self.timer = self.timer - 1
+		if self.timer < 0 then
 			self.on=false
 			--self.firelight1.ray_length = 25
 			--self.firelight2.ray_length = 25
@@ -82,7 +82,7 @@ function Fireball:Spawn()
 	self:shape("box")
 	self.z_index=1
 	self.on=true
-	self.timer=10
+	self.timer=30
 	--self.vx=0
 	--self.vy=0
 end

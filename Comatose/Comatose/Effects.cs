@@ -139,11 +139,11 @@ namespace Comatose
             int r = 225;
             int g = 55;
             int b = 40;
-
+            float speed = 3f * (1f - 1 / NextFloat(rand, 1f, 20f));
             for (int i = 0; i < intensity / 3; i++)
             {
                 Position = new Vector2(x = NextFloat(rand, x + .75f, x - .75f), y = NextFloat(rand, y + .75f, y - .75f)) * game.physics_scale;
-                float speed = 3f * (1f - 1 / NextFloat(rand, 1f, 20f));
+                
                 var state = new ParticleState()
                 {
                     Velocity = NextVector2(rand, speed, speed / 3),
@@ -162,11 +162,12 @@ namespace Comatose
             r = 235;
             g = 195;
             b = 20;
+            speed = 3f * (1f - 1 / NextFloat(rand, 1f, 5f));
             //particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud2-12+8");
             for (int i = 0; i < intensity / 4; i++)
             {
                 Position = new Vector2(x = NextFloat(rand, x + .5f, x - .5f), y = NextFloat(rand, y + .5f, y - .5f)) * game.physics_scale;
-                float speed = 3f * (1f - 1 / NextFloat(rand, 1f, 5f));
+                //float speed = 3f * (1f - 1 / NextFloat(rand, 1f, 5f));
                 var state = new ParticleState()
                 {
                     Velocity = NextVector2(rand, speed, speed / 5),
@@ -179,10 +180,11 @@ namespace Comatose
 
             //particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud3-128");
             //particleTexture = game.Content.Load<Texture2D>("art/particle");
+            speed = .5f * (1f - 1 / NextFloat(rand, 1f, 5f));
             for (int i = 0; i < intensity / 7; i++)
             {
                 Position = new Vector2(x = NextFloat(rand, x + .25f, x - .25f), y = NextFloat(rand, y + .25f, y - .25f)) * game.physics_scale;
-                float speed = .5f * (1f - 1 / NextFloat(rand, 1f, 5f));
+                speed = .5f * (1f - 1 / NextFloat(rand, 1f, 5f));
                 var state = new ParticleState()
                 {
                     Velocity = NextVector2(rand, speed * 2, speed / 4),
