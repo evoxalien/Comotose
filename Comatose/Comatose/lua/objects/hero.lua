@@ -95,15 +95,15 @@ end
 function Hero:everyFrame()
 	--root the aiming function, so that subsequent calls will have the correct angle
 	Input:setAimCenter(self.x, self.y)
-	self.firelight1.x = self.x
-	self.firelight1.y = self.y
-	self.firelight2.x = self.x
-	self.firelight2.y = self.y
-	--FUN TIMES
-	
-	--Effect:CreateSprinkler(self.x, self.y, 5)
+		--Effect:CreateSprinkler(self.x, self.y, 5)
 
 	if self.on_fire > 0 then
+		self.firelight1.x = self.x
+		self.firelight1.y = self.y
+		self.firelight2.x = self.x
+		self.firelight2.y = self.y
+		--FUN TIMES
+
 		self.firelight1.ray_length = 20
 		self.firelight2.ray_length = 25
 		self.firelight1:color(210, 50, 45, 64)

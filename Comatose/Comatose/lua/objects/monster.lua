@@ -4,7 +4,7 @@ Monster = inherits(AI)
 function Monster:init()
 	self:sprite("MonsterV_1")
 
-	--audio test
+	--audio
 	self.audio=Audio.create()
 	self.audio:audioname("chatter")
 	self.audio:attach( self:ID())
@@ -50,9 +50,6 @@ function Monster:everyFrame()
 	end
 
 		
-	--if 
-	--	(GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) and stage.hero.flashlight:isIlluminating(self:ID())) or
-	--	self:distanceFrom(stage.hero.x, stage.hero.y) < 10 then
 
 	if stage.hero:canSee(self) then
 		if stage.hero.flashlight:isIlluminating(self:ID()) then
@@ -69,12 +66,8 @@ function Monster:everyFrame()
 	end
 	self:color(255,255,255,255 * (self.fade_timer / 10))
 
-	--self:MoveTowardsTarget(stage.hero.x,stage.hero.y)
-
-
 	--turn to face our movement direction
 	rotate_angle = math.atan2(self.vx, -self.vy) + math.pi
-	--print(rotate_angle)
 	self:rotateTo(rotate_angle)
 
 	self:AudioMachine()
@@ -88,14 +81,11 @@ function Monster:AudioMachine()
 		self.audio:attachListener( stage.hero:ID())
 	end
 
-
-
 	if self.audio.isPlaying==false then --loop it in lua
 		self.audio:play()
 	end
 		
 	self.audio:Calc3D()
-
 end
 
 
