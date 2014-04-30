@@ -8,8 +8,8 @@ function Fireball:init()
 	self.z_index = 0.5
 	self.centered = true
 	self.cast_shadow = false
-	self.width=50
-	self.height=50
+	self.width=1
+	self.height=1
 
 	--copied from hero shamelessly
 	self.firelight1 = LightSource.create()
@@ -17,6 +17,19 @@ function Fireball:init()
 	self.firelight1:shape("none")
 	self.firelight1:color(210, 50, 45, 128)
 	self.firelight1.ray_length = 15
+
+	--audio
+	self.audio=Audio.create()
+	self.audio:audioname("fire00")
+	self.audio:attach( self:ID())
+	if stage.hero ~= null then
+		self.listenerset=true
+		self.audio:attachListener( stage.hero:ID())
+	end
+	self.audio.looped=true
+	self.audio:play()
+
+
 
 
 	--self.firelight2 = LightSource.create()
@@ -27,7 +40,8 @@ function Fireball:init()
 	self.count = 0
 
 	--how long this fire will burn
-	self.timer=5
+	self.burn_time=1200
+	self.timer=self.burn_time
 	self.on=true
 
 	self:set_group("monster")
@@ -43,32 +57,29 @@ function Fireball:everyFrame()
 	if self.on	 then
 		self.firelight1.x = self.x
 		self.firelight1.y = self.y
-		--self.firelight2.x = self.x
-		--self.firelight2.y = self.y - 1
-
-		--self.firelight1:color(210, 50, 45, 96)
-		--self.firelight2:color(230, 170, 20, 150)
-		if (self.count % 3) == 0 then
-			--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
-			--Effect:CreateFire(self.x , self.y, 45)
-			--self.firelight1:color(210, 50, 45, 128)
-		end
 
 		if (self.count % 4) == 0 then
-			--Effect:CreateExplosion(self.x , self.y, 10, 255, 255, 255)
-			--self.firelight2:color(230, 170, 20, 200)
-			Effect:CreateFire(self.x , self.y - 1, 55)
+			Effect:CreateFireBall(self.x , self.y - 1, 55)
 		end
 
 		--if the player gets too close, set them on FIRE!!! (super fun time)
+
+
+		--audio
+		if stage.listener~= true then
+			self.listenerset=true
+			self.audio:attachListener( stage.hero:ID())
+		end
+
+		self.audio:Calc3D()
+
 
 
 		self.count = self.count + 1
 		self.timer=self.timer-1
 		if self.timer <0 then
 			self.on=false
-			--self.firelight1.ray_length = 25
-			--self.firelight2.ray_length = 25
+
 		end
 	end
 	
@@ -76,20 +87,22 @@ end
 
 function Fireball:Hide()
 	self:shape("none")		   --make sure the object doesnt collide with anything
-	self.z_index=-1		   --remove  from screen by setting behind the map
+	self.z_index=-1		       --remove  from screen by setting behind the map
+	self.audio:stop()
+	self.firelight1.ray_length = 0
 
 	--stop the object from moving and straighten it
 	self.resetPosition()
 end
 
+--resets the fireball
 function Fireball:Spawn()
-	--place the item back into the world infront of the player 
 	self:shape("box")
 	self.z_index=1
 	self.on=true
-	self.timer=5
-	--self.vx=0
-	--self.vy=0
+	self.timer=self.burn_time
+	self.audio:play()
+	self.firelight1.ray_length = 15
 end
 registered_objects["Fireball"] = {
 	art="pixel",
