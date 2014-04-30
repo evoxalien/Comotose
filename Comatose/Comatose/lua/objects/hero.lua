@@ -11,6 +11,7 @@ function Hero:init()
 	self.count = 0
 	self:set_group("hero")
 	self:setLayer("unlit")
+	self.cast_shadow = false
 
 	self.on_fire = 0
 	self.warp_cooldown = 0
@@ -190,7 +191,7 @@ function Hero:everyFrame()
 
 	--update my sanity based on the flashlight and darkness status
 	--TODO: Handle "lit rooms" where the flashlight can be off safely
-	if not self.flashlight.on and not self.hiding then
+	if not self.flashlight.on and not self.hiding and not GameEngine:isIlluminated(self:ID()) then
 		self.sanity = math.max(self.sanity - (1 / 60), 0)
 		self.sanity_cooldown = 5 * 60 --10 second cooldown
 	end
