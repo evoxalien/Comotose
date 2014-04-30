@@ -82,6 +82,11 @@ namespace Comatose
                 sfx.Apply3D(listener, emitter); //needed before the first play
                 sfx.Play();
             }
+            else 
+            {
+                soundEffect.Play();
+            }
+
         }
         public void Volume(float f)
         {
@@ -95,7 +100,7 @@ namespace Comatose
         //this needs to be called everyframe so that the 3d works
         public void Calc3D()
         {
-            if (isPlaying)
+            if (isPlaying && listener!=null && emitter!=null)
             {
                 listener.Position = new Vector3(listener_object.body.Position, 0);
                 emitter.Position = new Vector3(parent_object.body.Position, 0);
