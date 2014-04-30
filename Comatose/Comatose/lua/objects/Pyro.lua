@@ -48,7 +48,7 @@ function Pyro:init()
 	self.fireballs={}
 	self.fireball_count=1
 	self.fireball_time=10
-	self.fireball_limit=10
+	self.fireball_limit=5
 	self.fireball_timer=self.fireball_time
 	self.fireball_oldest=1
 
@@ -69,8 +69,9 @@ function Pyro:everyFrame()
 		self.audio:attachListener( stage.hero:ID())
 	end
 	
-	if (count %2) == 0 
-		Effect:CreateHandFlame
+	--if (count %2) == 0 
+		--Effect:CreateHandFlame
+
 
 	
 	if stage.hero:canSee(self) then
