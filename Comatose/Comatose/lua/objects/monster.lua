@@ -8,10 +8,6 @@ function Monster:init()
 	self.audio=Audio.create()
 	self.audio:audioname("CrawlerMove02")
 	self.audio:attach( self:ID())
-	if stage.hero ~= null then
-		self.listenerset = true
-		self.audio:attachListener( stage.hero:ID() )
-	end
 	--/audio
 
 	self.centered = true
@@ -49,6 +45,11 @@ end
 function Monster:everyFrame()
 	if not self:HasTarget() then
 		self:setTarget(stage.hero:ID())
+	end
+
+	if stage.hero ~= null then
+		self.listenerset = true
+		self.audio:attachListener( stage.hero:ID() )
 	end
 
 	
