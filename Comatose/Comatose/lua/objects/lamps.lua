@@ -10,11 +10,13 @@ function FloorLamp:init()
 	self.cast_shadow = false
 	self.z_index = 0.5
 
-	--item bubble for switch tooltip
-	self.title = ItemBubble.create()
-	self.title:text("Switch")
-	self.title.target = self
-	self.title.centered = true
+	if not self.control then
+		--item bubble for switch tooltip
+		self.title = ItemBubble.create()
+		self.title:text("Switch")
+		self.title.target = self
+		self.title.centered = true
+	end
 
 	--light source
 	self.light = LightSource.create()
@@ -46,7 +48,18 @@ function FloorLamp:everyFrame()
 	end
 end
 
+function FloorLamp:switch(trigger)
+	if trigger == self.control then
+		self.on = not self.on
+		self.SwitchSound:Play()
+	end
+end
+
 function FloorLamp:use()
+	if self.control then
+		return
+	end
+
 	distance = stage.hero:distanceFrom(self.x, self.y)
 	if distance <= 15 then
 		if self.on then

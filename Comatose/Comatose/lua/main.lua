@@ -147,15 +147,15 @@ end
 --TODO: Do we really need tilemaps and objects to be separated?
 objects = {}
 
-processEvent = function(event)
+processEvent = function(event, ...)
 	for k, v in pairs(objects) do
 		if objects[k][event] then
-			objects[k][event](v)
+			objects[k][event](v, ...)
 		end
 	end
 
 	if stage[event] then
-		stage[event](stage)
+		stage[event](stage, ...)
 	end
 
 	--debug code

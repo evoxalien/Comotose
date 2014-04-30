@@ -3,74 +3,91 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
-	["joints"] = {
-	};
 	["objects"] = {
 		[21] = {
-			["class"] = "FloorLamp";
 			["defaults"] = {
 				["y"] = 112;
+				["control"] = "generator";
+				["on"] = false;
 				["x"] = 130;
 			};
+			["class"] = "FloorLamp";
 		};
 		[22] = {
-			["class"] = "FloorLamp";
 			["defaults"] = {
 				["y"] = 86.2;
+				["control"] = "generator";
+				["on"] = false;
 				["x"] = 81.9;
 			};
+			["class"] = "FloorLamp";
 		};
 		[12] = {
-			["class"] = "LocalWarp";
 			["defaults"] = {
 				["y"] = 127;
 				["x"] = 124.6;
 			};
+			["class"] = "LocalWarp";
 		};
 		[16] = {
-			["class"] = "LocalWarp";
 			["defaults"] = {
 				["y"] = 126.5;
 				["x"] = 81.9;
 			};
+			["class"] = "LocalWarp";
 		};
 		[17] = {
-			["class"] = "LocalWarp";
 			["defaults"] = {
 				["y"] = 127.1;
 				["x"] = 96.7;
 			};
+			["class"] = "LocalWarp";
+		};
+		[25] = {
+			["defaults"] = {
+				["y"] = 67.7;
+				["x"] = 66.2;
+				["control"] = "generator";
+				["on"] = false;
+			};
+			["class"] = "Switch";
 		};
 		[18] = {
-			["class"] = "LocalWarp";
 			["defaults"] = {
 				["y"] = 126.6;
 				["x"] = 110.9;
 			};
+			["class"] = "LocalWarp";
 		};
 		[19] = {
-			["class"] = "Hero";
 			["defaults"] = {
 				["y"] = 67.1;
 				["x"] = 141.8;
 			};
+			["class"] = "Hero";
 			["rotation"] = -1.4269993397432;
 		};
 		[20] = {
-			["class"] = "FloorLamp";
 			["defaults"] = {
 				["y"] = 120;
+				["control"] = "generator";
+				["on"] = false;
 				["x"] = 71.1;
 			};
+			["class"] = "FloorLamp";
 		};
 		[24] = {
-			["class"] = "FloorLamp";
 			["defaults"] = {
 				["y"] = 61;
+				["control"] = "generator";
+				["on"] = false;
 				["x"] = 115.6;
 			};
+			["class"] = "FloorLamp";
 		};
 	};
 	["map"] = "mechanic4";
+	["joints"] = {
+	};
 }
 return obj1
