@@ -3,102 +3,119 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
+	["joints"] = {
+	};
 	["objects"] = {
-		[14] = {
-			["defaults"] = {
-				["y"] = 47.1;
-				["x"] = 81.7;
-			};
-			["class"] = "Monster";
-		};
-		[1] = {
-			["rotation"] = -1.5707963267949;
-			["defaults"] = {
-				["y"] = 43.3;
-				["x"] = 140.6;
-			};
-			["class"] = "Hero";
-		};
-		[2] = {
-			["defaults"] = {
-				["y"] = 41.5;
-				["x"] = 104.4;
-			};
-			["class"] = "Log";
-		};
-		[4] = {
-			["defaults"] = {
-				["y"] = 24.6;
-				["x"] = 129.9;
-			};
-			["class"] = "Waypoint";
-		};
-		[8] = {
-			["defaults"] = {
-				["y"] = 18.5;
-				["x"] = 98.7;
-			};
-			["class"] = "Monster";
-		};
-		[9] = {
-			["defaults"] = {
-				["y"] = 17.8;
-				["x"] = 110.8;
-			};
-			["class"] = "Monster";
-		};
-		[5] = {
-			["defaults"] = {
-				["y"] = 146.1;
-				["x"] = 112.1;
-			};
-			["class"] = "Waypoint";
-		};
-		[10] = {
-			["defaults"] = {
-				["y"] = 17.5;
-				["x"] = 123.2;
-			};
-			["class"] = "Monster";
-		};
 		[11] = {
-			["defaults"] = {
-				["y"] = 17.3;
-				["x"] = 134.4;
-			};
 			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 134.4;
+				["y"] = 17.3;
+			};
+		};
+		[15] = {
+			["class"] = "Log";
+			["defaults"] = {
+				["x"] = 142.1;
+				["y"] = 50.6;
+				["trigger_event"] = "holyshit";
+				["text"] = "mechanic1";
+			};
 		};
 		[3] = {
+			["class"] = "Waypoint";
 			["defaults"] = {
-				["y"] = 24.9;
 				["x"] = 94.6;
+				["y"] = 24.9;
 			};
-			["class"] = "Waypoint";
 		};
-		[6] = {
-			["defaults"] = {
-				["y"] = 146.5;
-				["x"] = 59.6;
-			};
+		[4] = {
 			["class"] = "Waypoint";
+			["defaults"] = {
+				["x"] = 129.9;
+				["y"] = 24.6;
+			};
+		};
+		[8] = {
+			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 98.7;
+				["y"] = 18.5;
+			};
+		};
+		[1] = {
+			["class"] = "Hero";
+			["rotation"] = -1.5707963267949;
+			["defaults"] = {
+				["x"] = 140.6;
+				["y"] = 43.3;
+			};
+		};
+		[17] = {
+			["class"] = "LevelWarp";
+			["defaults"] = {
+				["y"] = 147;
+				["x"] = 43.6;
+				["target"] = "mechanic2";
+			};
+		};
+		[9] = {
+			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 110.8;
+				["y"] = 17.8;
+			};
 		};
 		[13] = {
-			["defaults"] = {
-				["y"] = 32.2;
-				["x"] = 82.4;
-			};
 			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 82.4;
+				["y"] = 32.2;
+			};
 		};
 		[7] = {
-			["defaults"] = {
-				["y"] = 19.1;
-				["x"] = 87.1;
-			};
 			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 87.1;
+				["y"] = 19.1;
+			};
+		};
+		[5] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["x"] = 112.1;
+				["y"] = 146.1;
+			};
+		};
+		[10] = {
+			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 123.2;
+				["y"] = 17.5;
+			};
+		};
+		[14] = {
+			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 81.7;
+				["y"] = 47.1;
+			};
+		};
+		[6] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["x"] = 59.6;
+				["y"] = 146.5;
+			};
 		};
 	};
 	["map"] = "mechanic1";
-	["joints"] = {
-	};
 }
 return obj1

@@ -3,88 +3,96 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
+	["map"] = "debugroom";
 	["joints"] = {
 	};
-	["map"] = "debugroom";
-	["music"] = "debugroom";
 	["objects"] = {
 		[11] = {
+			["class"] = "StageWarp";
 			["defaults"] = {
 				["x"] = 83.1;
-				["target"] = "leveleditor";
 				["y"] = 53.1;
+				["target"] = "leveleditor";
 			};
-			["class"] = "StageWarp";
 		};
 		[1] = {
-			["class"] = "Hero";
 			["defaults"] = {
-				["x"] = 43.4;
 				["y"] = 48.3;
+				["x"] = 43.4;
 			};
+			["class"] = "Hero";
 		};
 		[2] = {
-			["class"] = "LevelWarp";
 			["defaults"] = {
 				["x"] = 14.2;
-				["target"] = "demo";
 				["y"] = 23.6;
+				["target"] = "demo";
 			};
+			["class"] = "LevelWarp";
 		};
 		[4] = {
-			["class"] = "Campfire";
 			["defaults"] = {
-				["x"] = 13.2;
 				["y"] = 87.7;
+				["x"] = 13.2;
 			};
+			["class"] = "Campfire";
 		};
 		[8] = {
-			["class"] = "StageWarp";
 			["defaults"] = {
 				["x"] = 47.5;
-				["target"] = "textboxtest";
 				["y"] = 88.3;
+				["target"] = "textboxtest";
 			};
+			["class"] = "StageWarp";
 		};
 		[9] = {
-			["class"] = "StageWarp";
 			["defaults"] = {
 				["x"] = 68.9;
-				["target"] = "uitest";
 				["y"] = 88.4;
+				["target"] = "uitest";
 			};
+			["class"] = "StageWarp";
+		};
+		[12] = {
+			["defaults"] = {
+				["x"] = 83;
+				["y"] = 24.8;
+				["target"] = "entrance";
+			};
+			["class"] = "LevelWarp";
 		};
 		[5] = {
-			["class"] = "Campfire";
 			["defaults"] = {
-				["x"] = 84.1;
 				["y"] = 88.1;
+				["x"] = 84.1;
 			};
+			["class"] = "Campfire";
 		};
 		[7] = {
-			["class"] = "StageWarp";
 			["defaults"] = {
 				["x"] = 27.1;
-				["target"] = "aitest";
 				["y"] = 88;
-			};
-		};
-		[10] = {
-			["defaults"] = {
-				["x"] = 13.7;
-				["target"] = "mapeditor";
-				["y"] = 53.3;
+				["target"] = "aitest";
 			};
 			["class"] = "StageWarp";
 		};
 		[3] = {
-			["class"] = "LevelWarp";
 			["defaults"] = {
 				["x"] = 46.1;
-				["target"] = "test";
 				["y"] = 24.7;
+				["target"] = "test";
+			};
+			["class"] = "LevelWarp";
+		};
+		[10] = {
+			["class"] = "StageWarp";
+			["defaults"] = {
+				["x"] = 13.7;
+				["y"] = 53.3;
+				["target"] = "mapeditor";
 			};
 		};
 	};
+	["music"] = "debugroom";
 }
 return obj1

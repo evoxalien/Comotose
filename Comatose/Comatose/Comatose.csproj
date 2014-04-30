@@ -158,6 +158,9 @@
     <None Include="lua\levels\entrance.data">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\levels\mechanic1.data">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\maps\debugroom.data">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

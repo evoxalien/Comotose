@@ -5,14 +5,6 @@ local multiRefObjects = {
 local obj1 = {
 	["map"] = "entrance";
 	["objects"] = {
-		[2] = {
-			["rotation"] = 0.67336920515972;
-			["class"] = "Chair2";
-			["defaults"] = {
-				["y"] = 9.7;
-				["x"] = 32.9;
-			};
-		};
 		[3] = {
 			["rotation"] = -2.677945044589;
 			["class"] = "Hero";
@@ -21,25 +13,19 @@ local obj1 = {
 				["x"] = 22.9;
 			};
 		};
+		[2] = {
+			["rotation"] = 0.67336920515972;
+			["class"] = "Chair2";
+			["defaults"] = {
+				["y"] = 9.7;
+				["x"] = 32.9;
+			};
+		};
 		[4] = {
 			["class"] = "FloorLamp";
 			["defaults"] = {
-				["x"] = 16.9;
 				["y"] = 66.4;
-			};
-		};
-		[9] = {
-			["class"] = "FloorLamp";
-			["defaults"] = {
-				["x"] = 44.6;
-				["y"] = 19.4;
-			};
-		};
-		[10] = {
-			["class"] = "Log";
-			["defaults"] = {
-				["x"] = 46.7;
-				["y"] = 37.6;
+				["x"] = 16.9;
 			};
 		};
 		[8] = {
@@ -50,6 +36,31 @@ local obj1 = {
 				["x"] = 33.2;
 			};
 		};
+		[12] = {
+			["class"] = "LevelWarp";
+			["defaults"] = {
+				["y"] = 132;
+				["x"] = 147.6;
+				["target"] = "elevator";
+			};
+		};
+		[10] = {
+			["class"] = "Log";
+			["defaults"] = {
+				["y"] = 37.6;
+				["x"] = 46.7;
+				["text"] = "entrance";
+			};
+		};
+		[11] = {
+			["class"] = "FloorLamp";
+			["defaults"] = {
+				["y"] = 10.8;
+				["x"] = 46;
+			};
+		};
+	};
+	["joints"] = {
 	};
 }
 return obj1

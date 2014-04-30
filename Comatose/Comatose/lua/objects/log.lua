@@ -14,13 +14,15 @@ function Log:init()
 	self.title:text("Log")
 	self.title.target = self
 	self.title.centered = true
+
+	self.text = self.text or "demotext1"
 end
 
 function Log:use()
 	distance = stage.hero:distanceFrom(self.x, self.y)
 	if distance <= 15 then
 		stage.dialog:portrait("VoiceRecorder")
-		stage.dialog:displayText(logdata["demotext1"])
+		stage.dialog:displayText(logdata[self.text])
 		if self.trigger_event then
 			trigger_event(self.trigger_event)
 			self.trigger_event = nil -- prevent repeated triggerings
@@ -50,7 +52,7 @@ logdata["elevator"] = {
 }
 
 logdata["mechanic1"] = {
-	"Holy---!!n[Press SHIFT to book it.]"
+	"Holy---!!\n[Press SHIFT to book it.]"
 }
 
 logdata["mechanic2"] = {

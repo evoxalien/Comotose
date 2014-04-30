@@ -5,14 +5,32 @@ local multiRefObjects = {
 local obj1 = {
 	["map"] = "elevator";
 	["objects"] = {
-		[2] = {
-			["class"] = "Hero";
+		[5] = {
 			["defaults"] = {
-				["x"] = 91.3;
-				["y"] = 99.8;
+				["y"] = 99.4;
+				["target"] = "mechanic1";
+				["x"] = 87.4;
 			};
-			["rotation"] = 1.5564430979595;
+			["class"] = "LevelWarp";
 		};
+		[3] = {
+			["defaults"] = {
+				["y"] = 100;
+				["x"] = 109.5;
+			};
+			["rotation"] = -1.5462111178524;
+			["class"] = "Hero";
+		};
+		[4] = {
+			["class"] = "Log";
+			["defaults"] = {
+				["text"] = "elevator";
+				["y"] = 104.2;
+				["x"] = 112.6;
+			};
+		};
+	};
+	["joints"] = {
 	};
 }
 return obj1
