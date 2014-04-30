@@ -73,6 +73,12 @@ function reverse_list(head)
 	return head
 end
 
+--Handle a right-click, which can ONLY change the selection (and do nothing else fancy)
+--This is so very necessary for so many things.
+function VertexHandle:right_click()
+	select_vertex(self)
+end
+
 --Handle what happens when any vertex is clicked, including all the weird cases
 --where something else was already clicked before this one.
 function VertexHandle:click()
@@ -159,6 +165,9 @@ function VertexHandle:click()
 		end
 	end
 	handled_by_vertex = true
+	--update
+	process_collision()
+	recolorAll()
 end
 
 selected_vertex = nil
@@ -255,6 +264,7 @@ function stage.click()
 	end
 	handled_by_vertex = false
 	process_collision()
+	recolorAll()
 end
 
 function toggleShadow(vertex)
@@ -378,6 +388,7 @@ function delete_vertex(vertex)
 		vertex:destroy()
 		selected_vertex = nil
 	end
+	recolorAll()
 end
 
 current_filename = ""
