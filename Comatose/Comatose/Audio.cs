@@ -24,7 +24,6 @@ namespace Comatose
         private PhysicsObject listener_object = null; //I expect this just to be the hero
         private SoundEffectInstance sfx;
         public bool looped = false;
-        public bool playing = false;
 
         public Audio(ComatoseGame gm)
             : base(gm)
@@ -33,6 +32,22 @@ namespace Comatose
             emitter = new AudioEmitter();
 
         }
+
+        public bool isPlaying
+        {
+            get
+            {
+                if(sfx!=null)
+                {
+                    if(sfx.State==SoundState.Playing)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
 
         public void attach(int objectID)
         {
@@ -62,26 +77,22 @@ namespace Comatose
             {
                 sfx = soundEffect.CreateInstance();
                 sfx.IsLooped = looped;
-                Calc3D();
-                sfx.Apply3D(listener, emitter);
+                sfx.Apply3D(listener, emitter); //needed before the first play
                 sfx.Play();
-                playing = true;
             }
         }
         public void stop()
         {
-            sfx.Stop();
-            playing = false;
+            if(sfx!=null)
+                sfx.Stop();
         }
         //this needs to be called everyframe so that the 3d works
         public void Calc3D()
         {
-            if (playing)
+            if (isPlaying)
             {
                 listener.Position = new Vector3(listener_object.body.Position, 0);
-
                 emitter.Position = new Vector3(parent_object.body.Position, 0);
-
                 sfx.Apply3D(listener, emitter);
             }
         }

@@ -26,7 +26,6 @@ function Fireball:init()
 		self.listenerset=true
 		self.audio:attachListener( stage.hero:ID())
 	end
-	self.audio.looped=true
 	self.audio:play()
 
 
@@ -64,16 +63,7 @@ function Fireball:everyFrame()
 
 		--if the player gets too close, set them on FIRE!!! (super fun time)
 
-
-		--audio
-		if stage.listener~= true then
-			self.listenerset=true
-			self.audio:attachListener( stage.hero:ID())
-		end
-
-		self.audio:Calc3D()
-
-
+		self:AudioMachine()
 
 		self.count = self.count + 1
 		self.timer=self.timer-1
@@ -88,12 +78,13 @@ end
 function Fireball:Hide()
 	self:shape("none")		   --make sure the object doesnt collide with anything
 	self.z_index=-1		       --remove  from screen by setting behind the map
-	self.audio:stop()
+	self.audio:stop()			--make sure its not playing any more audio
 	self.firelight1.ray_length = 0
 
 	--stop the object from moving and straighten it
 	self.resetPosition()
 end
+
 
 --resets the fireball
 function Fireball:Spawn()
@@ -101,9 +92,25 @@ function Fireball:Spawn()
 	self.z_index=1
 	self.on=true
 	self.timer=self.burn_time
-	self.audio:play()
+	--self.audio:play()
 	self.firelight1.ray_length = 15
 end
+
+function Fireball:AudioMachine()
+	if stage.listener~= true then
+		self.listenerset=true
+		self.audio:attachListener( stage.hero:ID())
+	end
+
+
+
+	if self.audio.isPlaying==false then --loop it in lua
+		self.audio:play()
+	end
+		
+	self.audio:Calc3D()
+end
+
 registered_objects["Fireball"] = {
 	art="pixel",
 	centered=true

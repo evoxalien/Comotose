@@ -12,8 +12,7 @@ function Monster:init()
 		self.listenerset = true
 		self.audio:attachListener( stage.hero:ID() )
 	end
-	self.audio.looped=true
-	self.audio:play()
+	--/audio
 
 	self.centered = true
 	self.width = 64
@@ -50,12 +49,7 @@ function Monster:everyFrame()
 		self:setTarget(stage.hero:ID())
 	end
 
-	if stage.listener~= true then
-		self.listenerset=true
-		self.audio:attachListener( stage.hero:ID())
-	end
-
-	
+		
 	--if 
 	--	(GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) and stage.hero.flashlight:isIlluminating(self:ID())) or
 	--	self:distanceFrom(stage.hero.x, stage.hero.y) < 10 then
@@ -83,12 +77,26 @@ function Monster:everyFrame()
 	--print(rotate_angle)
 	self:rotateTo(rotate_angle)
 
-	self.audio:Calc3D()
-
+	self:AudioMachine()
 	self:StateMachine()
 
 end
 
+function Monster:AudioMachine()
+	if stage.listener~= true then
+		self.listenerset=true
+		self.audio:attachListener( stage.hero:ID())
+	end
+
+
+
+	if self.audio.isPlaying==false then --loop it in lua
+		self.audio:play()
+	end
+		
+	self.audio:Calc3D()
+
+end
 
 
 function Monster:StateMachine()
