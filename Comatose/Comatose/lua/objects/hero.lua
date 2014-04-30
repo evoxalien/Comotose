@@ -21,14 +21,14 @@ function Hero:init()
 
 	--Footsteps Audio
 	self.Foot1=Audio.create()
-	self.Foot1:audioname("FootstepsCarpet04")
+	self.Foot1:audioname("FootstepsTile00_01")
 	self.Foot1:attach( self:ID())
 	self.Foot1:attachListener( self:ID() )
 	self.Foot1.looped = false
 	
 
 	self.Foot2=Audio.create()
-	self.Foot2:audioname("FootstepsCarpet05")
+	self.Foot2:audioname("FootstepsTile00_02")
 	self.Foot2:attach( self:ID())
 	self.Foot2:attachListener( self:ID() )
 	self.Foot2.looped = false
@@ -141,7 +141,7 @@ function Hero:everyFrame()
 
 	if not Input:MovementDeadzone() then
 		
-		if (self.count % 20) == 0 then
+		if (self.count % 16) == 0 then
 
 			if self.flipflop == true then
 				-- Play First Footstep
