@@ -55,7 +55,7 @@ function Flame:everyFrame()
 	if self.on	 then
 		self.firelight1.x = self.x
 		self.firelight1.y = self.y
-
+	
 		if (self.count % 4) == 0 then
 			Effect:CreateFlame(self.x , self.y - 1, 55)
 			self.count=1
@@ -66,9 +66,7 @@ function Flame:everyFrame()
 		--if the player gets too close, set them on FIRE!!! (super fun time)
 
 		self:AudioMachine()
-
 	end
-	
 end
 
 function Flame:Hide()
@@ -76,9 +74,10 @@ function Flame:Hide()
 	self.z_index=-1		       --remove  from screen by setting behind the map
 	self.audio:stop()			--make sure its not playing any more audio
 	self.firelight1.ray_length = 0
+	self.on=false
 
 	--stop the object from moving and straighten it
-	self.resetPosition()
+	--self.resetPosition()
 end
 
 

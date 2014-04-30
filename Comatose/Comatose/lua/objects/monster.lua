@@ -137,8 +137,9 @@ function Monster:StateMachine()
 
 		
 		--if we see the player while wandering, attack it
-			if GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) then
-				if stage.hero.hiding ==false then
+			if stage.hero.hiding ==false then
+				print("should be wandering")
+				if GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) then
 					self.state="attacking"
 				end
 			else --we are going to wander the path by pick a random node and going to it

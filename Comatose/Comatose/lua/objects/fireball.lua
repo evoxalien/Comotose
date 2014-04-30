@@ -83,6 +83,7 @@ function Fireball:Hide()
 	self.z_index=-1		       --remove  from screen by setting behind the map
 	self.audio:stop()			--make sure its not playing any more audio
 	self.firelight1.ray_length = 0
+	self.on=false
 
 	--self.firelight1.destroy()
 

@@ -15,12 +15,12 @@ function Pyro:init()
 	self.audio:play()
 
 	--set up flashlight stuff
-	self.flame = Flame.create()
-	self.flame.cast_shadow = false
+	--self.flame = Flame.create()
+	--self.flame.cast_shadow = false
 	--offset the light so it's in the hero's "hand"
-	self.flame.x = self.x - 1.0
-	self.flame.y = self.y + 1.7
-	self.flame:join(self:ID(), "weld")
+	--self.flame.x = self.x - 1.0
+	--self.flame.y = self.y + 1.7
+	--self.flame:join(self:ID(), "weld")
 
 	--position & collision
 	self.centered = true
@@ -69,39 +69,27 @@ function Pyro:everyFrame()
 	if not self:HasTarget() then
 		self:setTarget(stage.hero:ID())
 	end
-
-		--if (count %2) == 0 
-		--Effect:CreateHandFlame
-
-
 	
 	if stage.hero:canSee(self) then
-		if stage.hero.flashlight:isIlluminating(self:ID()) then
-			--stage.hero.sanity = math.max(stage.hero.sanity - 20 / 60, 0)
-			--stage.hero.sanity_cooldown = 5 * 60
-		else
-			--stage.hero.sanity = math.max(stage.hero.sanity - 5 / 60, 0)
-			--stage.hero.sanity_cooldown = 5 * 60
+		if self.handheld.on==false then
+			self.handheld:Spawn()
 		end
 		self.fade_timer = math.min(self.fade_timer + 2, 10)
 	else
 		--hide
 		self.fade_timer = math.max(self.fade_timer - 1, 0)
+		self.handheld:Hide()
 	end
 	self:color(255,255,255,255 * (self.fade_timer / 10))
 
 
 	--turn to face our movement direction
 	rotate_angle = math.atan2(self.vx, -self.vy) 
-	--print(rotate_angle)
 	self:rotateTo(rotate_angle)
 
 	--dampen (no spinspinspin)
 	self.vr = self.vr / 2
 
-	--self.audio:Calc3D()
-
-	--print( self.fireball_count)
 
 	--gather used fireballs
 	for key,value in pairs(self.fireballs) do
