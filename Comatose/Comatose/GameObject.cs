@@ -33,7 +33,7 @@ namespace Comatose
         public int animation = 0;
         public int current_frame = 0;
         public int frame_delay = 0; //one cell per frame
-        protected int delay_timer = 0;
+        public int delay_timer = 0;
 
         public string layer = "gameobject";
 

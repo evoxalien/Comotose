@@ -137,26 +137,23 @@ function Hero:everyFrame()
 
 	-- Keep it reasonable	
 	local speed = self.speed
+	self.frame_delay = 6
 	if Input:IsKeyHeld("LeftShift") then
 		speed = self.run_speed
+		self.frame_delay = 4
 	end
 
 	if not Input:MovementDeadzone() then
-		
-		if (self.count % 16) == 0 then
-
-			if self.flipflop == true then
-				-- Play First Footstep
-				self.Foot1:play()
-				flipflop = false
-	
-			else
-				-- Play Second Footstep
-				self.Foot2:play()
-				flipflop = true
-
-			end
+		if self.current_frame == 0 and self.delay_timer == 0 then
+			-- Play First Footstep
+			self.Foot1:play()
 		end
+
+		if self.current_frame == 4 and self.delay_timer == 0 then
+			-- Play Second Footstep
+			self.Foot2:play()
+		end
+
 		direction = Input:GetMovementDirection()
 		--self.vx = direction.X * self.speed
 		--self.vy = direction.Y * self.speed
@@ -173,7 +170,6 @@ function Hero:everyFrame()
 		self:sprite("Hero_Move_Quick")
 		self.width = 71
 		self.height = 79
-		self.frame_delay = 6
 		self:shape("circle")
 	else
 		--kill off any momemtum we might have
