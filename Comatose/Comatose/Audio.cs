@@ -84,7 +84,11 @@ namespace Comatose
             }
             else 
             {
-                soundEffect.Play();
+                sfx = soundEffect.CreateInstance();
+                sfx.IsLooped = looped;
+                sfx.Volume = volume / 100;
+                sfx.Play();
+                //soundEffect.Play();
             }
 
         }

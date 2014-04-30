@@ -22,17 +22,17 @@ function Hero:init()
 	--Footsteps Audio
 	self.Foot1=Audio.create()
 	self.Foot1:audioname("FootstepsTile00_01")
-	self.Foot1:attach( self:ID())
-	self.Foot1:attachListener( self:ID() )
-	self.Foot1.looped = false
+	--self.Foot1:attach( self:ID())
+	--self.Foot1:attachListener( self:ID() )
+	--self.Foot1.looped = false
 	self.Foot1:Volume(5)
 	
 
 	self.Foot2=Audio.create()
 	self.Foot2:audioname("FootstepsTile00_02")
-	self.Foot2:attach( self:ID())
-	self.Foot2:attachListener( self:ID() )
-	self.Foot2.looped = false
+	--self.Foot2:attach( self:ID())
+	--self.Foot2:attachListener( self:ID() )
+	--self.Foot2.looped = false
 	self.Foot2:Volume(5)
 	
 	--self.Foot1:play()

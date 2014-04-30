@@ -12,7 +12,6 @@ function Pyro:init()
 		self.listenerset=true
 		self.audio:attachListener( stage.hero:ID())
 	end
-	self.audio.looped=true
 	self.audio:play()
 
 	--set up flashlight stuff
@@ -64,12 +63,7 @@ function Pyro:everyFrame()
 		self:setTarget(stage.hero:ID())
 	end
 
-	if stage.listener~= true then
-		self.listenerset=true
-		self.audio:attachListener( stage.hero:ID())
-	end
-	
-	--if (count %2) == 0 
+		--if (count %2) == 0 
 		--Effect:CreateHandFlame
 
 
@@ -95,7 +89,7 @@ function Pyro:everyFrame()
 	--print(rotate_angle)
 	self:rotateTo(rotate_angle)
 
-	self.audio:Calc3D()
+	--self.audio:Calc3D()
 
 	--print( self.fireball_count)
 
@@ -242,6 +236,23 @@ function Pyro:ThrowFireball(i)
 	self.fireballs[i].targetx=stage.hero.x
 	self.fireballs[i].targety=stage.hero.y
 end
+
+
+function Pyro:AudioMachine()
+
+	if stage.listener~= true then
+		self.listenerset=true
+		self.audio:attachListener( stage.hero:ID())
+	end
+
+	if self.audio.isPlaying==false then --loop it in lua
+		self.audio:play()
+	end
+		
+	self.audio:Calc3D()
+end
+
+
 
 registered_objects["Pyro"] = {
 	art="Pyro",
