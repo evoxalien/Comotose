@@ -206,7 +206,7 @@
     <None Include="lua\objects\Bar.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="lua\objects\Copy of fireball.lua">
+    <None Include="lua\objects\flame.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="lua\objects\fireball.lua">

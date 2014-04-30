@@ -77,7 +77,7 @@ namespace Comatose
             if (parent_object != null && listener_object != null)
             {
                 sfx = soundEffect.CreateInstance();
-                sfx.IsLooped = looped;
+                //sfx.IsLooped = looped;
                 sfx.Volume = volume / 100;
                 sfx.Apply3D(listener, emitter); //needed before the first play
                 sfx.Play();
@@ -85,7 +85,7 @@ namespace Comatose
             else 
             {
                 sfx = soundEffect.CreateInstance();
-                sfx.IsLooped = looped;
+                //sfx.IsLooped = looped;
                 sfx.Volume = volume / 100;
                 sfx.Play();
                 //soundEffect.Play();

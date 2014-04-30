@@ -194,6 +194,65 @@ namespace Comatose
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(255, 255, 255, 200), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }
         }
+        public void CreateFlame(float x, float y, int intensity)
+        {
+
+           Vector2 Position;
+           Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud1-32");
+
+           //intensity = 100;
+           //Red Particles
+           int r = rand.Next(210, 250);
+           int g = rand.Next(30, 90);
+           int b = rand.Next(30, 50);
+
+           for (int i = 0; i < intensity / 3; i++)
+           {
+               Position = new Vector2(x = NextFloat(rand, x + .0075f, x - .0075f), y = NextFloat(rand, y + .0075f, y - .0075f)) * game.physics_scale;
+               float speed = 3f * (1f - 1 / NextFloat(rand, 1f, 20f));
+               var state = new ParticleState()
+               {
+                   Velocity = NextVector2(rand, speed/3, speed / 7),
+                   Type = ParticleType.Fire,
+                   LengthMultiplier = 1.5f
+               };
+               game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(1.0f), state);
+           }
+
+           // Yellow Particles
+           r = rand.Next(220, 240);
+           g = rand.Next(170, 225);
+           b = rand.Next(0, 40);
+           //particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud2-128");
+           for (int i = 0; i < intensity / 4; i++)
+           {
+               Position = new Vector2(x = NextFloat(rand, x + .005f, x - .005f), y = NextFloat(rand, y + .005f, y - .005f)) * game.physics_scale;
+               float speed = 3f * (1f - 1 / NextFloat(rand, 1f, 5f));
+               var state = new ParticleState()
+               {
+                   Velocity = NextVector2(rand, speed / 2, speed / 10),
+                   Type = ParticleType.Fire,
+                   LengthMultiplier = 1.5f
+               };
+               game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
+           }
+
+
+           //particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud3-128");
+           //particleTexture = game.Content.Load<Texture2D>("art/particle");
+           for (int i = 0; i < intensity / 7; i++)
+           {
+               Position = new Vector2(x = NextFloat(rand, x + .25f, x - .25f), y = NextFloat(rand, y + .25f, y - .25f)) * game.physics_scale;
+               float speed = .5f * (1f - 1 / NextFloat(rand, 1f, 5f));
+               var state = new ParticleState()
+               {
+                   Velocity = NextVector2(rand, speed * 3, speed / 5),
+                   Type = ParticleType.Fire,
+                   LengthMultiplier = 1.5f
+               };
+               game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
+           }
+        }
         #endregion
 
         public void CreateSprinkler(float x, float y, int intensity)
@@ -201,7 +260,7 @@ namespace Comatose
             Vector2 Position = new Vector2(x, y) * game.physics_scale;
 
             Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Glow");
-            
+
             int r = 32;
             int g = 50;
             int b = 50;

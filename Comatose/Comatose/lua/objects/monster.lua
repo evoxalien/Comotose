@@ -110,13 +110,17 @@ function Monster:StateMachine()
 																	
 
 	elseif self.state=="attacking" then
-		self:MoveTowardsTarget(stage.hero.x,stage.hero.y)
+		if stage.hero.hiding == true then
+			self.state="wander"
+		else
+			self:MoveTowardsTarget(stage.hero.x,stage.hero.y)
 
-		if not GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) then
-			self.last_seen_x=stage.hero.x
-			self.last_seen_y=stage.hero.y
-			
-			self.state="searching"
+			if not GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) then
+				self.last_seen_x=stage.hero.x
+				self.last_seen_y=stage.hero.y
+				
+				self.state="searching"
+			end
 		end
 
 
@@ -125,26 +129,28 @@ function Monster:StateMachine()
 
 	elseif self.state=="wander" then --pick a random location on waypoint and goto
 
+		
 		--if we see the player while wandering, attack it
-		if GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) then
-			self.state="attacking"
-		else --we are going to wander the path by pick a random node and going to it
+			if GameEngine:hasLineOfSight(stage.hero:ID(), self:ID()) then
+				if stage.hero.hiding ==false then
+					self.state="attacking"
+				end
+			else --we are going to wander the path by pick a random node and going to it
 
-			self.wandertimer= self.wandertimer-1
-			if self.wandertimer<0 then
-				self.RandomWaypoint()
-				self.wandertimer=1000
+				self.wandertimer= self.wandertimer-1
+				if self.wandertimer<0 then
+					self.RandomWaypoint()
+					self.wandertimer=1000
+				end
+
+
+				--choose a random point
+				if not self.wandering then
+					self.RandomWaypoint()
+					self.wandering =true
+				end
+				self.Wander()
 			end
-
-
-			--choose a random point
-			if not self.wandering then
-				self.RandomWaypoint()
-				self.wandering =true
-			end
-			self.Wander()
-		end
-
 	end
 end
 

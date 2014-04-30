@@ -50,7 +50,7 @@ function Hero:init()
 	self.flashlight.x = self.x - 1.0
 	self.flashlight.y = self.y + 1.7
 
-	self.flashlight:join(self.ID(), "weld")
+	self.flashlight:join(self:ID(), "weld")
 
 	--setup the hero camera
 	self.camera = HeroCamera.create()

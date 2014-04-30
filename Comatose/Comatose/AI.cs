@@ -567,9 +567,12 @@ namespace Comatose
             Vector2 t = new Vector2(x, y);
 
             Vector2 distance = body.Position - t;
-            distance.Normalize();
-            this.vx = -distance.X * speed;
-            this.vy = -distance.Y * speed;
+            if (distance.Length() > 2) //causes a nice jitter for fire!
+            {
+                distance.Normalize();
+                this.vx = -distance.X * speed;
+                this.vy = -distance.Y * speed;
+            }
         }
 
         public void RandomWaypoint()

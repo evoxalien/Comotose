@@ -9,6 +9,7 @@ function Fireball:init()
 	self.cast_shadow = false
 	self.width=1
 	self.height=1
+	self:setDensity(0.01)
 
 	--copied from hero shamelessly
 	self.firelight1 = LightSource.create()
@@ -24,8 +25,8 @@ function Fireball:init()
 	if stage.hero ~= null then
 		self.listenerset=true
 		self.audio:attachListener( stage.hero:ID())
+		self.audio:play()
 	end
-	self.audio:play()
 
 
 	self.count = 0
@@ -114,6 +115,7 @@ function Fireball:AudioMachine()
 	if stage.listener~= true then
 		self.listenerset=true
 		self.audio:attachListener( stage.hero:ID())
+		self.audio:Calc3D()
 	end
 
 
@@ -121,8 +123,8 @@ function Fireball:AudioMachine()
 	if self.audio.isPlaying==false then --loop it in lua
 		self.audio:play()
 	end
+		self.audio:Calc3D()
 		
-	self.audio:Calc3D()
 end
 
 registered_objects["Fireball"] = {

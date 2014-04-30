@@ -15,11 +15,12 @@ function Pyro:init()
 	self.audio:play()
 
 	--set up flashlight stuff
-	--self.flame = Flame.create()
-	--self.flame.cast_shadow = false
+	self.flame = Flame.create()
+	self.flame.cast_shadow = false
 	--offset the light so it's in the hero's "hand"
-	--self.flame.x = self.x - 1.0
-	--self.flame.y = self.y + 1.7
+	self.flame.x = self.x - 1.0
+	self.flame.y = self.y + 1.7
+	self.flame:join(self:ID(), "weld")
 
 	--position & collision
 	self.centered = true
@@ -34,6 +35,12 @@ function Pyro:init()
 	self:add_target("hero")
 	self.fade_timer = 0
 	self.z_index = 0.5
+
+	--hand held fireball!
+	--self.handheld= Flame.create()
+	--self.handheld.x = self.x -1.0
+	--self.handheld.y = self.y +1.9
+	--self.handheld:join(self:ID(),"weld")
 
 
 
@@ -175,14 +182,14 @@ end
 function Pyro:AttackStateMachine()
 
 		--throw fireballs
-
-
 			--keep distance
 			--about the distance of the flash light
 			if self:distanceFrom(stage.hero.x,stage.hero.y) <50 then
+
 				--stop moving
 				self.vy=0
 				self.vx=0
+
 
 				--if the pyro hasnt spawned enough fireball spawn new ones
 				if self.fireball_timer <0  and self.fireball_count <self.fireball_limit then

@@ -11,13 +11,13 @@ function Flashlight:init()
 	self.sounds = {}
 	self.sounds.on = Audio.create()
 	self.sounds.on:audioname("FlashlightOn00")
-	self.sounds.on:attach(self:ID())
-	self.sounds.on:attachListener(self:ID())
+	--self.sounds.on:attach(self:ID())
+	--self.sounds.on:attachListener(self:ID())
 
 	self.sounds.off = Audio.create()
 	self.sounds.off:audioname("FlashlightOff00")
-	self.sounds.off:attach(self:ID())
-	self.sounds.off:attachListener(self:ID())
+	--self.sounds.off:attach(self:ID())
+	--self.sounds.off:attachListener(self:ID())
 end
 
 function Flashlight:addCharge(battery_level)
