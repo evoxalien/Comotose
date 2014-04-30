@@ -206,6 +206,12 @@
     <None Include="lua\main.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\maps\entrance.data">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="lua\maps\mechanic1.data">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\maps\test.data">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
