@@ -15,6 +15,13 @@ function Pyro:init()
 	self.audio.looped=true
 	self.audio:play()
 
+	--set up flashlight stuff
+	--self.flame = Flame.create()
+	--self.flame.cast_shadow = false
+	--offset the light so it's in the hero's "hand"
+	--self.flame.x = self.x - 1.0
+	--self.flame.y = self.y + 1.7
+
 	--position & collision
 	self.centered = true
 	self.width = 95
@@ -61,6 +68,10 @@ function Pyro:everyFrame()
 		self.listenerset=true
 		self.audio:attachListener( stage.hero:ID())
 	end
+	
+	if (count %2) == 0 
+		Effect:CreateHandFlame
+
 	
 	if stage.hero:canSee(self) then
 		if stage.hero.flashlight:isIlluminating(self:ID()) then
