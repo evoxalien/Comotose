@@ -37,10 +37,10 @@ function Pyro:init()
 	self.z_index = 0.5
 
 	--hand held fireball!
-	--self.handheld= Flame.create()
-	--self.handheld.x = self.x -1.0
-	--self.handheld.y = self.y +1.9
-	--self.handheld:join(self:ID(),"weld")
+	self.handheld= Flame.create()
+	self.handheld.x = self.x -1.0
+	self.handheld.y = self.y +1.9
+	self.handheld:join(self:ID(),"weld")
 
 
 
@@ -254,6 +254,31 @@ function Pyro:AudioMachine()
 	self.audio:Calc3D()
 end
 
+function Pyro:switch(trigger)
+	if trigger == "generator"  then --wussy mode engage!
+
+
+		for key,value in pairs(self.fireballs) do --hide all the fireballs!
+			--the fire is off, lets gather it somewhere nice
+			self.fireballs[key].on = false 
+			self.fireballs[key]:Hide()
+		end
+
+		--hide the pyros handheld fire
+		self.handheld.on=false
+		self.handheld:Hide()
+
+		self:shape("none")		   --make sure the object doesnt collide with anything
+		self.z_index=-1		       --remove  from screen by setting behind the map
+		self.audio:stop()			--make sure its not playing any more audio
+
+		--stop the object from moving and straighten it
+		self.resetPosition()
+
+
+	end
+
+end
 
 
 registered_objects["Pyro"] = {
