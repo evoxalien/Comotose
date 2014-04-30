@@ -3,90 +3,122 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
+	["map"] = "mechanic4";
 	["objects"] = {
-		[21] = {
+		[28] = {
 			["defaults"] = {
-				["y"] = 112;
+				["x"] = 85;
+				["y"] = 106.1;
 				["control"] = "generator";
+			};
+			["class"] = "Sprinkler";
+		};
+		[21] = {
+			["class"] = "FloorLamp";
+			["defaults"] = {
 				["on"] = false;
 				["x"] = 130;
+				["y"] = 112;
+				["control"] = "generator";
 			};
-			["class"] = "FloorLamp";
+		};
+		[29] = {
+			["defaults"] = {
+				["x"] = 118.8;
+				["y"] = 106.8;
+				["control"] = "generator";
+			};
+			["class"] = "Sprinkler";
 		};
 		[22] = {
+			["class"] = "FloorLamp";
 			["defaults"] = {
-				["y"] = 86.2;
-				["control"] = "generator";
 				["on"] = false;
 				["x"] = 81.9;
+				["y"] = 86.2;
+				["control"] = "generator";
 			};
-			["class"] = "FloorLamp";
 		};
 		[12] = {
+			["class"] = "LocalWarp";
 			["defaults"] = {
 				["y"] = 127;
 				["x"] = 124.6;
 			};
-			["class"] = "LocalWarp";
 		};
 		[16] = {
+			["class"] = "LocalWarp";
 			["defaults"] = {
 				["y"] = 126.5;
 				["x"] = 81.9;
 			};
-			["class"] = "LocalWarp";
 		};
 		[17] = {
+			["class"] = "LocalWarp";
 			["defaults"] = {
 				["y"] = 127.1;
 				["x"] = 96.7;
 			};
-			["class"] = "LocalWarp";
 		};
 		[25] = {
-			["defaults"] = {
-				["y"] = 67.7;
-				["x"] = 66.2;
-				["control"] = "generator";
-				["on"] = false;
-			};
 			["class"] = "Switch";
+			["defaults"] = {
+				["on"] = false;
+				["x"] = 66.2;
+				["y"] = 67.7;
+				["control"] = "generator";
+			};
 		};
 		[18] = {
+			["class"] = "LocalWarp";
 			["defaults"] = {
 				["y"] = 126.6;
 				["x"] = 110.9;
 			};
-			["class"] = "LocalWarp";
+		};
+		[26] = {
+			["defaults"] = {
+				["x"] = 85.6;
+				["y"] = 72.4;
+				["control"] = "generator";
+			};
+			["class"] = "Sprinkler";
 		};
 		[19] = {
 			["defaults"] = {
 				["y"] = 67.1;
 				["x"] = 141.8;
 			};
-			["class"] = "Hero";
 			["rotation"] = -1.4269993397432;
+			["class"] = "Hero";
+		};
+		[27] = {
+			["defaults"] = {
+				["x"] = 117.4;
+				["y"] = 72.8;
+				["control"] = "generator";
+			};
+			["class"] = "Sprinkler";
 		};
 		[20] = {
+			["class"] = "FloorLamp";
 			["defaults"] = {
-				["y"] = 120;
-				["control"] = "generator";
 				["on"] = false;
 				["x"] = 71.1;
+				["y"] = 120;
+				["control"] = "generator";
 			};
-			["class"] = "FloorLamp";
 		};
 		[24] = {
+			["class"] = "FloorLamp";
 			["defaults"] = {
-				["y"] = 61;
-				["control"] = "generator";
 				["on"] = false;
 				["x"] = 115.6;
+				["y"] = 61;
+				["control"] = "generator";
 			};
-			["class"] = "FloorLamp";
 		};
 	};
-	["map"] = "mechanic4";
 	["joints"] = {
 	};
 }
