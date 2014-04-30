@@ -1,0 +1,147 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	["objects"] = {
+		[1] = {
+			["defaults"] = {
+				["x"] = 59.6;
+				["y"] = 24.4;
+			};
+			["class"] = "Pyro";
+		};
+		[2] = {
+			["defaults"] = {
+				["x"] = 141.2;
+				["y"] = 26.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[3] = {
+			["defaults"] = {
+				["x"] = 52.3;
+				["y"] = 26.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[4] = {
+			["defaults"] = {
+				["x"] = 63.3;
+				["y"] = 129.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[5] = {
+			["defaults"] = {
+				["x"] = 63.3;
+				["y"] = 146.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[6] = {
+			["defaults"] = {
+				["x"] = 63.3;
+				["y"] = 177.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[7] = {
+			["defaults"] = {
+				["x"] = 141.2;
+				["y"] = 177.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[8] = {
+			["defaults"] = {
+				["x"] = 36.4;
+				["y"] = 146.6;
+			};
+			["class"] = "Waypoint";
+		};
+		[9] = {
+			["defaults"] = {
+				["x"] = 139.3;
+				["y"] = 40.6;
+			};
+			["class"] = "Waypoint";
+		};
+		[10] = {
+			["defaults"] = {
+				["x"] = 169.3;
+				["y"] = 40.6;
+			};
+			["class"] = "Waypoint";
+		};
+		[11] = {
+			["defaults"] = {
+				["x"] = 132.7;
+				["y"] = 48.6;
+			};
+			["class"] = "Log";
+		};
+		[12] = {
+			["class"] = "Hero";
+			["defaults"] = {
+				["x"] = 158.4;
+				["y"] = 42.1;
+			};
+			["rotation"] = -1.7669180770937;
+		};
+		[13] = {
+			["defaults"] = {
+				["x"] = 31.3;
+				["y"] = 156.4;
+			};
+			["class"] = "FloorLamp";
+		};
+		[15] = {
+			["class"] = "HidingSpot";
+			["defaults"] = {
+				["x"] = 125.1;
+				["y"] = 156.9;
+			};
+		};
+		[16] = {
+			["class"] = "HidingSpot";
+			["defaults"] = {
+				["x"] = 125.1;
+				["y"] = 66.6;
+			};
+		};
+		[17] = {
+			["class"] = "HidingSpot";
+			["defaults"] = {
+				["x"] = 170.3;
+				["y"] = 52;
+			};
+			["rotation"] = -1.5600440528135;
+		};
+		[18] = {
+			["class"] = "HidingSpot";
+			["defaults"] = {
+				["x"] = 37.7;
+				["y"] = 38.9;
+			};
+		};
+		[19] = {
+			["class"] = "HidingSpot";
+			["defaults"] = {
+				["x"] = 37.8;
+				["y"] = 88.8;
+			};
+		};
+		[20] = {
+			["class"] = "HidingSpot";
+			["defaults"] = {
+				["x"] = 37.9;
+				["y"] = 130;
+			};
+		};
+	};
+	["joints"] = {
+	};
+	["map"] = "mechanic3";
+}
+return obj1
