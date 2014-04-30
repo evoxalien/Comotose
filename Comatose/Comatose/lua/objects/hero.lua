@@ -15,6 +15,7 @@ function Hero:init()
 	self.on_fire = 0
 	self.warp_cooldown = 0
 	self.active_cooldown = 0
+	self.hiding = false
 	
 	--Every Other for Footsteps sound
 	self.flipflop = true
@@ -143,7 +144,7 @@ function Hero:everyFrame()
 		self.frame_delay = 4
 	end
 
-	if not Input:MovementDeadzone() then
+	if not Input:MovementDeadzone() and not self.hiding then
 		if self.current_frame == 0 and self.delay_timer == 0 then
 			-- Play First Footstep
 			self.Foot1:play()
@@ -189,7 +190,7 @@ function Hero:everyFrame()
 
 	--update my sanity based on the flashlight and darkness status
 	--TODO: Handle "lit rooms" where the flashlight can be off safely
-	if not self.flashlight.on then
+	if not self.flashlight.on and not self.hiding then
 		self.sanity = math.max(self.sanity - (1 / 60), 0)
 		self.sanity_cooldown = 5 * 60 --10 second cooldown
 	end
@@ -213,10 +214,18 @@ function Hero:everyFrame()
 
 	if self.active_cooldown == 0 then
 		self.active = true
-		self:color(255,255,255,255)
-	else
-		self:color(255,0,0,255)
 	end
+
+	--handle coloration
+	self:color(255,255,255,255)
+	if self.hiding then
+		self:color(0,0,0,128)
+
+		--slight sanity drain
+		self.sanity = math.max(self.sanity - (0.2 / 60), 0) --half that of when in the dark
+		self.sanity_cooldown = 5 * 60 --10 second cooldown
+	end
+
 	self.active_cooldown = math.max(0, self.active_cooldown - 1)
 
 	--process "using" things

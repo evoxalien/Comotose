@@ -3,53 +3,54 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
-	["joints"] = {
-	};
+	["map"] = "test";
 	["objects"] = {
-		[14] = {
-			["class"] = "Chair";
-			["defaults"] = {
-				["x"] = 30.8;
-				["y"] = 62.2;
-			};
-		};
 		[13] = {
 			["class"] = "Chair";
 			["defaults"] = {
-				["x"] = 21.6;
 				["y"] = 62.8;
+				["x"] = 21.6;
 			};
 		};
 		[6] = {
 			["class"] = "Hero";
 			["defaults"] = {
-				["x"] = 31.3;
 				["y"] = 21.1;
+				["x"] = 31.3;
 			};
+		};
+		[14] = {
+			["class"] = "Chair";
+			["defaults"] = {
+				["y"] = 62.2;
+				["x"] = 30.8;
+			};
+		};
+		[16] = {
+			["defaults"] = {
+				["x"] = 57.7;
+				["y"] = 21.8;
+			};
+			["class"] = "HidingSpot";
+			["rotation"] = 1.5707963267949;
 		};
 		[12] = {
 			["class"] = "Chair";
 			["defaults"] = {
-				["x"] = 12.2;
 				["y"] = 62.7;
+				["x"] = 12.2;
 			};
 		};
 		[7] = {
 			["class"] = "Recliner";
 			["defaults"] = {
-				["y"] = 19.4;
 				["x"] = 90.9;
+				["y"] = 19.4;
 				["cast_shadow"] = false;
 			};
 		};
-		[11] = {
-			["class"] = "Monster";
-			["defaults"] = {
-				["x"] = 55.7;
-				["y"] = 26.9;
-			};
-		};
 	};
-	["map"] = "test";
+	["joints"] = {
+	};
 }
 return obj1

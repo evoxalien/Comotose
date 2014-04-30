@@ -224,6 +224,9 @@
     <None Include="lua\objects\flashlight.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\objects\hidingspot.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\objects\itembubble.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
