@@ -25,13 +25,18 @@ function HidingSpot:init()
 	self.OpenSound=Audio.create()
 	self.OpenSound:audioname("CabinetOpen00")
 	self.OpenSound:attach(self:ID())
-	self.OpenSound:attachListener(stage.hero:ID())
 
 	--create sounds for opening and closing
 	self.CloseSound=Audio.create()
 	self.CloseSound:audioname("CabinetClose00")
 	self.CloseSound:attach(self:ID())
-	self.CloseSound:attachListener(stage.hero:ID())
+end
+
+function HidingSpot:everyFrame()
+	if stage.hero then
+		self.CloseSound:attachListener(stage.hero:ID())
+		self.OpenSound:attachListener(stage.hero:ID())
+	end
 end
 
 function HidingSpot:use()

@@ -110,6 +110,12 @@ function displayTable(tbl, indent)
 		if type(v) == "table" then
 			output = output .. indent .. "  " .. k .. ": \n"
 			output = output .. displayTable(v, indent .. "-")
+		elseif type(v) == "boolean" then
+			if v then
+				output = output .. indent .. "  " .. k .. ": true\n"
+			else
+				output = output .. indent .. "  " .. k .. ": false\n"
+			end
 		else
 			output = output .. indent .. "  " .. k .. ": " .. v .. "\n"
 		end

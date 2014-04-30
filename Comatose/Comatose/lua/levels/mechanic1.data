@@ -1,0 +1,104 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	["objects"] = {
+		[14] = {
+			["defaults"] = {
+				["y"] = 47.1;
+				["x"] = 81.7;
+			};
+			["class"] = "Monster";
+		};
+		[1] = {
+			["rotation"] = -1.5707963267949;
+			["defaults"] = {
+				["y"] = 43.3;
+				["x"] = 140.6;
+			};
+			["class"] = "Hero";
+		};
+		[2] = {
+			["defaults"] = {
+				["y"] = 41.5;
+				["x"] = 104.4;
+			};
+			["class"] = "Log";
+		};
+		[4] = {
+			["defaults"] = {
+				["y"] = 24.6;
+				["x"] = 129.9;
+			};
+			["class"] = "Waypoint";
+		};
+		[8] = {
+			["defaults"] = {
+				["y"] = 18.5;
+				["x"] = 98.7;
+			};
+			["class"] = "Monster";
+		};
+		[9] = {
+			["defaults"] = {
+				["y"] = 17.8;
+				["x"] = 110.8;
+			};
+			["class"] = "Monster";
+		};
+		[5] = {
+			["defaults"] = {
+				["y"] = 146.1;
+				["x"] = 112.1;
+			};
+			["class"] = "Waypoint";
+		};
+		[10] = {
+			["defaults"] = {
+				["y"] = 17.5;
+				["x"] = 123.2;
+			};
+			["class"] = "Monster";
+		};
+		[11] = {
+			["defaults"] = {
+				["y"] = 17.3;
+				["x"] = 134.4;
+			};
+			["class"] = "Monster";
+		};
+		[3] = {
+			["defaults"] = {
+				["y"] = 24.9;
+				["x"] = 94.6;
+			};
+			["class"] = "Waypoint";
+		};
+		[6] = {
+			["defaults"] = {
+				["y"] = 146.5;
+				["x"] = 59.6;
+			};
+			["class"] = "Waypoint";
+		};
+		[13] = {
+			["defaults"] = {
+				["y"] = 32.2;
+				["x"] = 82.4;
+			};
+			["class"] = "Monster";
+		};
+		[7] = {
+			["defaults"] = {
+				["y"] = 19.1;
+				["x"] = 87.1;
+			};
+			["class"] = "Monster";
+		};
+	};
+	["map"] = "mechanic1";
+	["joints"] = {
+	};
+}
+return obj1

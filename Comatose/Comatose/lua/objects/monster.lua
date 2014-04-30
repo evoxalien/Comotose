@@ -6,7 +6,7 @@ function Monster:init()
 
 	--audio
 	self.audio=Audio.create()
-	self.audio:audioname("chatter")
+	self.audio:audioname("CrawlerMove02")
 	self.audio:attach( self:ID())
 	if stage.hero ~= null then
 		self.listenerset = true
@@ -21,6 +21,8 @@ function Monster:init()
 	self:shape("circle")
 	self.cast_shadow = false
 	self.speed = 7.5
+
+	self.count = 0
 
 	stage.monster = self
 
@@ -49,7 +51,7 @@ function Monster:everyFrame()
 		self:setTarget(stage.hero:ID())
 	end
 
-		
+	
 
 	if stage.hero:canSee(self) then
 		if stage.hero.flashlight:isIlluminating(self:ID()) then
@@ -69,10 +71,13 @@ function Monster:everyFrame()
 	--turn to face our movement direction
 	rotate_angle = math.atan2(self.vx, -self.vy) + math.pi
 	self:rotateTo(rotate_angle)
-
-	self:AudioMachine()
+	number = math.random(30, 50)
+	
+	if( self.count % number) == 0 then
+		self:AudioMachine()
+	end
 	self:StateMachine()
-
+	self.count = self.count + 1
 end
 
 function Monster:AudioMachine()
