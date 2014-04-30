@@ -58,6 +58,9 @@ function Flame:everyFrame()
 
 		if (self.count % 4) == 0 then
 			Effect:CreateFlame(self.x , self.y - 1, 55)
+			self.count=1
+		else
+			self.count=self.count+1
 		end
 
 		--if the player gets too close, set them on FIRE!!! (super fun time)

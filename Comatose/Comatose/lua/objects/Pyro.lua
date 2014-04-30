@@ -187,11 +187,12 @@ function Pyro:AttackStateMachine()
 		--throw fireballs
 			--keep distance
 			--about the distance of the flash light
-			if self:distanceFrom(stage.hero.x,stage.hero.y) <50 then
 
+			self:MoveTowardsTarget(stage.hero.x,stage.hero.y)
+			if self:distanceFrom(stage.hero.x,stage.hero.y) <50 then
 				--stop moving
-				self.vy=0
-				self.vx=0
+				--self.vy=0
+				--self.vx=0
 
 
 				--if the pyro hasnt spawned enough fireball spawn new ones
@@ -228,16 +229,7 @@ function Pyro:AttackStateMachine()
 
 
 				self.fireball_timer	=self.fireball_timer-1
-
-			else
-				self:MoveTowardsTarget(stage.hero.x,stage.hero.y)
 			end
-
-
-					--set self on fire and move towards player	
-		
-
-
 end
 
 function Pyro:ThrowFireball(i)
