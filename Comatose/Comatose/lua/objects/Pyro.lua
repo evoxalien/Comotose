@@ -96,6 +96,9 @@ function Pyro:everyFrame()
 	--print(rotate_angle)
 	self:rotateTo(rotate_angle)
 
+	--dampen (no spinspinspin)
+	self.vr = self.vr / 2
+
 	--self.audio:Calc3D()
 
 	--print( self.fireball_count)
