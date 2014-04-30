@@ -76,11 +76,11 @@ function Pyro:everyFrame()
 	
 	if stage.hero:canSee(self) then
 		if stage.hero.flashlight:isIlluminating(self:ID()) then
-			stage.hero.sanity = math.max(stage.hero.sanity - 20 / 60, 0)
-			stage.hero.sanity_cooldown = 5 * 60
+			--stage.hero.sanity = math.max(stage.hero.sanity - 20 / 60, 0)
+			--stage.hero.sanity_cooldown = 5 * 60
 		else
-			stage.hero.sanity = math.max(stage.hero.sanity - 5 / 60, 0)
-			stage.hero.sanity_cooldown = 5 * 60
+			--stage.hero.sanity = math.max(stage.hero.sanity - 5 / 60, 0)
+			--stage.hero.sanity_cooldown = 5 * 60
 		end
 		self.fade_timer = math.min(self.fade_timer + 2, 10)
 	else
@@ -98,6 +98,17 @@ function Pyro:everyFrame()
 	self.audio:Calc3D()
 
 	--print( self.fireball_count)
+
+	--gather used fireballs
+	for key,value in pairs(self.fireballs) do
+		--the fire is off, lets gather it somewhere nice
+		if self.fireballs[key].on == false then
+			self.fireballs[key]:Hide()
+		end
+	end
+
+
+
 
 	--ai logic
 	self:StateMachine()
@@ -219,16 +230,7 @@ function Pyro:AttackStateMachine()
 			end
 
 
-			--gather used fireballs
-			for key,value in pairs(self.fireballs) do
-				--the fire is off, lets gather it somewhere nice
-				if self.fireballs[key].on == false then
-					self.fireballs[key]:Hide()
-				end
-			end
-
-
-		--set self on fire and move towards player	
+					--set self on fire and move towards player	
 		
 
 

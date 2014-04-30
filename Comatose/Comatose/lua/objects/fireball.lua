@@ -52,8 +52,10 @@ end
 function Fireball:everyFrame()
 
 	if self.on	 then
-		self.firelight1.x = self.x
-		self.firelight1.y = self.y
+		if self.firelight1~=nil then
+			self.firelight1.x = self.x
+			self.firelight1.y = self.y
+		end
 
 		if (self.count % 4) == 0 then
 			Effect:CreateFireBall(self.x , self.y - 1, 55)
@@ -81,6 +83,8 @@ function Fireball:Hide()
 	self.audio:stop()			--make sure its not playing any more audio
 	self.firelight1.ray_length = 0
 
+	--self.firelight1.destroy()
+
 	--stop the object from moving and straighten it
 	self.resetPosition()
 end
@@ -93,6 +97,16 @@ function Fireball:Spawn()
 	self.on=true
 	self.timer=self.burn_time
 	--self.audio:play()
+
+	--copied from hero shamelessly
+	--self.firelight1 = LightSource.create()
+	--self.firelight1.cast_shadow=false
+	--self.firelight1:shape("none")
+	--self.firelight1:color(210, 50, 45, 128)
+	--self.firelight1.ray_length = 15
+
+
+
 	self.firelight1.ray_length = 15
 end
 
