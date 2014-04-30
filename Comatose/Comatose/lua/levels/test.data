@@ -3,13 +3,52 @@ local multiRefObjects = {
 
 } -- multiRefObjects
 local obj1 = {
+	["joints"] = {
+	};
 	["map"] = "test";
 	["objects"] = {
+		[14] = {
+			["class"] = "Chair";
+			["defaults"] = {
+				["y"] = 62.2;
+				["x"] = 30.8;
+			};
+		};
+		[7] = {
+			["class"] = "Recliner";
+			["defaults"] = {
+				["cast_shadow"] = false;
+				["x"] = 90.9;
+				["y"] = 19.4;
+			};
+		};
 		[13] = {
 			["class"] = "Chair";
 			["defaults"] = {
 				["y"] = 62.8;
 				["x"] = 21.6;
+			};
+		};
+		[18] = {
+			["class"] = "FloorLamp";
+			["defaults"] = {
+				["y"] = 62.6;
+				["x"] = 58.8;
+			};
+		};
+		[16] = {
+			["rotation"] = 1.5707963267949;
+			["class"] = "HidingSpot";
+			["defaults"] = {
+				["y"] = 21.8;
+				["x"] = 57.7;
+			};
+		};
+		[12] = {
+			["class"] = "Chair";
+			["defaults"] = {
+				["y"] = 62.7;
+				["x"] = 12.2;
 			};
 		};
 		[6] = {
@@ -19,38 +58,6 @@ local obj1 = {
 				["x"] = 31.3;
 			};
 		};
-		[14] = {
-			["class"] = "Chair";
-			["defaults"] = {
-				["y"] = 62.2;
-				["x"] = 30.8;
-			};
-		};
-		[16] = {
-			["defaults"] = {
-				["x"] = 57.7;
-				["y"] = 21.8;
-			};
-			["class"] = "HidingSpot";
-			["rotation"] = 1.5707963267949;
-		};
-		[12] = {
-			["class"] = "Chair";
-			["defaults"] = {
-				["y"] = 62.7;
-				["x"] = 12.2;
-			};
-		};
-		[7] = {
-			["class"] = "Recliner";
-			["defaults"] = {
-				["x"] = 90.9;
-				["y"] = 19.4;
-				["cast_shadow"] = false;
-			};
-		};
-	};
-	["joints"] = {
 	};
 }
 return obj1

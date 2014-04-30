@@ -230,6 +230,9 @@
     <None Include="lua\objects\itembubble.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="lua\objects\lamps.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lua\objects\log.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
