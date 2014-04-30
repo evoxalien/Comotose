@@ -20,6 +20,18 @@ function HidingSpot:init()
 
 	self.oldx = 0
 	self.oldy = 0
+
+	--create sounds for opening and closing
+	self.OpenSound=Audio.create()
+	self.OpenSound:audioname("CabinetOpen00")
+	self.OpenSound:attach(self:ID())
+	self.OpenSound:attachListener(stage.hero:ID())
+
+	--create sounds for opening and closing
+	self.CloseSound=Audio.create()
+	self.CloseSound:audioname("CabinetClose00")
+	self.CloseSound:attach(self:ID())
+	self.CloseSound:attachListener(stage.hero:ID())
 end
 
 function HidingSpot:use()
@@ -37,6 +49,7 @@ function HidingSpot:use()
 
 			self.animation = 1
 			self.title:text("Hide")
+			self.OpenSound:Play()
 		else
 			self.oldx = stage.hero.x
 			self.oldy = stage.hero.y
@@ -52,6 +65,7 @@ function HidingSpot:use()
 
 			self.animation = 0
 			self.title:text("Leave")
+			self.CloseSound:Play()
 		end
 	end
 end
