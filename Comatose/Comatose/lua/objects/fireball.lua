@@ -1,9 +1,8 @@
 ﻿
-Fireball= inherits(PhysicsObject)
+Fireball= inherits(AI)
 
 function Fireball:init()
 	self:sprite("pixel")
-	--self:body_type("static")
 
 	self.z_index = 0.5
 	self.centered = true
@@ -29,19 +28,18 @@ function Fireball:init()
 	self.audio:play()
 
 
-
-
-	--self.firelight2 = LightSource.create()
-	--self.firelight2:shape("none")
-	--self.firelight2:color(230, 170, 20, 200)
-	--self.firelight2.ray_length = 25
-
 	self.count = 0
 
 	--how long this fire will burn
-	self.burn_time=1200
+	self.burn_time=300
 	self.timer=self.burn_time
 	self.on=true
+
+
+	--moving
+	self.targetx=0
+	self.targety=0
+	self.speed=20
 
 	self:set_group("monster")
 	self:add_target("hero")
@@ -64,6 +62,8 @@ function Fireball:everyFrame()
 		--if the player gets too close, set them on FIRE!!! (super fun time)
 
 		self:AudioMachine()
+
+		self:MoveToPoint(self.targetx,self.targety)
 
 		self.count = self.count + 1
 		self.timer=self.timer-1

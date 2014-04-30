@@ -41,7 +41,7 @@ function Pyro:init()
 	self.fireballs={}
 	self.fireball_count=1
 	self.fireball_time=10
-	self.fireball_limit=5
+	self.fireball_limit=10
 	self.fireball_timer=self.fireball_time
 	self.fireball_oldest=1
 
@@ -170,8 +170,8 @@ function Pyro:AttackStateMachine()
 				--if the pyro hasnt spawned enough fireball spawn new ones
 				if self.fireball_timer <0  and self.fireball_count <self.fireball_limit then
 					self.fireballs[self.fireball_count]=Fireball.create()
-					self.fireballs[self.fireball_count].x=self.x
-					self.fireballs[self.fireball_count].y=self.y
+
+					self:ThrowFireball(self.fireball_count)
 
 					self.fireball_timer=self.fireball_time
 					self.fireball_count=self.fireball_count+1
@@ -183,8 +183,8 @@ function Pyro:AttackStateMachine()
 					if self.fireballs[self.fireball_oldest].on ==false then
 						
 						self.fireballs[self.fireball_oldest]:Spawn()
-						self.fireballs[self.fireball_oldest].x=self.x
-						self.fireballs[self.fireball_oldest].y=self.y
+
+						self:ThrowFireball(self.fireball_oldest)
 
 						self.fireball_timer=self.fireball_time
 						self.fireball_oldest=self.fireball_oldest+1
@@ -220,6 +220,13 @@ function Pyro:AttackStateMachine()
 		
 
 
+end
+
+function Pyro:ThrowFireball(i)
+	self.fireballs[i].x=self.x
+	self.fireballs[i].y=self.y
+	self.fireballs[i].targetx=stage.hero.x
+	self.fireballs[i].targety=stage.hero.y
 end
 
 registered_objects["Pyro"] = {

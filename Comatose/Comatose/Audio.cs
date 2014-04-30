@@ -80,7 +80,6 @@ namespace Comatose
                 sfx.IsLooped = looped;
                 sfx.Volume = volume / 100;
                 sfx.Apply3D(listener, emitter); //needed before the first play
-                Console.Write(sfx.Volume);
                 sfx.Play();
             }
         }

@@ -561,6 +561,17 @@ namespace Comatose
             }
         }
 
+
+        public void MoveToPoint(float x, float y)
+        {
+            Vector2 t = new Vector2(x, y);
+
+            Vector2 distance = body.Position - t;
+            distance.Normalize();
+            this.vx = -distance.X * speed;
+            this.vy = -distance.Y * speed;
+        }
+
         public void RandomWaypoint()
         {
             //choose a random waypoint
@@ -624,6 +635,7 @@ namespace Comatose
 
 
         }
+
         public override void Draw(GameTime gameTime)
         {
             rotate(body.GetAngle());
