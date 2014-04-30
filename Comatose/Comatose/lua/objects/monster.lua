@@ -9,8 +9,8 @@ function Monster:init()
 	self.audio:audioname("chatter")
 	self.audio:attach( self:ID())
 	if stage.hero ~= null then
-		self.listenerset=true
-		self.audio:attachListener( stage.hero:ID())
+		self.listenerset = true
+		self.audio:attachListener( stage.hero:ID() )
 	end
 	self.audio.looped=true
 	self.audio:play()

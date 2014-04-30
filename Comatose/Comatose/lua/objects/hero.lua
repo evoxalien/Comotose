@@ -16,6 +16,25 @@ function Hero:init()
 	self.warp_cooldown = 0
 	self.active_cooldown = 0
 	
+	--Every Other for Footsteps sound
+	self.flipflop = true
+
+	--Footsteps Audio
+	self.Foot1=Audio.create()
+	self.Foot1:audioname("FootstepsCarpet04")
+	self.Foot1:attach( self:ID())
+	self.Foot1:attachListener( self:ID() )
+	self.Foot1.looped = false
+	
+
+	self.Foot2=Audio.create()
+	self.Foot2:audioname("FootstepsCarpet05")
+	self.Foot2:attach( self:ID())
+	self.Foot2:attachListener( self:ID() )
+	self.Foot2.looped = false
+	
+	--self.Foot1:play()
+	--self.Foot2:play()
 	
 	--add ourselves to the stage as a global object
 	stage.hero = self
@@ -121,6 +140,21 @@ function Hero:everyFrame()
 	end
 
 	if not Input:MovementDeadzone() then
+		
+		if (self.count % 20) == 0 then
+
+			if self.flipflop == true then
+				-- Play First Footstep
+				self.Foot1:play()
+				flipflop = false
+	
+			else
+				-- Play Second Footstep
+				self.Foot2:play()
+				flipflop = true
+
+			end
+		end
 		direction = Input:GetMovementDirection()
 		--self.vx = direction.X * self.speed
 		--self.vy = direction.Y * self.speed
@@ -191,6 +225,9 @@ function Hero:everyFrame()
 	if Input:WasKeyReleased("E") or Input:WasButtonReleased("A") then
 		processEvent("use")
 	end
+
+	--self.Foot1:Calc3D()
+	--self.Foot2:Calc3D()
 end
 
 function Hero:canSee(entity)
