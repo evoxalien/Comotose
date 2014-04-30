@@ -25,6 +25,7 @@ function Hero:init()
 	self.Foot1:attach( self:ID())
 	self.Foot1:attachListener( self:ID() )
 	self.Foot1.looped = false
+	self.Foot1:Volume(5)
 	
 
 	self.Foot2=Audio.create()
@@ -32,6 +33,7 @@ function Hero:init()
 	self.Foot2:attach( self:ID())
 	self.Foot2:attachListener( self:ID() )
 	self.Foot2.looped = false
+	self.Foot2:Volume(5)
 	
 	--self.Foot1:play()
 	--self.Foot2:play()

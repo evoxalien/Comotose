@@ -24,6 +24,7 @@ namespace Comatose
         private PhysicsObject listener_object = null; //I expect this just to be the hero
         private SoundEffectInstance sfx;
         public bool looped = false;
+        public float volume=100;
 
         public Audio(ComatoseGame gm)
             : base(gm)
@@ -77,9 +78,15 @@ namespace Comatose
             {
                 sfx = soundEffect.CreateInstance();
                 sfx.IsLooped = looped;
+                sfx.Volume = volume / 100;
                 sfx.Apply3D(listener, emitter); //needed before the first play
+                Console.Write(sfx.Volume);
                 sfx.Play();
             }
+        }
+        public void Volume(float f)
+        {
+            volume = f;
         }
         public void stop()
         {
