@@ -18,7 +18,7 @@ end
 
 function Sprinkler:everyFrame()
 	if self.on then
-		Effect:CreateSprinkler(self.x, self.y, 10)
+		Effect:CreateSprinkler(self.x, self.y, 5)
 	end
 end
 

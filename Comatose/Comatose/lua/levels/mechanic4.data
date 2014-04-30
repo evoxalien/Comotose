@@ -8,8 +8,8 @@ local obj1 = {
 		[28] = {
 			["defaults"] = {
 				["x"] = 85;
-				["y"] = 106.1;
 				["control"] = "generator";
+				["y"] = 106.1;
 			};
 			["class"] = "Sprinkler";
 		};
@@ -17,16 +17,16 @@ local obj1 = {
 			["class"] = "FloorLamp";
 			["defaults"] = {
 				["on"] = false;
+				["control"] = "generator";
 				["x"] = 130;
 				["y"] = 112;
-				["control"] = "generator";
 			};
 		};
 		[29] = {
 			["defaults"] = {
 				["x"] = 118.8;
-				["y"] = 106.8;
 				["control"] = "generator";
+				["y"] = 106.8;
 			};
 			["class"] = "Sprinkler";
 		};
@@ -34,69 +34,76 @@ local obj1 = {
 			["class"] = "FloorLamp";
 			["defaults"] = {
 				["on"] = false;
+				["control"] = "generator";
 				["x"] = 81.9;
 				["y"] = 86.2;
-				["control"] = "generator";
+			};
+		};
+		[30] = {
+			["class"] = "Pyro";
+			["defaults"] = {
+				["x"] = 174.7;
+				["y"] = 67.7;
 			};
 		};
 		[12] = {
 			["class"] = "LocalWarp";
 			["defaults"] = {
-				["y"] = 127;
 				["x"] = 124.6;
+				["y"] = 127;
 			};
 		};
 		[16] = {
 			["class"] = "LocalWarp";
 			["defaults"] = {
-				["y"] = 126.5;
 				["x"] = 81.9;
+				["y"] = 126.5;
 			};
 		};
 		[17] = {
 			["class"] = "LocalWarp";
 			["defaults"] = {
-				["y"] = 127.1;
 				["x"] = 96.7;
+				["y"] = 127.1;
 			};
 		};
 		[25] = {
 			["class"] = "Switch";
 			["defaults"] = {
 				["on"] = false;
+				["control"] = "generator";
 				["x"] = 66.2;
 				["y"] = 67.7;
-				["control"] = "generator";
 			};
 		};
 		[18] = {
 			["class"] = "LocalWarp";
 			["defaults"] = {
-				["y"] = 126.6;
 				["x"] = 110.9;
+				["y"] = 126.6;
 			};
 		};
 		[26] = {
 			["defaults"] = {
 				["x"] = 85.6;
-				["y"] = 72.4;
 				["control"] = "generator";
+				["y"] = 72.4;
 			};
 			["class"] = "Sprinkler";
 		};
 		[19] = {
-			["defaults"] = {
-				["y"] = 67.1;
-				["x"] = 141.8;
-			};
 			["rotation"] = -1.4269993397432;
+			["defaults"] = {
+				["x"] = 141.8;
+				["y"] = 67.1;
+			};
 			["class"] = "Hero";
 		};
 		[27] = {
 			["defaults"] = {
 				["x"] = 117.4;
-				["y"] = 72.8;
 				["control"] = "generator";
+				["y"] = 72.8;
 			};
 			["class"] = "Sprinkler";
 		};
@@ -104,18 +111,18 @@ local obj1 = {
 			["class"] = "FloorLamp";
 			["defaults"] = {
 				["on"] = false;
+				["control"] = "generator";
 				["x"] = 71.1;
 				["y"] = 120;
-				["control"] = "generator";
 			};
 		};
 		[24] = {
 			["class"] = "FloorLamp";
 			["defaults"] = {
 				["on"] = false;
+				["control"] = "generator";
 				["x"] = 115.6;
 				["y"] = 61;
-				["control"] = "generator";
 			};
 		};
 	};
