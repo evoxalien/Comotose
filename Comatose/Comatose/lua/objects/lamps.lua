@@ -19,7 +19,9 @@ function FloorLamp:init()
 	--light source
 	self.light = LightSource.create()
 	self.light.ray_length = 50
-	self.on = true
+	if self.on == nil then
+		self.on = true
+	end
 
 	--"switch" noise
 	self.SwitchSound=Audio.create()
@@ -33,6 +35,15 @@ function FloorLamp:everyFrame()
 	end
 	self.light.x = self.x
 	self.light.y = self.y
+
+	--update light state thingy based on flag stuff
+	if self.on then
+		self.light.ray_length = 50
+		self.light:color(255,255,255,255)
+	else
+		self.light.ray_length = 1
+		self.light:color(255,255,255,0)
+	end
 end
 
 function FloorLamp:use()
@@ -40,13 +51,9 @@ function FloorLamp:use()
 	if distance <= 15 then
 		if self.on then
 			self.on = false
-			self.light.ray_length = 1
-			self.light:color(255,255,255,0)
 			self.SwitchSound:Play()
 		else
 			self.on = true
-			self.light.ray_length = 50
-			self.light:color(255,255,255,255)
 			self.SwitchSound:Play()
 		end
 	end

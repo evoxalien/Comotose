@@ -56,6 +56,14 @@ namespace Comatose
             return lastKeyboardState.IsKeyDown(key) && keyboardState.IsKeyUp(key);
         }
 
+        public bool IsButtonHeld(string button_string)
+        {
+            if (game.console.Opened)
+                return false;
+            Buttons button = (Buttons)Buttons.Parse(typeof(Buttons), button_string, true);
+            return lastGamepadState.IsButtonDown(button) && gamepadState.IsButtonDown(button);
+        }
+
         public bool IsKeyHeld(string key_string)
         {
             if (game.console.Opened)

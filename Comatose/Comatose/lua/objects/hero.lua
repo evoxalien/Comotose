@@ -140,7 +140,7 @@ function Hero:everyFrame()
 	-- Keep it reasonable	
 	local speed = self.speed
 	self.frame_delay = 6
-	if Input:IsKeyHeld("LeftShift") then
+	if Input:IsKeyHeld("LeftShift") or Input:IsButtonHeld("RightShoulder") then
 		speed = self.run_speed
 		self.frame_delay = 4
 	end
