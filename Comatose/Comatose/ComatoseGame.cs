@@ -450,6 +450,9 @@ namespace Comatose
             base.Update(gameTime);
         }
 
+        int[] framerates = new int[60];
+        int current_framerate = 0;
+
         public SpriteBatch gameObjectBatch;
         Texture2D lightMap;
         protected override void Draw(GameTime gameTime)
@@ -536,7 +539,16 @@ namespace Comatose
                 ((cDebugDraw)world.DebugDraw).DrawBackground();
                 world.DrawDebugData();
 
+
             }
+
+            //framerate stuff
+            int framerate = (int)(1f / (float)gameTime.ElapsedGameTime.TotalSeconds);
+            framerates[current_framerate++] = framerate;
+            current_framerate %= 60;
+
+            debugBatch.DrawString(Content.Load<SpriteFont>("art/fonts/segoeprint"), "FPS: " + (int)framerates.Average(), Vector2.Zero, Color.White);
+
             debugBatch.End();
 
             base.Draw(gameTime);
