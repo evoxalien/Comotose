@@ -67,7 +67,8 @@ namespace Comatose
         {
 
             Vector2 Position;
-            Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud1-128");
+            Texture2D particleTexture = game.Content.Load<Texture2D>("art/pixel");
+            //Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud1-128");
 
             //intensity = 100;
             //Red Particles
@@ -83,7 +84,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed, speed / 4),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 1.5f
+                    LengthMultiplier = 128f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(1.0f), state);
             }
@@ -101,7 +102,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed, speed / 7),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 1.5f
+                    LengthMultiplier = 128f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }
@@ -117,7 +118,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed * 3, speed / 5),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 1.5f
+                    LengthMultiplier = 128f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(255, 255, 255, 200), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }
@@ -127,7 +128,8 @@ namespace Comatose
         {
 
             Vector2 Position;
-            Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud1-128");
+            Texture2D particleTexture = game.Content.Load<Texture2D>("art/pixel");
+            //Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud1-128");
 
             //intensity = 100;
             //Red Particles
@@ -148,7 +150,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed, speed / 3),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 1.5f
+                    LengthMultiplier = 128f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(1.0f), state);
             }
@@ -172,7 +174,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed, speed / 5),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 1.5f
+                    LengthMultiplier = 128f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }
@@ -189,7 +191,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed * 2, speed / 4),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 1.5f
+                    LengthMultiplier = 128f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(255, 255, 255, 200), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }

@@ -258,7 +258,7 @@ namespace Comatose
             graphics.ApplyChanges();
 
             //MODIFYING THE FIRST VALUE WILL LIMIT PARTICLE COUNT
-            ParticleManager = new ParticleManager(1024 * 24, ParticleState.UpdateParticle, this);
+            ParticleManager = new ParticleManager(1024 * 3, ParticleState.UpdateParticle, this);
             Effects = new Effects(this);
             base.Initialize();
         }
@@ -287,8 +287,9 @@ namespace Comatose
             //loadStage("test");
             //loadStage("textboxtest");
             //loadStage("aitest");
-            loadLevel("debugroom");
+            //loadLevel("debugroom");
             //loadLevel("demo");
+            loadLevel("entrance");
 
 
         }
