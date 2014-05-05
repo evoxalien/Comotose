@@ -185,6 +185,11 @@ namespace Comatose
 
         private void handleMouseClicks()
         {
+            if (!game.IsActive)
+            {
+                return;
+            }
+
             Vector2 mouse_position = GetMousePosition();
             Vector2 transformed_mouse = new Vector2((mouse_position.X / game.physics_scale), (mouse_position.Y / game.physics_scale));
             game.vm.DoString("mouse.x = " + transformed_mouse.X);
