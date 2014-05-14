@@ -1,0 +1,121 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	["joints"] = {
+	};
+	["objects"] = {
+		[11] = {
+			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 134.4;
+				["y"] = 17.3;
+			};
+		};
+		[15] = {
+			["class"] = "Log";
+			["defaults"] = {
+				["x"] = 142.1;
+				["y"] = 50.6;
+				["trigger_event"] = "holyshit";
+				["text"] = "mechanic1";
+			};
+		};
+		[3] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["x"] = 94.6;
+				["y"] = 24.9;
+			};
+		};
+		[4] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["x"] = 129.9;
+				["y"] = 24.6;
+			};
+		};
+		[8] = {
+			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 98.7;
+				["y"] = 18.5;
+			};
+		};
+		[1] = {
+			["class"] = "Hero";
+			["rotation"] = -1.5707963267949;
+			["defaults"] = {
+				["x"] = 140.6;
+				["y"] = 43.3;
+			};
+		};
+		[17] = {
+			["class"] = "LevelWarp";
+			["defaults"] = {
+				["y"] = 147;
+				["x"] = 43.6;
+				["target"] = "mechanic2";
+			};
+		};
+		[9] = {
+			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 110.8;
+				["y"] = 17.8;
+			};
+		};
+		[13] = {
+			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 82.4;
+				["y"] = 32.2;
+			};
+		};
+		[7] = {
+			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 87.1;
+				["y"] = 19.1;
+			};
+		};
+		[5] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["x"] = 112.1;
+				["y"] = 146.1;
+			};
+		};
+		[10] = {
+			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 123.2;
+				["y"] = 17.5;
+			};
+		};
+		[14] = {
+			["class"] = "Monster";
+			["event"] = "holyshit";
+			["defaults"] = {
+				["x"] = 81.7;
+				["y"] = 47.1;
+			};
+		};
+		[6] = {
+			["class"] = "Waypoint";
+			["defaults"] = {
+				["x"] = 59.6;
+				["y"] = 146.5;
+			};
+		};
+	};
+	["map"] = "mechanic1";
+}
+return obj1

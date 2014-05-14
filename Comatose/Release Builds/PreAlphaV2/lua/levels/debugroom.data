@@ -1,0 +1,98 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	["map"] = "debugroom";
+	["joints"] = {
+	};
+	["objects"] = {
+		[11] = {
+			["class"] = "StageWarp";
+			["defaults"] = {
+				["x"] = 83.1;
+				["y"] = 53.1;
+				["target"] = "leveleditor";
+			};
+		};
+		[1] = {
+			["defaults"] = {
+				["y"] = 48.3;
+				["x"] = 43.4;
+			};
+			["class"] = "Hero";
+		};
+		[2] = {
+			["defaults"] = {
+				["x"] = 14.2;
+				["y"] = 23.6;
+				["target"] = "demo";
+			};
+			["class"] = "LevelWarp";
+		};
+		[4] = {
+			["defaults"] = {
+				["y"] = 87.7;
+				["x"] = 13.2;
+			};
+			["class"] = "Campfire";
+		};
+		[8] = {
+			["defaults"] = {
+				["x"] = 47.5;
+				["y"] = 88.3;
+				["target"] = "textboxtest";
+			};
+			["class"] = "StageWarp";
+		};
+		[9] = {
+			["defaults"] = {
+				["x"] = 68.9;
+				["y"] = 88.4;
+				["target"] = "uitest";
+			};
+			["class"] = "StageWarp";
+		};
+		[12] = {
+			["defaults"] = {
+				["x"] = 83;
+				["y"] = 24.8;
+				["target"] = "entrance";
+			};
+			["class"] = "LevelWarp";
+		};
+		[5] = {
+			["defaults"] = {
+				["y"] = 88.1;
+				["x"] = 84.1;
+			};
+			["class"] = "Campfire";
+		};
+		[7] = {
+			["defaults"] = {
+				["x"] = 27.1;
+				["y"] = 88;
+				["target"] = "aitest";
+			};
+			["class"] = "StageWarp";
+		};
+		[3] = {
+			["defaults"] = {
+				["x"] = 46.1;
+				["y"] = 24.7;
+				["target"] = "test";
+			};
+			["class"] = "LevelWarp";
+		};
+		[10] = {
+			["class"] = "StageWarp";
+			["defaults"] = {
+				["x"] = 13.7;
+				["y"] = 53.3;
+				["target"] = "mapeditor";
+			};
+		};
+	};
+	["music"] = "debugroom";
+}
+return obj1

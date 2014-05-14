@@ -1,0 +1,283 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	["joints"] = {
+	};
+	["objects"] = {
+		[9] = {
+			["defaults"] = {
+				["x"] = 139.3;
+				["y"] = 40.6;
+			};
+			["class"] = "Waypoint";
+		};
+		[18] = {
+			["defaults"] = {
+				["x"] = 37.7;
+				["y"] = 38.9;
+			};
+			["class"] = "HidingSpot";
+		};
+		[36] = {
+			["defaults"] = {
+				["control"] = "none";
+				["y"] = 14.2;
+				["x"] = 38.3;
+				["on"] = false;
+			};
+			["class"] = "FloorLamp";
+		};
+		[5] = {
+			["defaults"] = {
+				["x"] = 63.3;
+				["y"] = 146.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[10] = {
+			["defaults"] = {
+				["x"] = 169.3;
+				["y"] = 40.6;
+			};
+			["class"] = "Waypoint";
+		};
+		[20] = {
+			["defaults"] = {
+				["x"] = 37.9;
+				["y"] = 130;
+			};
+			["class"] = "HidingSpot";
+		};
+		[22] = {
+			["defaults"] = {
+				["y"] = 146.7;
+				["x"] = 19.2;
+				["target"] = "mechanic4";
+			};
+			["class"] = "LevelWarp";
+		};
+		[35] = {
+			["defaults"] = {
+				["control"] = "none";
+				["y"] = 168.2;
+				["x"] = 38.4;
+				["on"] = false;
+			};
+			["class"] = "FloorLamp";
+		};
+		[3] = {
+			["defaults"] = {
+				["x"] = 52.3;
+				["y"] = 26.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[6] = {
+			["defaults"] = {
+				["x"] = 63.3;
+				["y"] = 177.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[12] = {
+			["defaults"] = {
+				["x"] = 158.4;
+				["y"] = 42.1;
+			};
+			["rotation"] = -1.7669180770937;
+			["class"] = "Hero";
+		};
+		[24] = {
+			["defaults"] = {
+				["x"] = 152.1;
+				["y"] = 92.9;
+			};
+			["rotation"] = 1.5650160424186;
+			["class"] = "Recliner";
+		};
+		[13] = {
+			["defaults"] = {
+				["x"] = 31.3;
+				["y"] = 156.4;
+			};
+			["class"] = "FloorLamp";
+		};
+		[17] = {
+			["defaults"] = {
+				["x"] = 170.3;
+				["y"] = 52;
+			};
+			["rotation"] = -1.5600440528135;
+			["class"] = "HidingSpot";
+		};
+		[34] = {
+			["defaults"] = {
+				["control"] = "none";
+				["y"] = 188.2;
+				["x"] = 154.2;
+				["on"] = false;
+			};
+			["class"] = "FloorLamp";
+		};
+		[7] = {
+			["defaults"] = {
+				["x"] = 141.2;
+				["y"] = 177.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[19] = {
+			["defaults"] = {
+				["x"] = 37.8;
+				["y"] = 88.8;
+			};
+			["class"] = "HidingSpot";
+		};
+		[53] = {
+			["defaults"] = {
+				["x"] = 110;
+				["y"] = 184.2;
+			};
+			["class"] = "Campfire";
+		};
+		[52] = {
+			["defaults"] = {
+				["x"] = 110.3;
+				["y"] = 171.7;
+			};
+			["class"] = "Campfire";
+		};
+		[15] = {
+			["defaults"] = {
+				["x"] = 125.1;
+				["y"] = 156.9;
+			};
+			["class"] = "HidingSpot";
+		};
+		[30] = {
+			["defaults"] = {
+				["x"] = 50.4;
+				["y"] = 78.3;
+			};
+			["rotation"] = 0.74299934445068;
+			["class"] = "Chair";
+		};
+		[51] = {
+			["defaults"] = {
+				["x"] = 153.3;
+				["y"] = 14.5;
+			};
+			["class"] = "Campfire";
+		};
+		[25] = {
+			["defaults"] = {
+				["x"] = 127.2;
+				["y"] = 139.6;
+			};
+			["class"] = "Sofa";
+		};
+		[43] = {
+			["defaults"] = {
+				["x"] = 102.2;
+				["y"] = 15.7;
+			};
+			["rotation"] = 1.5612272409096;
+			["class"] = "Sofa";
+		};
+		[26] = {
+			["defaults"] = {
+				["x"] = 63.2;
+				["y"] = 61.8;
+			};
+			["rotation"] = 2.7233683179586;
+			["class"] = "Table";
+		};
+		[31] = {
+			["defaults"] = {
+				["x"] = 65.9;
+				["y"] = 81.9;
+			};
+			["rotation"] = -0.16772157419018;
+			["class"] = "Chair";
+		};
+		[23] = {
+			["defaults"] = {
+				["x"] = 152;
+				["y"] = 78.5;
+			};
+			["rotation"] = 1.5615373319948;
+			["class"] = "Recliner";
+		};
+		[29] = {
+			["defaults"] = {
+				["x"] = 44.6;
+				["y"] = 65.4;
+			};
+			["rotation"] = 1.3500623319745;
+			["class"] = "Chair";
+		};
+		[27] = {
+			["defaults"] = {
+				["x"] = 63.4;
+				["y"] = 44;
+			};
+			["rotation"] = 3.0734058408991;
+			["class"] = "Chair";
+		};
+		[28] = {
+			["defaults"] = {
+				["x"] = 48.9;
+				["y"] = 50.1;
+			};
+			["rotation"] = 2.2672577411481;
+			["class"] = "Chair";
+		};
+		[2] = {
+			["defaults"] = {
+				["x"] = 141.2;
+				["y"] = 26.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[4] = {
+			["defaults"] = {
+				["x"] = 63.3;
+				["y"] = 129.5;
+			};
+			["class"] = "Waypoint";
+		};
+		[8] = {
+			["defaults"] = {
+				["x"] = 36.4;
+				["y"] = 146.6;
+			};
+			["class"] = "Waypoint";
+		};
+		[16] = {
+			["defaults"] = {
+				["x"] = 125.1;
+				["y"] = 66.6;
+			};
+			["class"] = "HidingSpot";
+		};
+		[32] = {
+			["defaults"] = {
+				["x"] = 138;
+				["y"] = 93.7;
+			};
+			["class"] = "Pyro";
+		};
+		[21] = {
+			["defaults"] = {
+				["y"] = 33.2;
+				["x"] = 156.4;
+				["text"] = "mechanic3";
+			};
+			["class"] = "Log";
+		};
+	};
+	["map"] = "mechanic3";
+}
+return obj1

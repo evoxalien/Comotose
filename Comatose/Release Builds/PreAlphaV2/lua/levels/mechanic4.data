@@ -1,0 +1,104 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	["joints"] = {
+	};
+	["map"] = "mechanic4";
+	["objects"] = {
+		[28] = {
+			["class"] = "Sprinkler";
+			["defaults"] = {
+				["x"] = 85;
+				["y"] = 106.1;
+				["control"] = "generator";
+			};
+		};
+		[21] = {
+			["defaults"] = {
+				["x"] = 130;
+				["y"] = 112;
+				["control"] = "generator";
+				["on"] = false;
+			};
+			["class"] = "FloorLamp";
+		};
+		[29] = {
+			["class"] = "Sprinkler";
+			["defaults"] = {
+				["x"] = 118.8;
+				["y"] = 106.8;
+				["control"] = "generator";
+			};
+		};
+		[30] = {
+			["defaults"] = {
+				["x"] = 174.7;
+				["y"] = 67.7;
+			};
+			["class"] = "Pyro";
+		};
+		[31] = {
+			["defaults"] = {
+				["control"] = "generator";
+				["on"] = false;
+				["x"] = 64.8;
+				["y"] = 87;
+			};
+			["class"] = "FloorLamp";
+		};
+		[25] = {
+			["defaults"] = {
+				["x"] = 66.2;
+				["y"] = 67.7;
+				["control"] = "generator";
+				["on"] = false;
+			};
+			["class"] = "Switch";
+		};
+		[26] = {
+			["class"] = "Sprinkler";
+			["defaults"] = {
+				["x"] = 85.6;
+				["y"] = 72.4;
+				["control"] = "generator";
+			};
+		};
+		[19] = {
+			["rotation"] = -1.4269993397432;
+			["class"] = "Hero";
+			["defaults"] = {
+				["x"] = 141.8;
+				["y"] = 67.1;
+			};
+		};
+		[27] = {
+			["class"] = "Sprinkler";
+			["defaults"] = {
+				["x"] = 117.4;
+				["y"] = 72.8;
+				["control"] = "generator";
+			};
+		};
+		[20] = {
+			["defaults"] = {
+				["x"] = 71.1;
+				["y"] = 120;
+				["control"] = "generator";
+				["on"] = false;
+			};
+			["class"] = "FloorLamp";
+		};
+		[24] = {
+			["defaults"] = {
+				["x"] = 115.6;
+				["y"] = 61;
+				["control"] = "generator";
+				["on"] = false;
+			};
+			["class"] = "FloorLamp";
+		};
+	};
+}
+return obj1

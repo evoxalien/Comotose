@@ -1,0 +1,36 @@
+-- Persistent Data
+local multiRefObjects = {
+
+} -- multiRefObjects
+local obj1 = {
+	["map"] = "elevator";
+	["objects"] = {
+		[5] = {
+			["defaults"] = {
+				["y"] = 99.4;
+				["target"] = "mechanic1";
+				["x"] = 87.4;
+			};
+			["class"] = "LevelWarp";
+		};
+		[3] = {
+			["defaults"] = {
+				["y"] = 100;
+				["x"] = 109.5;
+			};
+			["rotation"] = -1.5462111178524;
+			["class"] = "Hero";
+		};
+		[4] = {
+			["class"] = "Log";
+			["defaults"] = {
+				["text"] = "elevator";
+				["y"] = 104.2;
+				["x"] = 112.6;
+			};
+		};
+	};
+	["joints"] = {
+	};
+}
+return obj1
