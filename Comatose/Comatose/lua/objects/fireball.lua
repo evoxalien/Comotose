@@ -59,7 +59,7 @@ function Fireball:everyFrame()
 		end
 
 		if (self.count % 4) == 0 then
-			Effect:CreateFireBall(self.x , self.y - 1, 55)
+			Effect:CreateFireBall(self.x , self.y - 1, 35)
 		end
 
 		--if the player gets too close, set them on FIRE!!! (super fun time)

@@ -67,7 +67,7 @@ namespace Comatose
         {
 
             Vector2 Position;
-            Texture2D particleTexture = game.Content.Load<Texture2D>("art/pixel");
+            Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud1-32");
             //Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud1-128");
 
             //intensity = 100;
@@ -84,7 +84,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed, speed / 4),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 128f
+                    LengthMultiplier = 8f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(1.0f), state);
             }
@@ -102,7 +102,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed, speed / 7),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 128f
+                    LengthMultiplier = 8f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }
@@ -118,7 +118,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed * 3, speed / 5),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 128f
+                    LengthMultiplier = 8f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(255, 255, 255, 200), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }
@@ -128,7 +128,7 @@ namespace Comatose
         {
 
             Vector2 Position;
-            Texture2D particleTexture = game.Content.Load<Texture2D>("art/pixel");
+            Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud1-32");
             //Texture2D particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud1-128");
 
             //intensity = 100;
@@ -150,7 +150,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed, speed / 3),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 128f
+                    LengthMultiplier = 8f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(1.0f), state);
             }
@@ -165,7 +165,7 @@ namespace Comatose
             g = 195;
             b = 20;
             speed = 3f * (1f - 1 / NextFloat(rand, 1f, 5f));
-            //particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud2-12+8");
+            //particleTexture = game.Content.Load<Texture2D>("art/particles/Cloud2-32");
             for (int i = 0; i < intensity / 4; i++)
             {
                 Position = new Vector2(x = NextFloat(rand, x + .5f, x - .5f), y = NextFloat(rand, y + .5f, y - .5f)) * game.physics_scale;
@@ -174,7 +174,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed, speed / 5),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 128f
+                    LengthMultiplier = 8f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(r, g, b, 255), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }
@@ -191,7 +191,7 @@ namespace Comatose
                 {
                     Velocity = NextVector2(rand, speed * 2, speed / 4),
                     Type = ParticleType.Fire,
-                    LengthMultiplier = 128f
+                    LengthMultiplier = 8f
                 };
                 game.ParticleManager.CreateParticle(particleTexture, Position, Color.FromNonPremultiplied(255, 255, 255, 200), 150f, new Vector2(NextFloat(rand, 0.5f, 1f)), state);
             }
